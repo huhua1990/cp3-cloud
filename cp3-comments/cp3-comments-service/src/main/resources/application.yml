@@ -1,0 +1,56 @@
+server:
+  port: 8092
+  tomcat:
+    max-connections: 5000
+spring:
+  application:
+    name: comments-service
+  data:
+    mongodb:
+      host: 10.45.50.241
+      database: cp3db
+  datasource:
+    url: jdbc:mysql://10.45.50.241:3306/cp3
+    username: cp3
+    password: cp3
+  rabbitmq:
+      virtual-host: /
+      username: admin
+      password: admin
+      host: 10.45.50.241
+  redis:
+    host: 10.45.50.241
+  jackson:
+    default-property-inclusion: non_null # 配置json处理时忽略空值
+logging:
+  level:
+    root: INFO
+    com:
+      cp3: DEBUG
+  file: ./logs/comments.log
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 10 #10秒不发送九过期
+    lease-renewal-interval-in-seconds: 5 #每隔5秒发一次心跳
+cp3:
+  jwt:
+    #pubKeyPath: H:/javacode/idea/rsa/rsa.pub # 公钥地址
+    pubKeyPath: /cp3/rsa/rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  worker:
+    workerId: 2
+    dataCenterId: 2
+
+ribbon:
+  ConnectTimeout: 4000 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数

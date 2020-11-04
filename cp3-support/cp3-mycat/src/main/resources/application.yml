@@ -1,0 +1,19 @@
+server:
+  port: 18066
+logging:
+  level:
+    root: INFO
+    com:
+      cp3: DEBUG
+  file: ./logs/mycat.log
+spring:
+  application:
+    name: cp3-mycat
+  datasource:
+    url: jdbc:mysql://10.45.50.175:8066/mycatds
+    username: root
+    password: Slice@0731
+
+
+# Eureka
+

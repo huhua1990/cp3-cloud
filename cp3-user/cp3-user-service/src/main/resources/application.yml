@@ -1,0 +1,73 @@
+server:
+  port: 8085
+logging:
+  level:
+    root: INFO
+    com:
+      cp3: DEBUG
+  file: ./logs/user.log
+spring:
+  application:
+    name: user-service
+  zipkin:
+    base-url: http://10.45.50.241:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0
+  datasource:
+    url: jdbc:mysql://10.45.50.241:3306/cp3
+    username: cp3
+    password: cp3
+  rabbitmq:
+    host: 10.45.50.241
+    username: admin
+    password: admin
+    virtual-host: /
+    template:
+      retry:
+        enabled: true
+        max-interval: 210000ms
+        initial-interval: 10000ms
+        multiplier: 2
+    publisher-confirms: true
+  redis:
+    host: 10.45.50.241
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.45.50.241:10086/eureka
+      registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.45.50.241
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+mybatis:
+  type-aliases-package: com.cp3.cloud.user.pojo #指定POJO扫描包来让mybatis自动扫描到自定义POJO，interface中的pojo
+
+ribbon:
+  ConnectTimeout: 4000 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 10000 # 熔断超时时长：10000ms
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+      enabled: true

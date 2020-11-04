@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: shardingsphere
+  profiles:
+    active: sharding-hint
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 18090
+logging:
+  level:
+    root: INFO
+    com:
+      cp3: DEBUG
+  file: ./logs/shardingsphere.log
+#spring.profiles.active=sharding-tables
+#spring.profiles.active=sharding-databases
+#spring.profiles.active=sharding-databases-tables
+

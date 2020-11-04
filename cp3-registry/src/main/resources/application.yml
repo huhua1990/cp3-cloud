@@ -1,0 +1,24 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: eureka_server #spring.application.name,这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+logging:
+  level:
+    root: INFO
+    com:
+      cp3: DEBUG
+  file: ./logs/eureka.log
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://127.0.0.1:9010/eureka
+  server:
+    enable-self-preservation: false  #关闭自我保护
+    eviction-interval-timer-in-ms: 5000 #每隔5秒进行一次服务列表清理
+    peer-node-read-timeout-ms: 1000
+  instance:
+    prefer-ip-address: true
+
