@@ -1,4 +1,4 @@
-package com.cp3.cloud.myexception;
+package com.cp3.cloud.common.myexception;
 
 /**
  * @Author: 98050

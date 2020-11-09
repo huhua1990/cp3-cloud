@@ -25,7 +25,7 @@
         <module>cp3-secskill</module>
         <module>cp3-comments</module>
         <module>cp3-support</module>
-        <module>cp3-cloud-starter</module>
+        <module>cp3-cloud-commons</module>
     </modules>
 
     <parent>
