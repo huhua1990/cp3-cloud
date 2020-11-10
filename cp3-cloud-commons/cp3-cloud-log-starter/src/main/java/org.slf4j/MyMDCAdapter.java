@@ -13,7 +13,7 @@ import java.util.Set;
  * 重构{@link LogbackMDCAdapter}类，搭配TransmittableThreadLocal实现父子线程之间的数据传递
  *
  * @author cp3
- * @date zuihou
+ * @date 2020年10月09日16:46:48
  */
 public class MyMDCAdapter implements MDCAdapter {
     private static final int WRITE_OPERATION = 1;

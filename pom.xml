@@ -12,20 +12,11 @@
     <modules>
         <module>cp3-registry</module>
         <module>cp3-gateway</module>
-        <module>cp3-item</module>
-        <module>cp3-common</module>
         <module>cp3-upload</module>
-        <module>cp3-search</module>
-        <module>cp3-goods-web</module>
-        <module>cp3-user</module>
         <module>cp3-sms</module>
-        <module>cp3-authentication</module>
-        <module>cp3-cart</module>
-        <module>cp3-order</module>
-        <module>cp3-secskill</module>
-        <module>cp3-comments</module>
         <module>cp3-support</module>
         <module>cp3-cloud-commons</module>
+        <module>cp3-cloud-mall</module>
     </modules>
 
     <parent>
