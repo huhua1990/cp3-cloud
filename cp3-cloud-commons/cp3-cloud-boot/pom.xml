@@ -6,7 +6,7 @@
     <parent>
         <artifactId>cp3-cloud-commons</artifactId>
         <groupId>com.cp3.cloud</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
     </parent>
 
     <artifactId>cp3-cloud-boot</artifactId>

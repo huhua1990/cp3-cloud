@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cp3.cloud</groupId>
     <artifactId>cp3-cloud-commons</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>公共模块</description>
@@ -16,13 +16,19 @@
         <module>cp3-cloud-starter</module>
         <module>cp3-cloud-config</module>
         <module>cp3-cloud-databases</module>
+        <module>cp3-cloud-cache-starter</module>
+        <module>cp3-cloud-mq-starter</module>
+        <module>cp3-cloud-j2cache-starter</module>
         <module>cp3-cloud-uid</module>
         <module>cp3-cloud-security-starter</module>
         <module>cp3-cloud-log-starter</module>
+        <module>cp3-cloud-jwt-starter</module>
+        <module>cp3-cloud-swagger2-starter</module>
+        <module>cp3-cloud-zipkin-client-starter</module>
         <module>cp3-cloud-dependencies</module>
     </modules>
     <properties>
-        <cp3-dependencies.version>1.0.0-SNAPSHOT</cp3-dependencies.version>
+        <cp3-dependencies.version>1.0.0-RELEASE</cp3-dependencies.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -119,6 +125,37 @@
             <dependency>
                 <groupId>com.cp3.cloud</groupId>
                 <artifactId>cp3-cloud-log-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-cache-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-j2cache-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-jwt-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-mq-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-swagger2-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cp3.cloud</groupId>
     <artifactId>cp3-cloud-dependencies</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>Spring Boot 2.x项目依赖管理</description>

@@ -53,9 +53,9 @@ public class UriSecurityPreAuthAspect implements ApplicationContextAware {
      * @return Object
      * @throws Throwable 没有权限的异常
      */
-    @Around("execution(public * com.github.zuihou.base.controller.*.*(..)) || " +
-            "@annotation(com.github.zuihou.security.annotation.PreAuth) || " +
-            "@within(com.github.zuihou.security.annotation.PreAuth)"
+    @Around("execution(public * com.cp3.cloud.base.controller.*.*(..)) || " +
+            "@annotation(com.cp3.cloud.security.annotation.PreAuth) || " +
+            "@within(com.cp3.cloud.security.annotation.PreAuth)"
     )
     public Object preAuth(ProceedingJoinPoint point) throws Throwable {
         if (handleAuth(point)) {
