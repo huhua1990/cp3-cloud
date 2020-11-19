@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cp3.cloud</groupId>
+        <artifactId>cp3-gateway</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <!--<relativePath>../</relativePath>-->
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cp3-zuul-server</artifactId>
+    <name>${project.artifactId}</name>
+    <description>网关服务启动模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-common</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.cp3.cloud</groupId>
+                    <artifactId>cp3-cloud-cache-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-boot</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-log-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-jwt-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-swagger2-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-j2cache-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <!--<filters>
+            <filter>../../src/main/filters/config-${profile.active}.properties</filter>
+        </filters>-->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- docker打包插件 -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-plugin.version}</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <tag>${cp3-cloud-project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -61,7 +61,7 @@
 
         <dependency>
             <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-common</artifactId>
+            <artifactId>cp3-mall-common</artifactId>
             <version>${cp3.latest.version}</version>
         </dependency>
 

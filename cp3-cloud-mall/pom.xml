@@ -12,7 +12,7 @@
 
     <modules>
         <module>cp3-item</module>
-        <module>cp3-common</module>
+        <module>cp3-mall-common</module>
         <module>cp3-search</module>
         <module>cp3-goods-web</module>
         <module>cp3-user</module>
