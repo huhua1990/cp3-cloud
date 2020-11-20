@@ -33,6 +33,9 @@
         <!--<module>cp3-cloud-mall</module>-->
         <module>cp3-common</module>
         <module>cp3-gateway</module>
+        <module>cp3-authority</module>
+        <module>cp3-oauth</module>
+        <module>cp3-tenant</module>
     </modules>
 
     <properties>
@@ -119,15 +122,15 @@
                 <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
                 <version>${cp3-cloud-commons.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-injection-starter</artifactId>
+                <version>${cp3-cloud-commons.version}</version>
+            </dependency>
 
             <!--<dependency>
                 <groupId>com.cp3.cloud</groupId>
                 <artifactId>zuihou-dozer-starter</artifactId>
-                <version>${cp3-cloud-commons.version}</version>
-            </dependency>-->
-            <!--<dependency>
-                <groupId>com.cp3.cloud</groupId>
-                <artifactId>zuihou-injection-starter</artifactId>
                 <version>${cp3-cloud-commons.version}</version>
             </dependency>-->
             <!--<dependency>
