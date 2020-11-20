@@ -1,7 +1,7 @@
-package com.cp3.cloud.cloud;
+package com.cp3.cloud;
 
 
-import com.cp3.cloud.cloud.ribbon.GrayRule;
+import com.cp3.cloud.ribbon.GrayRule;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

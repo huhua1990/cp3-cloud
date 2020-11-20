@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.http;
+package com.cp3.cloud.http;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.cp3.cloud.context.BaseContextHandler;
@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static com.cp3.cloud.cloud.interceptor.FeignAddHeaderRequestInterceptor.HEADER_NAME_LIST;
+import static com.cp3.cloud.interceptor.FeignAddHeaderRequestInterceptor.HEADER_NAME_LIST;
 
 /**
  * 通过 RestTemplate 调用时，传递请求头和线程变量

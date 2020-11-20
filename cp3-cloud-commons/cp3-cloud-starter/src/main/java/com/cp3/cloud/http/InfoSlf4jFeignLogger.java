@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.http;
+package com.cp3.cloud.http;
 
 import org.slf4j.Logger;
 

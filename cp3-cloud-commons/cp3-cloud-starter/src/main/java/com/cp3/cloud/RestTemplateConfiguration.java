@@ -1,9 +1,9 @@
-package com.cp3.cloud.cloud;
+package com.cp3.cloud;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.cp3.cloud.cloud.http.InfoFeignLoggerFactory;
-import com.cp3.cloud.cloud.http.RestTemplateHeaderInterceptor;
+import com.cp3.cloud.http.InfoFeignLoggerFactory;
+import com.cp3.cloud.http.RestTemplateHeaderInterceptor;
 import feign.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

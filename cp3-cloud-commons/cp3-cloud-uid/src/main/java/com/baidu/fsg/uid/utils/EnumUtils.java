@@ -1,4 +1,4 @@
-///*
+package com.baidu.fsg.uid.utils;///*
 // * Copyright (c) 2017 Baidu, Inc. All Rights Reserve.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");

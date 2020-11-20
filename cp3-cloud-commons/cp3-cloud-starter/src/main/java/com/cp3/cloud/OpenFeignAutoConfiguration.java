@@ -1,8 +1,8 @@
-package com.cp3.cloud.cloud;
+package com.cp3.cloud;
 
-import com.cp3.cloud.cloud.feign.DateFormatRegister;
-import com.cp3.cloud.cloud.hystrix.ThreadLocalHystrixConcurrencyStrategy;
-import com.cp3.cloud.cloud.interceptor.FeignAddHeaderRequestInterceptor;
+import com.cp3.cloud.feign.DateFormatRegister;
+import com.cp3.cloud.hystrix.ThreadLocalHystrixConcurrencyStrategy;
+import com.cp3.cloud.interceptor.FeignAddHeaderRequestInterceptor;
 import com.netflix.hystrix.HystrixCommand;
 import feign.Feign;
 import feign.RequestInterceptor;

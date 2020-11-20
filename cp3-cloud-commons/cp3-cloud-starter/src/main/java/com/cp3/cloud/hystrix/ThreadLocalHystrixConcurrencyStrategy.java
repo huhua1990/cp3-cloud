@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.hystrix;
+package com.cp3.cloud.hystrix;
 
 import com.cp3.cloud.context.BaseContextHandler;
 import com.netflix.hystrix.HystrixThreadPoolKey;

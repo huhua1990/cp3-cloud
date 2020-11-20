@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.ribbon;
+package com.cp3.cloud.ribbon;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;

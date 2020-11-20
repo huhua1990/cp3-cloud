@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.interceptor;
+package com.cp3.cloud.interceptor;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;

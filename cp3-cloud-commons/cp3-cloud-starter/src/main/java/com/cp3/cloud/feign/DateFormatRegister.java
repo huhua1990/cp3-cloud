@@ -1,4 +1,4 @@
-package com.cp3.cloud.cloud.feign;
+package com.cp3.cloud.feign;
 
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.core.convert.converter.Converter;
