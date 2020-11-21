@@ -1,5 +1,5 @@
-FROM openjdk:8-jre
-MAINTAINER zuihou 306479353@qq.com
+FROM centos7-java8-base:latest
+MAINTAINER huhua 497345033@qq.com
 
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone
