@@ -24,11 +24,11 @@
             <artifactId>cp3-authority-biz</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
-
-        <dependency>
+        <!-- TODO cp3-->
+        <!--<dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-mq-starter</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-databases</artifactId>

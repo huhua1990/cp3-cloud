@@ -26,7 +26,6 @@ import static com.cp3.cloud.common.constant.CacheKey.buildTenantKey;
  */
 @Slf4j
 @Service
-
 public class ApplicationServiceImpl extends SuperCacheServiceImpl<ApplicationMapper, Application> implements ApplicationService {
 
     @Override

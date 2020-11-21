@@ -29,7 +29,6 @@ import static com.cp3.cloud.utils.BizAssert.isFalse;
  */
 @Slf4j
 @Service
-
 public class GlobalUserServiceImpl extends SuperServiceImpl<GlobalUserMapper, GlobalUser> implements GlobalUserService {
 
     @Override

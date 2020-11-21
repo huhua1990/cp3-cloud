@@ -36,7 +36,6 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Service
-
 public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService {
     @Autowired
     private UserService userService;

@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-
 public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, UserToken> implements UserTokenService {
 
     @Autowired

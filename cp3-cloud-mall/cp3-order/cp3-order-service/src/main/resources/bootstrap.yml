@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    config:
-      name: order
-      profile: dev
-      label: master
-      uri: http://127.0.0.1:10011
-      enabled: false

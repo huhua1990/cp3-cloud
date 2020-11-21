@@ -37,7 +37,6 @@ import static com.cp3.cloud.common.constant.CacheKey.RESOURCE;
  */
 @Slf4j
 @Service
-
 public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, Resource> implements ResourceService {
 
     @Autowired

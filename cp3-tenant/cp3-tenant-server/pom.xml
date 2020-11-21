@@ -44,10 +44,10 @@
             <groupId>com.github.zuihou</groupId>
             <artifactId>zuihou-xss-starter</artifactId>
         </dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.cp3.cloud</groupId>
@@ -133,7 +133,7 @@
                 <version>${dockerfile-maven-plugin.version}</version>
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${zuihou-project.version}</tag>
+                    <tag>${cp3-cloud-project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

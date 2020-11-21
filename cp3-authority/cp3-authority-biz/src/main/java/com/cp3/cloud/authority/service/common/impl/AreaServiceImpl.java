@@ -25,7 +25,6 @@ import static com.cp3.cloud.common.constant.CacheKey.AREA;
  */
 @Slf4j
 @Service
-
 public class AreaServiceImpl extends SuperCacheServiceImpl<AreaMapper, Area> implements AreaService {
 
     @Override

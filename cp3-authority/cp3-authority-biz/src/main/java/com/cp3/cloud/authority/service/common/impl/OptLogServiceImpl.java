@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Service
-
 public class OptLogServiceImpl extends SuperServiceImpl<OptLogMapper, OptLog> implements OptLogService {
 
     @Override

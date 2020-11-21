@@ -35,7 +35,6 @@ import static com.cp3.cloud.utils.BizAssert.isFalse;
  */
 @Slf4j
 @Service
-
 public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenant> implements TenantService {
 
     @Autowired

@@ -40,6 +40,7 @@ import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +73,7 @@ import static com.cp3.cloud.common.constant.CacheKey.USER_ACCOUNT;
  * @date 2019-07-03
  */
 @Slf4j
+@Primary
 @Service
 public class UserServiceImpl extends SuperCacheServiceImpl<UserMapper, User> implements UserService {
 

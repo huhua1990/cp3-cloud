@@ -28,7 +28,6 @@ import static com.cp3.cloud.common.constant.BizConstant.INIT_ROLE_CODE;
  */
 @Slf4j
 @Service
-
 public class UserRoleServiceImpl extends SuperServiceImpl<UserRoleMapper, UserRole> implements UserRoleService {
 
     @Autowired

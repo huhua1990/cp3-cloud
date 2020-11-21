@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-
 public class RoleOrgServiceImpl extends SuperServiceImpl<RoleOrgMapper, RoleOrg> implements RoleOrgService {
     @Override
     public List<Long> listOrgByRoleId(Long id) {
