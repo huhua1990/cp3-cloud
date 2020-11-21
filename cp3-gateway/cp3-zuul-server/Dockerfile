@@ -1,7 +1,5 @@
 FROM centos7-java8-base:latest
 MAINTAINER huhua 497345033@qq.com
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone
 
 ARG JAR_FILE
 COPY ${JAR_FILE} /app.jar
