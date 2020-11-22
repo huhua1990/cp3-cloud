@@ -73,7 +73,6 @@ import static com.cp3.cloud.common.constant.CacheKey.USER_ACCOUNT;
  * @date 2019-07-03
  */
 @Slf4j
-@Primary
 @Service
 public class UserServiceImpl extends SuperCacheServiceImpl<UserMapper, User> implements UserService {
 

@@ -1,4 +1,4 @@
-package com.cp3.cloud.tenant;
+package com.cp3.cloud;
 
 import com.cp3.cloud.security.annotation.EnableLoginArgResolver;
 import lombok.extern.slf4j.Slf4j;

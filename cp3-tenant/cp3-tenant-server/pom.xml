@@ -44,10 +44,10 @@
             <groupId>com.github.zuihou</groupId>
             <artifactId>zuihou-xss-starter</artifactId>
         </dependency>-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>com.cp3.cloud</groupId>

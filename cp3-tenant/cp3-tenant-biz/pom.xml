@@ -25,10 +25,10 @@
             <version>${cp3-cloud-project.version}</version>
         </dependency>
         <!-- TODO cp3-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-mq-starter</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-databases</artifactId>
