@@ -28,10 +28,10 @@
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-j2cache-starter</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-dozer-starter</artifactId>
-        </dependency>-->
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-cloud-dozer-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-boot</artifactId>

@@ -14,7 +14,7 @@ import java.util.List;
  * @author cp3
  * @date 2019/08/02
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/role", fallback = RoleApiFallback.class)
+@FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", path = "/role", fallback = RoleApiFallback.class)
 public interface RoleApi {
     /**
      * 根据角色编码，查找用户id

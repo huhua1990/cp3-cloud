@@ -121,15 +121,15 @@
             </dependency>
             <dependency>
                 <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-dozer-starter</artifactId>
+                <version>${cp3-cloud-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
                 <artifactId>cp3-cloud-injection-starter</artifactId>
                 <version>${cp3-cloud-commons.version}</version>
             </dependency>
 
-            <!--<dependency>
-                <groupId>com.cp3.cloud</groupId>
-                <artifactId>zuihou-dozer-starter</artifactId>
-                <version>${cp3-cloud-commons.version}</version>
-            </dependency>-->
             <!--<dependency>
                 <groupId>com.github.zuihou</groupId>
                 <artifactId>zuihou-validator-starter</artifactId>

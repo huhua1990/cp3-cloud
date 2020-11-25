@@ -15,7 +15,7 @@ import java.util.Set;
  * @author cp3
  * @date 2019/08/02
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/station",
+@FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", path = "/station",
         qualifier = "stationApi", fallback = StationApiFallback.class)
 public interface StationApi {
 

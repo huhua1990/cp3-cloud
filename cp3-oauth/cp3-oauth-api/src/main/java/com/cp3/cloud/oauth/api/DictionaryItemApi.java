@@ -15,7 +15,7 @@ import java.util.Set;
  * @author cp3
  * @date 2019/07/26
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "dictionaryItem",
+@FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", path = "dictionaryItem",
         qualifier = "dictionaryItemApi", fallback = DictionaryItemApiFallback.class)
 public interface DictionaryItemApi {
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author cp3
  * @date 2020年04月02日22:53:56
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/parameter",
+@FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", path = "/parameter",
         qualifier = "parameterApi", fallback = ParameterApiFallback.class)
 public interface ParameterApi {
 

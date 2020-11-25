@@ -16,7 +16,7 @@ import java.util.List;
  * @author cp3
  * @date 2019/07/02
  */
-@FeignClient(name = "${zuihou.feign.authority-server:zuihou-authority-server}", fallback = UserBizApiFallback.class
+@FeignClient(name = "${zuihou.feign.authority-server:cp3-authority-server}", fallback = UserBizApiFallback.class
         , path = "/user", qualifier = "userBizApi")
 public interface UserBizApi {
 

@@ -26,11 +26,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-oauth-api</artifactId>
-            <version>${zuihou-project.version}</version>
-        </dependency>-->
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-oauth-api</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-cloud-jwt-starter</artifactId>

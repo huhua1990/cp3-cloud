@@ -1,11 +1,11 @@
 package com.cp3.cloud.oauth.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.cp3.cloud.authority.dto.auth.RouterMeta;
 import com.cp3.cloud.authority.dto.auth.VueRouter;
 import com.cp3.cloud.authority.entity.auth.Menu;
 import com.cp3.cloud.authority.service.auth.MenuService;
 import com.cp3.cloud.base.R;
+import com.cp3.cloud.dozer.DozerUtils;
 import com.cp3.cloud.security.annotation.LoginUser;
 import com.cp3.cloud.security.model.SysUser;
 import com.cp3.cloud.utils.TreeUtil;
@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -42,8 +44,8 @@ import java.util.List;
 @Api(value = "Menu", tags = "菜单")
 public class OauthMenuController {
 
-    //@Autowired
-    //private DozerUtils dozer;
+    @Autowired
+    private DozerUtils dozer;
     @Autowired
     private MenuService menuService;
 
@@ -84,9 +86,8 @@ public class OauthMenuController {
             userId = sysUser.getId();
         }
         List<Menu> list = menuService.findVisibleMenu(group, userId);
-        //TODO cp3
-        List<VueRouter> treeList = new ArrayList<>();
-        //List<VueRouter> treeList = dozer.mapList(list, VueRouter.class);
+         //TODO cp3
+        List<VueRouter> treeList = dozer.mapList(list, VueRouter.class);
         return R.success(TreeUtil.buildTree(treeList));
     }
 

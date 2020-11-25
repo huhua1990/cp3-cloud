@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author cp3
  * @date 2019/07/02
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", fallback = LogApiHystrix.class, qualifier = "logApi")
+@FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", fallback = LogApiHystrix.class, qualifier = "logApi")
 public interface LogApi {
 
     /**
