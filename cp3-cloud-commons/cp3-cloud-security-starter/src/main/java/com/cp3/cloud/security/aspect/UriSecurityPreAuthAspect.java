@@ -119,6 +119,7 @@ public class UriSecurityPreAuthAspect implements ApplicationContextAware {
             }
         }
 
+        //TODO cp3 运用SpEL表达式
         Expression expression = SPEL_PARSER.parseExpression(condition);
         // 方法参数值
         Object[] args = point.getArgs();

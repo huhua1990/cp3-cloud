@@ -42,7 +42,7 @@ public class UserResolveFeignConfiguration {
         return new SpringUtils();
     }
 
-    @FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/user",
+    @FeignClient(name = "${zuihou.feign.oauth-server:cp3-oauth-server}", path = "/user",
             fallback = UserResolveApiFallback.class)
     public interface UserResolveApi {
 

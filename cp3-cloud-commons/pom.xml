@@ -25,6 +25,7 @@
         <module>cp3-cloud-swagger2-starter</module>
         <module>cp3-cloud-injection-starter</module>
         <module>cp3-cloud-zipkin-client-starter</module>
+        <module>cp3-cloud-dozer-starter</module>
         <module>cp3-cloud-dependencies</module>
     </modules>
     <properties>
@@ -161,6 +162,11 @@
             <dependency>
                 <groupId>com.cp3.cloud</groupId>
                 <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cp3.cloud</groupId>
+                <artifactId>cp3-cloud-dozer-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
