@@ -60,6 +60,7 @@
         </filter>
         <encoder>
             <pattern>${common-pattern-color}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
         </encoder>
     </appender>
     <!-- 控制台异步实时输出 -->

@@ -13,6 +13,10 @@ spring:
   profiles:
     active: @profile.active@
   cloud:
+    inetutils:
+      preferred-networks:
+        - ${LOCALHOST_NETWORK_IP:@localhost.network.ip@}
+        - ${DOCKER_NETWORK_IP:@docker.network.ip@}
     nacos:
       config:
         server-addr: ${zuihou.nacos.ip}:${zuihou.nacos.port}

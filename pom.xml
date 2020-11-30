@@ -27,7 +27,7 @@
         <!--
         <module>cp3-support</module>
         <module>cp3-cloud-mall</module>-->
-        <!--<module>cp3-cloud-commons</module>-->
+        <module>cp3-cloud-commons</module>
         <module>cp3-common</module>
         <module>cp3-gateway</module>
         <module>cp3-authority</module>
