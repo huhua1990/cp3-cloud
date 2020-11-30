@@ -5,4 +5,4 @@ ARG JAR_FILE
 COPY ${JAR_FILE} /app.jar
 
 ENTRYPOINT ["java",  "-Xmx512m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
-CMD ["--spring.profiles.active=docker"]
+#CMD ["--spring.profiles.active=docker"]
