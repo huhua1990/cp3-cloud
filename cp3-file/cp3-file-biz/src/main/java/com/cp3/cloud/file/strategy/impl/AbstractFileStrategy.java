@@ -103,6 +103,6 @@ public abstract class AbstractFileStrategy implements FileStrategy {
      * @author cp3
      * @date 2019-05-07
      */
-    protected abstract void delete(List<FileDeleteDO> list, FileDeleteDO file);
+    protected abstract void delete(List<FileDeleteDO> list, FileDeleteDO file) throws Exception;
 
 }

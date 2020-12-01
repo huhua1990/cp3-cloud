@@ -52,7 +52,7 @@ public class SwaggerProperties {
     /**
      * 描述
      **/
-    private String description = "zuihou-admin-cloud 在线文档";
+    private String description = "cp3-cloud 在线文档";
     /**
      * 版本
      **/

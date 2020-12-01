@@ -46,6 +46,8 @@ public class FileServerProperties {
 
     private Ali ali;
 
+    private Minio minio;
+
     public String getDownByUrl(Object... param) {
         return String.format(downByUrl, param);
     }
@@ -82,6 +84,14 @@ public class FileServerProperties {
         private String endpoint;
         private String accessKeyId;
         private String accessKeySecret;
+        private String bucketName;
+    }
+
+    @Data
+    public static class Minio {
+        private String uriPrefix;
+        private String accessKey;
+        private String secretKey;
         private String bucketName;
     }
 }

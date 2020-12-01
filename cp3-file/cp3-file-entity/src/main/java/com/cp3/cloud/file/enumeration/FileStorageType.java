@@ -17,6 +17,10 @@ public enum FileStorageType {
     FAST_DFS,
     ALI,
     QINIU,
+    /**
+     * MINIO
+     */
+    MINIO,
     ;
 
     public boolean eq(FileStorageType type) {
