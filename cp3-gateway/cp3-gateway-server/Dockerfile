@@ -1,4 +1,4 @@
-FROM centos7-java8-base:latest
+FROM centos7-jre8-base:latest
 MAINTAINER huhua 497345033@qq.com
 
 ARG JAR_FILE
