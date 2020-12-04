@@ -19,16 +19,16 @@
             <artifactId>cp3-oauth-controller</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.cp3.cloud</groupId>
-            <artifactId>zuihou-file-entity</artifactId>
-            <version>${zuihou-project.version}</version>
+            <artifactId>cp3-file-entity</artifactId>
+            <version>${cp3-cloud-project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
-            <artifactId>zuihou-msgs-entity</artifactId>
-            <version>${zuihou-project.version}</version>
-        </dependency>-->
+            <artifactId>cp3-msgs-entity</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.cp3.cloud</groupId>

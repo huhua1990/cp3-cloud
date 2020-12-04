@@ -9,7 +9,14 @@ import com.cp3.cloud.base.BaseEnum;
 import com.cp3.cloud.base.R;
 import com.cp3.cloud.common.enums.HttpMethod;
 import com.cp3.cloud.database.mybatis.auth.DataScopeType;
+import com.cp3.cloud.file.enumeration.DataType;
+import com.cp3.cloud.msgs.enumeration.MsgsBizType;
+import com.cp3.cloud.msgs.enumeration.MsgsCenterType;
 import com.cp3.cloud.security.annotation.PreAuth;
+import com.cp3.cloud.sms.enumeration.ProviderType;
+import com.cp3.cloud.sms.enumeration.SendStatus;
+import com.cp3.cloud.sms.enumeration.SourceType;
+import com.cp3.cloud.sms.enumeration.TaskStatus;
 import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 import com.cp3.cloud.tenant.enumeration.TenantTypeEnum;
 import io.swagger.annotations.Api;
@@ -48,15 +55,15 @@ public class OauthGeneralController {
         ENUM_MAP.put(TenantTypeEnum.class.getSimpleName(), BaseEnum.getMap(TenantTypeEnum.values()));
         ENUM_MAP.put(TenantStatusEnum.class.getSimpleName(), BaseEnum.getMap(TenantStatusEnum.values()));
         ENUM_MAP.put(ApplicationAppTypeEnum.class.getSimpleName(), BaseEnum.getMap(ApplicationAppTypeEnum.values()));
-        // 文件服务 TODO co3
-        //ENUM_MAP.put(DataType.class.getSimpleName(), BaseEnum.getMap(HttpMethod.values()));
-        //消息服务  TODO co3
-        //ENUM_MAP.put(MsgsCenterType.class.getSimpleName(), BaseEnum.getMap(MsgsCenterType.values()));
-        //ENUM_MAP.put(MsgsBizType.class.getSimpleName(), BaseEnum.getMap(MsgsBizType.values()));
-        //ENUM_MAP.put(ProviderType.class.getSimpleName(), BaseEnum.getMap(ProviderType.values()));
-        //ENUM_MAP.put(SourceType.class.getSimpleName(), BaseEnum.getMap(SourceType.values()));
-        //ENUM_MAP.put(SendStatus.class.getSimpleName(), BaseEnum.getMap(SendStatus.values()));
-        //ENUM_MAP.put(TaskStatus.class.getSimpleName(), BaseEnum.getMap(TaskStatus.values()));
+        // 文件服务 TODO cp3
+        ENUM_MAP.put(DataType.class.getSimpleName(), BaseEnum.getMap(HttpMethod.values()));
+        //消息服务  TODO cp3
+        ENUM_MAP.put(MsgsCenterType.class.getSimpleName(), BaseEnum.getMap(MsgsCenterType.values()));
+        ENUM_MAP.put(MsgsBizType.class.getSimpleName(), BaseEnum.getMap(MsgsBizType.values()));
+        ENUM_MAP.put(ProviderType.class.getSimpleName(), BaseEnum.getMap(ProviderType.values()));
+        ENUM_MAP.put(SourceType.class.getSimpleName(), BaseEnum.getMap(SourceType.values()));
+        ENUM_MAP.put(SendStatus.class.getSimpleName(), BaseEnum.getMap(SendStatus.values()));
+        ENUM_MAP.put(TaskStatus.class.getSimpleName(), BaseEnum.getMap(TaskStatus.values()));
     }
 
     @Value("${zuihou.database.isNotWrite:false}")

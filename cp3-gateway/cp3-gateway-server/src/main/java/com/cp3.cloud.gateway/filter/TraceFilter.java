@@ -2,6 +2,7 @@ package com.cp3.cloud.gateway.filter;
 
 import cn.hutool.core.util.IdUtil;
 import com.cp3.cloud.context.BaseContextConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
  * @author cp3
  * @date 2020年03月09日18:02:47
  */
+@Slf4j
 @Component
 public class TraceFilter implements GlobalFilter, Ordered {
 
@@ -28,7 +30,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
         ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
                 .headers(h -> h.add(BaseContextConstants.TRACE_ID_HEADER, traceId))
                 .build();
-
+        log.info("TraceFilter traceId:{}",traceId);
         ServerWebExchange build = exchange.mutate().request(serverHttpRequest).build();
         return chain.filter(build);
     }
