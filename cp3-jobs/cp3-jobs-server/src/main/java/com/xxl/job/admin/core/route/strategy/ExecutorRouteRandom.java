@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 随机
  * Created by xuxueli on 17/3/10.
  */
 public class ExecutorRouteRandom extends ExecutorRouter {

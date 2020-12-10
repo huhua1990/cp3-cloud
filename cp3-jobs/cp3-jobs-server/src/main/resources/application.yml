@@ -1,17 +1,17 @@
 zuihou:
   mysql:
-    ip: ${MYSQL_IP:127.0.0.1}
-    port: 3306
+    ip: ${MYSQL_IP:10.45.50.241}
+    port: 3308
     username: root
     password: root
     database: zuihou_defaults
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${zuihou.mysql.ip}:${zuihou.mysql.port}/${zuihou.mysql.database}?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
   redis:
-    ip: 127.0.0.1
-    port: 16379
+    ip: 10.45.50.241
+    port: 26379
     database: 0
-    password: SbtyMveYNfLzTks7H0apCmyStPzWJqjy
+    password: redis
   database:
     multiTenantType: SCHEMA
     tenantDatabasePrefix: zuihou_base
@@ -21,18 +21,18 @@ zuihou:
 
 ### xxl-job email
 xxl.job:
-  mail:
-    host: smtp.163.com
-    port: 25
-    ssl: false
-    username: ovono802302@163.com
-    password: asdfzxcv
-    sendNick: 《任务调度平台ZUIHOU-JOB》
+#  mail:
+#    host: test.smtp.163.com
+#    port: 25
+#    ssl: false
+#    username: ovono802302@163.com
+#    password: asdfzxcv
+#    sendNick: 《任务调度平台CP3-JOB》
   login:
-    username: zuihou
-    password: zuihou
+    username: admin
+    password: admin
   # 调度中心国际化配置 ： 默认为 "zh_CN"/中文简体, 可选范围为 "zh_CN"/中文简体, "zh_TC"/中文繁体 and "en"/英文；
-  i18n:
+  i18n: zh_CN
   #设置一：调度中心和执行器，均不设置AccessToken；关闭安全性校验；
   #设置二：调度中心和执行器，设置了相同的AccessToken；
   accessToken:
@@ -46,17 +46,24 @@ xxl.job:
     ip: ${EXECUTOR_IP:127.0.0.1}
     # 调度器通过XXL-RPC跟执行器通信的端口
     port: ${EXECUTOR_PORT:8771}
+    address:
     registryLazy: 10000  # 延迟10秒注册，防止首次启动报错
     # 日志路径
     logpath: ${logging.file.path}/${spring.application.name}/
     # 日志保留天数
     logretentiondays: -1
-
-
+  ## xxl-job, triggerpool max size
+  triggerpool:
+    fast:
+      max: 200
+    slow:
+      max: 200
+  # 日志保留天数
+  logretentiondays: -1
 server:
   servlet:
     context-path: /${spring.application.name}
-  port: 8767
+  port: 28767
   undertow: # jetty  undertow
     io-threads: 4 # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
     worker-threads: 80  # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
@@ -177,7 +184,21 @@ spring:
     password: ${zuihou.redis.password}
     port: ${zuihou.redis.port}
     database: ${zuihou.redis.database}
-
+  #xxl-job email
+  mail:
+      host: smtp.qq.com
+      port: 25
+      username: xxx@qq.com
+      from: xxx@qq.com
+      password: xxx
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
 #mybatis:
 #  mapper-locations: classpath:mybatis-mapper/*.xml
 

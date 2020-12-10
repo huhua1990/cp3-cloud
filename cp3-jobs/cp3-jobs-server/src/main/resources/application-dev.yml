@@ -1,7 +1,7 @@
 zuihou:
   mysql:
-    ip: ${MYSQL_IP:127.0.0.1}
-    port: 3306
+    ip: ${MYSQL_IP:10.45.50.241}
+    port: 3308
     username: root
     password: root
 

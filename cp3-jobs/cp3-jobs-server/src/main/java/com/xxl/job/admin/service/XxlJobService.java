@@ -9,80 +9,78 @@ import java.util.Map;
 
 /**
  * core job action for xxl-job
- *
+ * 
  * @author xuxueli 2016-5-28 15:30:33
  */
 public interface XxlJobService {
 
-    /**
-     * page list
-     *
-     * @param start
-     * @param length
-     * @param jobGroup
-     * @param jobDesc
-     * @param executorHandler
-     * @param filterTime
-     * @return
-     */
-    public Map<String, Object> pageList(Integer start, Integer length, Integer jobGroup, String jobDesc, String executorHandler, String filterTime, Integer type);
+	/**
+	 * page list
+	 *
+	 * @param start
+	 * @param length
+	 * @param jobGroup
+	 * @param jobDesc
+	 * @param executorHandler
+	 * @param author
+	 * @return
+	 */
+	public Map<String, Object> pageList(int start, int length, int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author);
 
-    /**
-     * add job, default quartz stop
-     *
-     * @param jobInfo
-     * @return
-     */
-    public ReturnT<String> add(XxlJobInfo jobInfo);
+	/**
+	 * add job
+	 *
+	 * @param jobInfo
+	 * @return
+	 */
+	public ReturnT<String> add(XxlJobInfo jobInfo);
 
-    public ReturnT<String> addStart(XxlJobInfo jobInfo);
+	/**
+	 * update job
+	 *
+	 * @param jobInfo
+	 * @return
+	 */
+	public ReturnT<String> update(XxlJobInfo jobInfo);
 
-    /**
-     * update job, update quartz-cron if started
-     *
-     * @param jobInfo
-     * @return
-     */
-    public ReturnT<String> update(XxlJobInfo jobInfo);
+	/**
+	 * remove job
+	 * 	 *
+	 * @param id
+	 * @return
+	 */
+	public ReturnT<String> remove(int id);
 
-    /**
-     * remove job, unbind quartz
-     *
-     * @param id
-     * @return
-     */
-    public ReturnT<String> remove(Integer id);
+	/**
+	 * start job
+	 *
+	 * @param id
+	 * @return
+	 */
+	public ReturnT<String> start(int id);
 
-    /**
-     * start job, bind quartz
-     *
-     * @param id
-     * @return
-     */
-    public ReturnT<String> start(Integer id);
+	/**
+	 * stop job
+	 *
+	 * @param id
+	 * @return
+	 */
+	public ReturnT<String> stop(int id);
 
-    /**
-     * stop job, unbind quartz
-     *
-     * @param id
-     * @return
-     */
-    public ReturnT<String> stop(Integer id);
+	/**
+	 * dashboard info
+	 *
+	 * @return
+	 */
+	public Map<String,Object> dashboardInfo();
 
-    /**
-     * dashboard info
-     *
-     * @return
-     */
-    public Map<String, Object> dashboardInfo();
-
-    /**
-     * chart info
-     *
-     * @param startDate
-     * @param endDate
-     * @return
-     */
-    public ReturnT<Map<String, Object>> chartInfo(Date startDate, Date endDate);
+	/**
+	 * chart info
+	 *
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public ReturnT<Map<String,Object>> chartInfo(Date startDate, Date endDate);
 
 }

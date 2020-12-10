@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-cloud-parent</artifactId>
+        <groupId>com.cp3.cloud</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-    <artifactId>cp3-jobs</artifactId>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cp3-jobs</artifactId>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>定时服务</description>
 
     <modules>
-        <module>cp3-jobs-api</module>
-        <module>cp3-jobs-core</module>
         <module>cp3-jobs-server</module>
-        <module>cp3-executor</module>
+        <module>cp3-jobs-core</module>
+        <module>cp3-jobs-executor</module>
     </modules>
+
 
 </project>

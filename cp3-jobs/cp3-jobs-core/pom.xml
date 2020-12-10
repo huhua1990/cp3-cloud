@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-jobs</artifactId>
+        <groupId>com.cp3.cloud</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
@@ -12,32 +12,32 @@
 
     <artifactId>cp3-jobs-core</artifactId>
     <name>${project.artifactId}</name>
-    <description>定时服务核心模块</description>
-    <dependencies>
+    <description>xxl-job-core</description>
 
-        <!-- xxl-rpc-core -->
+    <properties>
+        <netty-all.version>4.1.53.Final</netty-all.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <groovy.version>3.0.6</groovy.version>
+    </properties>
+
+    <dependencies>
+        <!-- ********************** embed server: netty + gson ********************** -->
         <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-rpc-core</artifactId>
-            <version>1.2.1</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty-all.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
 
+        <!-- ********************** plugin ********************** -->
         <!-- groovy-all -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
-        </dependency>
-
-        <!-- commons-exec -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-exec</artifactId>
-        </dependency>
-
-        <!-- jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <version>${groovy.version}</version>
         </dependency>
 
         <!-- spring-context -->
@@ -47,5 +47,32 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- ********************** base ********************** -->
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- javax.annotation-api -->
+        <!--<dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.annotation-api.version}</version>
+            <scope>provided</scope>
+        </dependency>-->
+
     </dependencies>
+
 </project>

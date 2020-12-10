@@ -14,25 +14,23 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * job file clean thread
- * 日志文件清理线程
  *
  * @author xuxueli 2017-12-29 16:23:43
  */
-public class JobLogFileCleanThread /*extends Thread */ {
+public class JobLogFileCleanThread {
     private static Logger logger = LoggerFactory.getLogger(JobLogFileCleanThread.class);
 
     private static JobLogFileCleanThread instance = new JobLogFileCleanThread();
-    private Thread localThread;
-    private volatile boolean toStop = false;
-
-    public static JobLogFileCleanThread getInstance() {
+    public static JobLogFileCleanThread getInstance(){
         return instance;
     }
 
-    public void start(final long logRetentionDays) {
+    private Thread localThread;
+    private volatile boolean toStop = false;
+    public void start(final long logRetentionDays){
 
         // limit min value
-        if (logRetentionDays < 3) {
+        if (logRetentionDays < 3 ) {
             return;
         }
 
@@ -43,18 +41,18 @@ public class JobLogFileCleanThread /*extends Thread */ {
                     try {
                         // clean log dir, over logRetentionDays
                         File[] childDirs = new File(XxlJobFileAppender.getLogPath()).listFiles();
-                        if (childDirs != null && childDirs.length > 0) {
+                        if (childDirs!=null && childDirs.length>0) {
 
                             // today
                             Calendar todayCal = Calendar.getInstance();
-                            todayCal.set(Calendar.HOUR_OF_DAY, 0);
-                            todayCal.set(Calendar.MINUTE, 0);
-                            todayCal.set(Calendar.SECOND, 0);
-                            todayCal.set(Calendar.MILLISECOND, 0);
+                            todayCal.set(Calendar.HOUR_OF_DAY,0);
+                            todayCal.set(Calendar.MINUTE,0);
+                            todayCal.set(Calendar.SECOND,0);
+                            todayCal.set(Calendar.MILLISECOND,0);
 
                             Date todayDate = todayCal.getTime();
 
-                            for (File childFile : childDirs) {
+                            for (File childFile: childDirs) {
 
                                 // valid
                                 if (!childFile.isDirectory()) {
@@ -76,7 +74,7 @@ public class JobLogFileCleanThread /*extends Thread */ {
                                     continue;
                                 }
 
-                                if ((todayDate.getTime() - logFileCreateDate.getTime()) >= logRetentionDays * (24 * 60 * 60 * 1000)) {
+                                if ((todayDate.getTime()-logFileCreateDate.getTime()) >= logRetentionDays * (24 * 60 * 60 * 1000) ) {
                                     FileUtil.deleteRecursively(childFile);
                                 }
 
@@ -84,13 +82,18 @@ public class JobLogFileCleanThread /*extends Thread */ {
                         }
 
                     } catch (Exception e) {
-                        logger.error(e.getMessage(), e);
+                        if (!toStop) {
+                            logger.error(e.getMessage(), e);
+                        }
+
                     }
 
                     try {
                         TimeUnit.DAYS.sleep(1);
                     } catch (InterruptedException e) {
-                        logger.error(e.getMessage(), e);
+                        if (!toStop) {
+                            logger.error(e.getMessage(), e);
+                        }
                     }
                 }
                 logger.info(">>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.");
@@ -98,6 +101,7 @@ public class JobLogFileCleanThread /*extends Thread */ {
             }
         });
         localThread.setDaemon(true);
+        localThread.setName("xxl-job, executor JobLogFileCleanThread");
         localThread.start();
     }
 

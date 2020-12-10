@@ -33,14 +33,14 @@ import java.util.List;
  * COLUMN和SCHEMA模式的实现 参考下面的 @see 中的3个类
  *
  * @author cp3
- * @createTime 2017-11-18 0:34
+ * @createTime 2020-12-9
  */
 @Configuration
 @Slf4j
 @MapperScan(
         basePackages = {
-                "com.xxl.job.admin.dao",
                 "com.cp3.cloud",
+                "com.xxl.job.admin.dao",
         },
         annotationClass = Repository.class,
         sqlSessionFactoryRef = JobsDatabaseAutoConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
@@ -61,7 +61,7 @@ public class JobsDatabaseAutoConfiguration extends MasterDatabaseConfiguration {
         super(properties, databaseProperties, interceptorsProvider, typeHandlersProvider,
                 languageDriversProvider, resourceLoader, databaseIdProvider,
                 configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
-        log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 AuthorityDatabaseAutoConfiguration");
+        log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 JobsDatabaseAutoConfiguration");
     }
 
 }

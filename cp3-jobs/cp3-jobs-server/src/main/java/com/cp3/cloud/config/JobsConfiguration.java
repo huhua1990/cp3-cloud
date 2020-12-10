@@ -1,13 +1,13 @@
 package com.cp3.cloud.config;
 
 
+import com.cp3.cloud.converter.String2DateConverter;
+import com.cp3.cloud.utils.CodeGenerate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.cp3.cloud.converter.String2DateConverter;
-import com.cp3.cloud.utils.CodeGenerate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -25,8 +25,9 @@ import java.util.TimeZone;
 import static com.cp3.cloud.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
- * @author cp3
- * @createTime 2017-12-15 14:42
+ * @Description
+ * @Auther: cp3
+ * @Date: 2020/12/9
  */
 @Configuration
 public class JobsConfiguration {

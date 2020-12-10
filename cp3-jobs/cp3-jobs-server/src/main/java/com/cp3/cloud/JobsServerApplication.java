@@ -10,10 +10,9 @@ import org.springframework.core.env.Environment;
 import java.net.InetAddress;
 
 /**
- * 消息服务
- *
- * @author cp3
- * @createTime 2018-01-25 10:13
+ * @Description 任务服务
+ * @Auther: cp3
+ * @Date: 2020/12/9
  */
 @SpringBootApplication
 @ComponentScan({

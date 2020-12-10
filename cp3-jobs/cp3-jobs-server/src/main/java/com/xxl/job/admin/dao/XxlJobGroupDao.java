@@ -2,6 +2,7 @@ package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.xxl.job.admin.core.model.XxlJobGroup;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -14,18 +15,26 @@ import java.util.List;
 @InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
 public interface XxlJobGroupDao {
 
-    List<XxlJobGroup> findAll();
+    public List<XxlJobGroup> findAll();
 
-    List<XxlJobGroup> findByAddressType(@Param("addressType") Integer addressType);
+    public List<XxlJobGroup> findByAddressType(@Param("addressType") int addressType);
 
-    int save(XxlJobGroup xxlJobGroup);
+    public int save(XxlJobGroup xxlJobGroup);
 
-    int update(XxlJobGroup xxlJobGroup);
+    public int update(XxlJobGroup xxlJobGroup);
 
-    int remove(@Param("id") Integer id);
+    public int remove(@Param("id") int id);
 
-    XxlJobGroup load(@Param("id") Integer id);
+    public XxlJobGroup load(@Param("id") int id);
 
-    XxlJobGroup getByName(@Param("appName") String appName);
+    public List<XxlJobGroup> pageList(@Param("offset") int offset,
+                                      @Param("pagesize") int pagesize,
+                                      @Param("appname") String appname,
+                                      @Param("title") String title);
+
+    public int pageListCount(@Param("offset") int offset,
+                             @Param("pagesize") int pagesize,
+                             @Param("appname") String appname,
+                             @Param("title") String title);
 
 }

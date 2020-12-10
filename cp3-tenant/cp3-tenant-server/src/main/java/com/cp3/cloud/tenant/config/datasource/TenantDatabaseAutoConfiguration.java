@@ -61,7 +61,7 @@ public class TenantDatabaseAutoConfiguration extends MasterDatabaseConfiguration
         super(properties, databaseProperties, interceptorsProvider, typeHandlersProvider,
                 languageDriversProvider, resourceLoader, databaseIdProvider,
                 configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
-        log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 AuthorityDatabaseAutoConfiguration");
+        log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 TenantDatabaseAutoConfiguration");
     }
 
 }

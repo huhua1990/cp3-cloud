@@ -3,192 +3,155 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
- * 任务日志, 用于跟踪触发器进程
- * used to track trigger process
- *
+ * xxl-job log, used to track trigger process
  * @author xuxueli  2015-12-19 23:19:09
  */
 public class XxlJobLog {
+	
+	private long id;
+	
+	// job info
+	private int jobGroup;
+	private int jobId;
 
-    /**
-     * 主键
-     */
-    private int id;
+	// execute info
+	private String executorAddress;
+	private String executorHandler;
+	private String executorParam;
+	private String executorShardingParam;
+	private int executorFailRetryCount;
+	
+	// trigger info
+	private Date triggerTime;
+	private int triggerCode;
+	private String triggerMsg;
+	
+	// handle info
+	private Date handleTime;
+	private int handleCode;
+	private String handleMsg;
 
-    /**
-     * 任务组
-     */
-    private int jobGroup;
+	// alarm info
+	private int alarmStatus;
 
-    /**
-     * 任务主键
-     */
-    private int jobId;
+	public long getId() {
+		return id;
+	}
 
-    /**
-     * 执行地址
-     */
-    private String executorAddress;
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    /**
-     * 执行者
-     */
-    private String executorHandler;
+	public int getJobGroup() {
+		return jobGroup;
+	}
 
-    /**
-     * 执行参数
-     */
-    private String executorParam;
+	public void setJobGroup(int jobGroup) {
+		this.jobGroup = jobGroup;
+	}
 
-    /**
-     * 执行碎片参数
-     */
-    private String executorShardingParam;
+	public int getJobId() {
+		return jobId;
+	}
 
-    /**
-     * 执行失败重试统计
-     */
-    private int executorFailRetryCount;
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
 
-    /**
-     * 触发时间
-     */
-    private Date triggerTime;
+	public String getExecutorAddress() {
+		return executorAddress;
+	}
 
-    /**
-     * 触发编码
-     */
-    private int triggerCode;
+	public void setExecutorAddress(String executorAddress) {
+		this.executorAddress = executorAddress;
+	}
 
-    /**
-     * 触发消息
-     */
-    private String triggerMsg;
+	public String getExecutorHandler() {
+		return executorHandler;
+	}
 
-    /**
-     * 操作时间
-     */
-    private Date handleTime;
+	public void setExecutorHandler(String executorHandler) {
+		this.executorHandler = executorHandler;
+	}
 
-    /**
-     * 操作编码
-     */
-    private int handleCode;
+	public String getExecutorParam() {
+		return executorParam;
+	}
 
-    /**
-     * 操作信息
-     */
-    private String handleMsg;
+	public void setExecutorParam(String executorParam) {
+		this.executorParam = executorParam;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getExecutorShardingParam() {
+		return executorShardingParam;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setExecutorShardingParam(String executorShardingParam) {
+		this.executorShardingParam = executorShardingParam;
+	}
 
-    public int getJobGroup() {
-        return jobGroup;
-    }
+	public int getExecutorFailRetryCount() {
+		return executorFailRetryCount;
+	}
 
-    public void setJobGroup(int jobGroup) {
-        this.jobGroup = jobGroup;
-    }
+	public void setExecutorFailRetryCount(int executorFailRetryCount) {
+		this.executorFailRetryCount = executorFailRetryCount;
+	}
 
-    public int getJobId() {
-        return jobId;
-    }
+	public Date getTriggerTime() {
+		return triggerTime;
+	}
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
+	public void setTriggerTime(Date triggerTime) {
+		this.triggerTime = triggerTime;
+	}
 
-    public String getExecutorAddress() {
-        return executorAddress;
-    }
+	public int getTriggerCode() {
+		return triggerCode;
+	}
 
-    public void setExecutorAddress(String executorAddress) {
-        this.executorAddress = executorAddress;
-    }
+	public void setTriggerCode(int triggerCode) {
+		this.triggerCode = triggerCode;
+	}
 
-    public String getExecutorHandler() {
-        return executorHandler;
-    }
+	public String getTriggerMsg() {
+		return triggerMsg;
+	}
 
-    public void setExecutorHandler(String executorHandler) {
-        this.executorHandler = executorHandler;
-    }
+	public void setTriggerMsg(String triggerMsg) {
+		this.triggerMsg = triggerMsg;
+	}
 
-    public String getExecutorParam() {
-        return executorParam;
-    }
+	public Date getHandleTime() {
+		return handleTime;
+	}
 
-    public void setExecutorParam(String executorParam) {
-        this.executorParam = executorParam;
-    }
+	public void setHandleTime(Date handleTime) {
+		this.handleTime = handleTime;
+	}
 
-    public String getExecutorShardingParam() {
-        return executorShardingParam;
-    }
+	public int getHandleCode() {
+		return handleCode;
+	}
 
-    public void setExecutorShardingParam(String executorShardingParam) {
-        this.executorShardingParam = executorShardingParam;
-    }
+	public void setHandleCode(int handleCode) {
+		this.handleCode = handleCode;
+	}
 
-    public int getExecutorFailRetryCount() {
-        return executorFailRetryCount;
-    }
+	public String getHandleMsg() {
+		return handleMsg;
+	}
 
-    public void setExecutorFailRetryCount(int executorFailRetryCount) {
-        this.executorFailRetryCount = executorFailRetryCount;
-    }
+	public void setHandleMsg(String handleMsg) {
+		this.handleMsg = handleMsg;
+	}
 
-    public Date getTriggerTime() {
-        return triggerTime;
-    }
+	public int getAlarmStatus() {
+		return alarmStatus;
+	}
 
-    public void setTriggerTime(Date triggerTime) {
-        this.triggerTime = triggerTime;
-    }
+	public void setAlarmStatus(int alarmStatus) {
+		this.alarmStatus = alarmStatus;
+	}
 
-    public int getTriggerCode() {
-        return triggerCode;
-    }
-
-    public void setTriggerCode(int triggerCode) {
-        this.triggerCode = triggerCode;
-    }
-
-    public String getTriggerMsg() {
-        return triggerMsg;
-    }
-
-    public void setTriggerMsg(String triggerMsg) {
-        this.triggerMsg = triggerMsg;
-    }
-
-    public Date getHandleTime() {
-        return handleTime;
-    }
-
-    public void setHandleTime(Date handleTime) {
-        this.handleTime = handleTime;
-    }
-
-    public int getHandleCode() {
-        return handleCode;
-    }
-
-    public void setHandleCode(int handleCode) {
-        this.handleCode = handleCode;
-    }
-
-    public String getHandleMsg() {
-        return handleMsg;
-    }
-
-    public void setHandleMsg(String handleMsg) {
-        this.handleMsg = handleMsg;
-    }
 }

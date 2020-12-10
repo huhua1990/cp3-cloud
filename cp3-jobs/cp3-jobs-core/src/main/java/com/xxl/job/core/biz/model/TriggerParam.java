@@ -5,57 +5,24 @@ import java.io.Serializable;
 /**
  * Created by xuxueli on 16/7/22.
  */
-public class TriggerParam implements Serializable {
+public class TriggerParam implements Serializable{
     private static final long serialVersionUID = 42L;
 
-    /**
-     * 任务id： XxlJobInfo表
-     */
     private int jobId;
-    /**
-     * 执行器，任务Handler名称
-     */
-    private String executorHandler;
-    /**
-     * 执行参数
-     */
-    private String executorParams;
-    /**
-     * 阻塞处理策略
-     */
-    private String executorBlockStrategy;
-    /**
-     * 任务执行超时时间，单位秒
-     */
-    private int executorTimeout;
-    /**
-     * 日志id
-     */
-    private int logId;
 
-    /**
-     * 日志时间
-     */
-    private long logDateTim;
-    /**
-     * GLUE类型 #com.xxl.job.core.glue.GlueTypeEnum
-     */
+    private String executorHandler;
+    private String executorParams;
+    private String executorBlockStrategy;
+    private int executorTimeout;
+
+    private long logId;
+    private long logDateTime;
+
     private String glueType;
-    /**
-     * GLUE源代码
-     */
     private String glueSource;
-    /**
-     * GLUE更新时间
-     */
     private long glueUpdatetime;
-    /**
-     * 广播索引
-     */
+
     private int broadcastIndex;
-    /**
-     * 广播总数
-     */
     private int broadcastTotal;
 
 
@@ -99,20 +66,20 @@ public class TriggerParam implements Serializable {
         this.executorTimeout = executorTimeout;
     }
 
-    public int getLogId() {
+    public long getLogId() {
         return logId;
     }
 
-    public void setLogId(int logId) {
+    public void setLogId(long logId) {
         this.logId = logId;
     }
 
-    public long getLogDateTim() {
-        return logDateTim;
+    public long getLogDateTime() {
+        return logDateTime;
     }
 
-    public void setLogDateTim(long logDateTim) {
-        this.logDateTim = logDateTim;
+    public void setLogDateTime(long logDateTime) {
+        this.logDateTime = logDateTime;
     }
 
     public String getGlueType() {
@@ -165,7 +132,7 @@ public class TriggerParam implements Serializable {
                 ", executorBlockStrategy='" + executorBlockStrategy + '\'' +
                 ", executorTimeout=" + executorTimeout +
                 ", logId=" + logId +
-                ", logDateTim=" + logDateTim +
+                ", logDateTime=" + logDateTime +
                 ", glueType='" + glueType + '\'' +
                 ", glueSource='" + glueSource + '\'' +
                 ", glueUpdatetime=" + glueUpdatetime +

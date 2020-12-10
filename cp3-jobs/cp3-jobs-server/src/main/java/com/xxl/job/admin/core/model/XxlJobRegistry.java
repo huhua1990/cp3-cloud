@@ -3,34 +3,14 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
- * 任务注册
  * Created by xuxueli on 16/9/30.
  */
 public class XxlJobRegistry {
 
-    /**
-     * 主键
-     */
     private int id;
-
-    /**
-     * 注册组
-     */
     private String registryGroup;
-
-    /**
-     * 注册键
-     */
     private String registryKey;
-
-    /**
-     * 注册值
-     */
     private String registryValue;
-
-    /**
-     * 更新时间
-     */
     private Date updateTime;
 
     public int getId() {

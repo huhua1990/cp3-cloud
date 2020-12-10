@@ -12,19 +12,17 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * 一致性HASH：
  * 分组下机器地址相同，不同JOB均匀散列在不同机器上，保证分组下机器分配JOB平均；且每个JOB固定调度其中一台机器；
- * a、virtual node：解决不均衡问题
- * b、hash method replace hashCode：String的hashCode可能重复，需要进一步扩大hashCode的取值范围
+ *      a、virtual node：解决不均衡问题
+ *      b、hash method replace hashCode：String的hashCode可能重复，需要进一步扩大hashCode的取值范围
  * Created by xuxueli on 17/3/10.
  */
 public class ExecutorRouteConsistentHash extends ExecutorRouter {
 
-    private static int VIRTUAL_NODE_NUM = 5;
+    private static int VIRTUAL_NODE_NUM = 100;
 
     /**
      * get hash code on 2^32 ring (md5散列的方式计算hash值)
-     *
      * @param key
      * @return
      */
@@ -63,7 +61,7 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
         // ------A1------A2-------A3------
         // -----------J1------------------
         TreeMap<Long, String> addressRing = new TreeMap<Long, String>();
-        for (String address : addressList) {
+        for (String address: addressList) {
             for (int i = 0; i < VIRTUAL_NODE_NUM; i++) {
                 long addressHash = hash("SHARD-" + address + "-NODE-" + i);
                 addressRing.put(addressHash, address);

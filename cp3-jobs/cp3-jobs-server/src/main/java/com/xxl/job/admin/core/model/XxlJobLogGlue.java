@@ -1,102 +1,75 @@
 package com.xxl.job.admin.core.model;
 
+import java.util.Date;
+
 /**
- * 任务glue日志
  * xxl-job log for glue, used to track job code process
- *
  * @author xuxueli 2016-5-19 17:57:46
  */
 public class XxlJobLogGlue {
+	
+	private int id;
+	private int jobId;				// 任务主键ID
+	private String glueType;		// GLUE类型	#com.xxl.job.core.glue.GlueTypeEnum
+	private String glueSource;
+	private String glueRemark;
+	private Date addTime;
+	private Date updateTime;
 
-    /**
-     * 主键
-     */
-    private int id;
+	public int getId() {
+		return id;
+	}
 
-    /**
-     * 任务主键
-     */
-    private int jobId;
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    /**
-     * GLUE类型	#com.xxl.job.core.glue.GlueTypeEnum
-     */
-    private String glueType;
+	public int getJobId() {
+		return jobId;
+	}
 
-    /**
-     * glue资源
-     */
-    private String glueSource;
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
 
-    /**
-     * glue评论
-     */
-    private String glueRemark;
+	public String getGlueType() {
+		return glueType;
+	}
 
-    /**
-     * 添加时间
-     */
-    private String addTime;
+	public void setGlueType(String glueType) {
+		this.glueType = glueType;
+	}
 
-    /**
-     * 更新时间
-     */
-    private String updateTime;
+	public String getGlueSource() {
+		return glueSource;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setGlueSource(String glueSource) {
+		this.glueSource = glueSource;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public String getGlueRemark() {
+		return glueRemark;
+	}
 
-    public int getJobId() {
-        return jobId;
-    }
+	public void setGlueRemark(String glueRemark) {
+		this.glueRemark = glueRemark;
+	}
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
+	public Date getAddTime() {
+		return addTime;
+	}
 
-    public String getGlueType() {
-        return glueType;
-    }
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
 
-    public void setGlueType(String glueType) {
-        this.glueType = glueType;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public String getGlueSource() {
-        return glueSource;
-    }
-
-    public void setGlueSource(String glueSource) {
-        this.glueSource = glueSource;
-    }
-
-    public String getGlueRemark() {
-        return glueRemark;
-    }
-
-    public void setGlueRemark(String glueRemark) {
-        this.glueRemark = glueRemark;
-    }
-
-    public String getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(String addTime) {
-        this.addTime = addTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
 }
