@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * core job action for xxl-job
- * 
+ *
  * @author xuxueli 2016-5-28 15:30:33
  */
 public interface XxlJobService {
@@ -82,5 +82,12 @@ public interface XxlJobService {
 	 * @return
 	 */
 	public ReturnT<Map<String,Object>> chartInfo(Date startDate, Date endDate);
+
+	/**
+	 * 添加和启动定时任务
+	 * @param xxlJobInfo
+	 * @return
+	 */
+	ReturnT<String> addTimingTask(XxlJobInfo xxlJobInfo);
 
 }

@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -177,6 +178,12 @@ public class JobInfoController {
 		}
 		return new ReturnT<List<String>>(result);
 
+	}
+
+	@RequestMapping(value = "/addTimingTask")
+	@ResponseBody
+	public ReturnT<String> addTimingTask(@RequestBody XxlJobInfo xxlJobInfo){
+		return xxlJobService.addTimingTask(xxlJobInfo);
 	}
 
 }

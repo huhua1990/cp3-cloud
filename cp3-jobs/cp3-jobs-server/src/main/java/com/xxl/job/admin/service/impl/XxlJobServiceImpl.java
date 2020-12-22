@@ -441,4 +441,13 @@ public class XxlJobServiceImpl implements XxlJobService {
 		return new ReturnT<Map<String, Object>>(result);
 	}
 
+	@Override
+	public ReturnT<String> addTimingTask(XxlJobInfo xxlJobInfo) {
+		ReturnT<String> result = this.add(xxlJobInfo);
+		if (result.getCode() == ReturnT.SUCCESS_CODE) {
+			this.start(Integer.valueOf(result.getContent()));
+		}
+		return result;
+	}
+
 }

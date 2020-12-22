@@ -19,6 +19,7 @@
         <module>cp3-jobs-server</module>
         <module>cp3-jobs-core</module>
         <module>cp3-jobs-executor</module>
+        <module>cp3-jobs-api</module>
     </modules>
 
 

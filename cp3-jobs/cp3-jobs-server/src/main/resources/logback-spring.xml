@@ -5,7 +5,7 @@
 
     <springProfile name="test,docker,prod">
         <logger name="com.xxl.job.admin" additivity="true" level="WARN">
-            <appender-ref ref="ASYNC_PROJECT_APPENDER"/>
+            <appender-ref ref="ASYNC_PROJECT_APPENDER"/>LoadBalancer
         </logger>
     </springProfile>
 
