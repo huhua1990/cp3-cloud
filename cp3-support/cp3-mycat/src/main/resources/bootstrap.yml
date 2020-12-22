@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    config:
-      name: mycat
-      profile: dev
-      label: master
-      uri: http://127.0.0.1:18066
-      enabled: false

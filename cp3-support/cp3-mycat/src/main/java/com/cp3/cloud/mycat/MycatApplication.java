@@ -12,8 +12,8 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan("com.cp3.cloud.mycat.mapper")
-public class LyMycatApplication {
+public class MycatApplication {
     public static void main(String[] args) {
-        SpringApplication.run(LyMycatApplication.class, args);
+        SpringApplication.run(MycatApplication.class, args);
     }
 }

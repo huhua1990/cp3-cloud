@@ -3,7 +3,6 @@ package com.cp3.cloud.mycat.service.serviceImpl;
 import com.cp3.cloud.mycat.entity.UserDemo;
 import com.cp3.cloud.mycat.mapper.DemoMapper;
 import com.cp3.cloud.mycat.service.DemoService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
