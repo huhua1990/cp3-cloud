@@ -2,7 +2,7 @@ package com.cp3.cloud.file.properties;
 
 
 import com.cp3.cloud.file.enumeration.FileStorageType;
-import com.cp3.cloud.utils.StrPool;
+import com.cp3.base.utils.StrPool;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +13,14 @@ import java.io.File;
 
 
 /**
- * @author cp3
+ * @author zuihou
  */
 @Setter
 @Getter
 @ConfigurationProperties(prefix = FileServerProperties.PREFIX)
 @RefreshScope
 public class FileServerProperties {
-    public static final String PREFIX = "zuihou.file";
+    public static final String PREFIX = "lamp.file";
     /**
      * 为以下3个值，指定不同的自动化配置
      * qiniu：七牛oss

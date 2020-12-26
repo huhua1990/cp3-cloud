@@ -6,7 +6,9 @@ import com.baidubce.services.sms.SmsClient;
 import com.baidubce.services.sms.SmsClientConfiguration;
 import com.baidubce.services.sms.model.SendMessageV2Request;
 import com.baidubce.services.sms.model.SendMessageV2Response;
+import com.cp3.cloud.sms.dao.SmsTaskMapper;
 import com.cp3.cloud.sms.enumeration.ProviderType;
+import com.cp3.cloud.sms.service.SmsSendStatusService;
 import com.cp3.cloud.sms.strategy.domain.SmsDO;
 import com.cp3.cloud.sms.strategy.domain.SmsResult;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +19,16 @@ import java.util.Map;
 /**
  * 百度发送短信 实现类
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/12/20
  */
 @Component("BAIDU")
 @Slf4j
 public class SmsBaiduStrategy extends AbstractSmsStrategy {
+    public SmsBaiduStrategy(SmsTaskMapper smsTaskMapper, SmsSendStatusService smsSendStatusService) {
+        super(smsTaskMapper, smsSendStatusService);
+    }
+
     @Override
     protected SmsResult send(SmsDO smsDO) {
         try {

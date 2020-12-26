@@ -1,6 +1,6 @@
 package com.cp3.cloud.oauth.service;
 
-import com.cp3.cloud.base.R;
+import com.cp3.base.basic.R;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * 验证码
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-10-18 17:22
  */
 public interface ValidateCodeService {
@@ -19,7 +19,7 @@ public interface ValidateCodeService {
      *
      * @param key      验证码 uuid
      * @param response HttpServletResponse
-     * @throws IOException
+     * @throws IOException 异常
      */
     void create(String key, HttpServletResponse response) throws IOException;
 

@@ -1,4 +1,4 @@
-package com.cp3.cloud;
+package com.cp3.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

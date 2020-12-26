@@ -1,25 +1,62 @@
 package com.cp3.cloud.tenant.enumeration;
 
+import com.cp3.base.basic.BaseEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.stream.Stream;
+
 /**
- * @author cp3
- * @date 2020/8/26 下午5:28
+ * <p>
+ * 实体注释中生成的类型枚举
+ * 企业
+ * </p>
+ *
+ * @author zuihou
+ * @date 2020-11-19
  */
-public enum TenantConnectTypeEnum {
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(value = "TenantConnectTypeEnum", description = "连接类型-枚举")
+public enum TenantConnectTypeEnum implements BaseEnum {
+
     /**
-     * 同一个数据库(物理)，链接不同的数据库实例. 从mysql.yml中读取master数据源来自动新增其他数据库
+     * LOCAL="本地"
      */
-    LOCAL,
+    LOCAL("本地"),
     /**
-     * 不同的数据库(物理)，需要先在DatasourceConfig表配置链接源信息，然后指定以下字段（xxxDatasource）
+     * REMOTE="远程"
      */
-    REMOTE,
+    REMOTE("远程"),
     ;
 
-    public boolean eq(TenantConnectTypeEnum val) {
-        return val == null ? false : eq(val.name());
+    @ApiModelProperty(value = "描述")
+    private String desc;
+
+
+    /**
+     * 根据当前枚举的name匹配
+     */
+    public static TenantConnectTypeEnum match(String val, TenantConnectTypeEnum def) {
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
-    public boolean eq(String val) {
-        return this.name().equalsIgnoreCase(val);
+    public static TenantConnectTypeEnum get(String val) {
+        return match(val, null);
     }
+
+    public boolean eq(TenantConnectTypeEnum val) {
+        return val != null && eq(val.name());
+    }
+
+    @Override
+    @ApiModelProperty(value = "编码", allowableValues = "LOCAL,REMOTE", example = "LOCAL")
+    public String getCode() {
+        return this.name();
+    }
+
 }

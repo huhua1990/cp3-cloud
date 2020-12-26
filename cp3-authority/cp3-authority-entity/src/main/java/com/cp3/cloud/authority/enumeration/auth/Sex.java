@@ -1,6 +1,6 @@
 package com.cp3.cloud.authority.enumeration.auth;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,8 +15,8 @@ import java.util.stream.Stream;
  * 用户
  * </p>
  *
- * @author cp3
- * @date 2020-02-14
+ * @author zuihou
+ * @date 2020-11-20
  */
 @Getter
 @AllArgsConstructor
@@ -41,12 +41,12 @@ public enum Sex implements BaseEnum {
     @ApiModelProperty(value = "描述")
     private String desc;
 
-    public static Sex match(String val, Sex def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
-    }
 
-    public static Sex matchDesc(String val, Sex def) {
-        return Stream.of(values()).parallel().filter((item) -> item.getDesc().equalsIgnoreCase(val)).findAny().orElse(def);
+    /**
+     * 根据当前枚举的name匹配
+     */
+    public static Sex match(String val, Sex def) {
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static Sex get(String val) {
@@ -54,7 +54,7 @@ public enum Sex implements BaseEnum {
     }
 
     public boolean eq(Sex val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override

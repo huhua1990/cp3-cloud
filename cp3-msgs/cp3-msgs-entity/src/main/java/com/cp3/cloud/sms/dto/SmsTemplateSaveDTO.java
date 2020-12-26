@@ -3,7 +3,12 @@ package com.cp3.cloud.sms.dto;
 import com.cp3.cloud.sms.enumeration.ProviderType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,8 +22,8 @@ import java.io.Serializable;
  * 短信模板
  * </p>
  *
- * @author cp3
- * @since 2019-11-21
+ * @author zuihou
+ * @since 2020-11-21
  */
 @Data
 @NoArgsConstructor
@@ -88,16 +93,16 @@ public class SmsTemplateSaveDTO implements Serializable {
     @Length(max = 50, message = "模板CODE长度不能超过50")
     private String templateCode;
     /**
-     * 模板签名名称
+     * 签名
      */
-    @ApiModelProperty(value = "模板签名名称")
-    @Length(max = 100, message = "模板签名名称长度不能超过100")
+    @ApiModelProperty(value = "签名")
+    @Length(max = 100, message = "签名长度不能超过100")
     private String signName;
     /**
-     * 模板描述
+     * 备注
      */
-    @ApiModelProperty(value = "模板描述")
-    @Length(max = 255, message = "模板描述长度不能超过255")
+    @ApiModelProperty(value = "备注")
+    @Length(max = 255, message = "备注长度不能超过255")
     private String templateDescribe;
 
 }

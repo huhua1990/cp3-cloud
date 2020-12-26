@@ -3,7 +3,7 @@ package com.cp3.cloud.file.enumeration;
 /**
  * 文件 存储类型 枚举
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/05/06
  */
 public enum FileStorageType {
@@ -20,7 +20,7 @@ public enum FileStorageType {
     /**
      * MINIO
      */
-    MINIO,
+    MINIO
     ;
 
     public boolean eq(FileStorageType type) {

@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 文件、附件DO
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/05/06
  */
 @Data

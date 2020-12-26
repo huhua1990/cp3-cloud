@@ -6,21 +6,24 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-tenant</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cp3-tenant-controller</artifactId>
     <name>${project.artifactId}</name>
     <description>租户服务接口模块</description>
-    <dependencies>
 
+    <dependencies>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-tenant-biz</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-security-starter</artifactId>
+        </dependency>
     </dependencies>
-
 
 </project>

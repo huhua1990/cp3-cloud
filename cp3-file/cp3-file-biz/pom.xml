@@ -6,7 +6,7 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-file</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,18 +22,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-boot</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-boot</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-databases</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-databases</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-dozer-starter</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -55,6 +50,12 @@
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jersey-core</artifactId>
+                    <groupId>com.sun.jersey</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 七牛oss -->
         <dependency>

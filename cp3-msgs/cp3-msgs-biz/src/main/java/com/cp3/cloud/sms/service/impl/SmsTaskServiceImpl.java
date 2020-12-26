@@ -3,15 +3,14 @@ package com.cp3.cloud.sms.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cp3.cloud.base.service.SuperServiceImpl;
-import com.cp3.cloud.common.constant.BizConstant;
-import com.cp3.cloud.context.BaseContextConstants;
-import com.cp3.cloud.context.BaseContextHandler;
-import com.cp3.cloud.database.mybatis.conditions.Wraps;
-import com.cp3.cloud.exception.BizException;
-import com.cp3.cloud.jobs.api.JobsTimingApi;
-import com.cp3.cloud.jobs.dto.XxlJobInfo;
+import com.cp3.base.basic.service.SuperServiceImpl;
+import com.cp3.base.context.ContextConstants;
+import com.cp3.base.context.ContextUtil;
+import com.cp3.base.database.mybatis.conditions.Wraps;
+import com.cp3.base.exception.BizException;
+import com.cp3.base.utils.BizAssert;
 import com.cp3.cloud.sms.dao.SmsTaskMapper;
 import com.cp3.cloud.sms.entity.SmsTask;
 import com.cp3.cloud.sms.entity.SmsTemplate;
@@ -22,21 +21,18 @@ import com.cp3.cloud.sms.service.SmsTaskService;
 import com.cp3.cloud.sms.service.SmsTemplateService;
 import com.cp3.cloud.sms.strategy.SmsContext;
 import com.cp3.cloud.sms.util.PhoneUtils;
-import com.cp3.cloud.utils.BizAssert;
-import com.cp3.cloud.utils.DateUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.cp3.cloud.exception.code.ExceptionCode.BASE_VALID_PARAM;
+import static com.cp3.base.exception.code.ExceptionCode.BASE_VALID_PARAM;
 
 /**
  * <p>
@@ -46,18 +42,17 @@ import static com.cp3.cloud.exception.code.ExceptionCode.BASE_VALID_PARAM;
  * 具体的发送状态查看发送状态（#sms_send_status）表
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Slf4j
 @Service
+
+@RequiredArgsConstructor
 public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask> implements SmsTaskService {
-    @Resource
-    private JobsTimingApi jobsTimingApi;
-    @Autowired
-    private SmsContext smsContext;
-    @Autowired
-    private SmsTemplateService smsTemplateService;
+//    private final JobsTimingApi jobsTimingApi;
+    private final SmsContext smsContext;
+    private final SmsTemplateService smsTemplateService;
 
     private static String content(ProviderType providerType, String templateContent, String templateParams) {
         try {
@@ -95,17 +90,14 @@ public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask>
     public void saveTask(SmsTask smsTask, TemplateCodeType type) {
         validAndInit(smsTask, type);
 
-        send(smsTask, (task) -> save(task));
+        send(smsTask, this::save);
     }
 
     /**
      * 验证数据，并初始化数据
-     *
-     * @param smsTask
-     * @param type
      */
     public void validAndInit(SmsTask smsTask, TemplateCodeType type) {
-        SmsTemplate template = null;
+        SmsTemplate template;
         if (type != null) {
             template = smsTemplateService.getOne(Wrappers.<SmsTemplate>lambdaQuery()
                     .eq(SmsTemplate::getCustomCode, type.name()));
@@ -123,7 +115,7 @@ public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask>
 
         //1，验证必要参数
         Set<String> phoneList = PhoneUtils.getPhone(smsTask.getReceiver());
-        BizAssert.isFalse(phoneList == null || phoneList.isEmpty(), BASE_VALID_PARAM.build("接收人不能为空"));
+        BizAssert.isFalse(phoneList.isEmpty(), BASE_VALID_PARAM.build("接收人不能为空"));
 
         // 验证定时发送的时间，至少大于（当前时间+5分钟） ，是为了防止 定时调度或者是保存数据跟不上
         if (smsTask.getSendTime() != null) {
@@ -131,7 +123,7 @@ public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask>
             BizAssert.isTrue(flag, BASE_VALID_PARAM.build("定时发送时间至少在当前时间的5分钟之后"));
         }
 
-        if (StrUtil.isNotEmpty(smsTask.getContent()) && smsTask.getContent().length() > 450) {
+        if (StrUtil.isNotEmpty(smsTask.getContent()) && smsTask.getContent().length() > 500) {
             throw new BizException(BASE_VALID_PARAM.getCode(), "发送内容不能超过500字");
         }
 
@@ -164,10 +156,6 @@ public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask>
 
     /**
      * 具体的短信任务保存操作
-     *
-     * @param smsTask
-     * @param function 保存/修改方法
-     * @return
      */
     private SmsTask send(SmsTask smsTask, Function<SmsTask, Boolean> function) {
         //1， 初始化默认参数
@@ -189,13 +177,13 @@ public class SmsTaskServiceImpl extends SuperServiceImpl<SmsTaskMapper, SmsTask>
         } else {
             JSONObject param = new JSONObject();
             param.put("id", smsTask.getId());
-            param.put(BaseContextConstants.JWT_KEY_TENANT, BaseContextHandler.getTenant());
+            param.put(ContextConstants.JWT_KEY_TENANT, ContextUtil.getTenant());
             //推送定时任务
-            jobsTimingApi.addTimingTask(
-                    XxlJobInfo.build(BizConstant.DEF_JOB_GROUP_NAME,
-                            DateUtils.localDateTime2Date(smsTask.getSendTime()),
-                            BizConstant.SMS_SEND_JOB_HANDLER,
-                            param.toString()));
+//            jobsTimingApi.addTimingTask(
+//                    XxlJobInfo.build(BizConstant.DEF_JOB_GROUP_NAME,
+//                            DateUtils.localDateTime2Date(smsTask.getSendTime()),
+//                            BizConstant.SMS_SEND_JOB_HANDLER,
+//                            param.toString()));
         }
         return smsTask;
     }

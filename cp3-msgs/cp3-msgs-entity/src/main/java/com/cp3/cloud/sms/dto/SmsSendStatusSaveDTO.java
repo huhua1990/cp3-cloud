@@ -3,7 +3,12 @@ package com.cp3.cloud.sms.dto;
 import com.cp3.cloud.sms.enumeration.SendStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,8 +22,8 @@ import java.io.Serializable;
  * 短信发送状态
  * </p>
  *
- * @author cp3
- * @since 2019-08-01
+ * @author zuihou
+ * @since 2020-11-21
  */
 @Data
 @NoArgsConstructor
@@ -34,7 +39,7 @@ public class SmsSendStatusSaveDTO implements Serializable {
 
     /**
      * 任务ID
-     * #sms_task
+     * #e_sms_task
      */
     @ApiModelProperty(value = "任务ID")
     @NotNull(message = "任务ID不能为空")
@@ -49,6 +54,7 @@ public class SmsSendStatusSaveDTO implements Serializable {
     /**
      * 接收者手机号
      * 单个手机号
+     * 阿里：发送回执ID,可根据该ID查询具体的发送状态  腾讯：sid 标识本次发送id，标识一次短信下发记录  百度：requestId 短信发送请求唯一流水ID
      */
     @ApiModelProperty(value = "接收者手机号")
     @NotEmpty(message = "接收者手机号不能为空")
@@ -56,7 +62,6 @@ public class SmsSendStatusSaveDTO implements Serializable {
     private String receiver;
     /**
      * 发送回执ID
-     * 阿里：发送回执ID,可根据该ID查询具体的发送状态  腾讯：sid 标识本次发送id，标识一次短信下发记录  百度：requestId 短信发送请求唯一流水ID
      */
     @ApiModelProperty(value = "发送回执ID")
     @Length(max = 255, message = "发送回执ID长度不能超过255")
@@ -99,7 +104,7 @@ public class SmsSendStatusSaveDTO implements Serializable {
      * 创建时处于当年的第几周 yyyy-ww 用于统计
      */
     @ApiModelProperty(value = "创建时年周")
-    @Length(max = 10, message = "创建时年周长度不能超过10")
+    @Length(max = 7, message = "创建时年周长度不能超过7")
     private String createWeek;
     /**
      * 创建时年月日

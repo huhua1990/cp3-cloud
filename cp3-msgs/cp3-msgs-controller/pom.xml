@@ -3,10 +3,10 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cp3-msgs</artifactId>
         <groupId>com.cp3.cloud</groupId>
+        <artifactId>cp3-msgs</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -30,13 +30,14 @@
             <artifactId>cp3-oauth-api</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-log-starter</artifactId>
+        </dependency>-->
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-log-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-security-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-security-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

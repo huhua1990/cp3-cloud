@@ -3,8 +3,8 @@ package com.cp3.cloud.area2;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.log.StaticLog;
+import com.cp3.base.context.ContextUtil;
 import com.cp3.cloud.authority.entity.common.Area;
-import com.cp3.cloud.context.BaseContextHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
 public class CityParserTest {
-    private static final String url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html";
+    private static final String URL = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html";
     @Resource
     ICityParser cityParser;
     @Resource
@@ -27,15 +27,16 @@ public class CityParserTest {
 
     @Before
     public void setTenant() {
-        BaseContextHandler.setTenant("0000");
+        ContextUtil.setTenant("0000");
     }
-
 
     @Test
-    public void empty() {
-
+    public void test() {
     }
 
+    /**
+     * 实时爬取最新的地区数据，请执行该方法
+     */
     //    @Test
     public void init() {
         TimeInterval timer = DateUtil.timer();
@@ -52,7 +53,7 @@ public class CityParserTest {
         获取统计局数据, 注意：目前只获取了 省市区 3级数据， 若要获取乡镇（4级）和村庄数据（5级），请将 CityParser 类的122行代码打开. （5级数据量比较多，非常非常非常非常耗时）
         CityParser 122行： countyArea.setChildren(parseTowntr(fullName + countyName, COMMON_URL + href.subSequence(2, 5).toString() + "/" + href));
         */
-        List<Area> list = cityParser.parseProvinces(url);
+        List<Area> list = cityParser.parseProvinces(URL);
 
         // 持久化
         sqlCityParserDecorator.parseProvinces(list);

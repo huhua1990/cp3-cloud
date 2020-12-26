@@ -6,13 +6,14 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-oauth</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cp3-oauth-biz</artifactId>
     <name>${project.artifactId}</name>
     <description>认证服务业务模块</description>
+
     <dependencies>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
@@ -24,10 +25,15 @@
             <artifactId>cp3-tenant-biz</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
-        <!-- jwt 只有权限服务需要使用 -->
+        <!-- jwt 只有认证服务需要使用 -->
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-jwt-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-jwt-starter</artifactId>
+        </dependency>
+        <!-- log 只有认证服务biz模块引用，其他服务都在controller模块 -->
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-log-starter</artifactId>
         </dependency>
 
         <dependency>

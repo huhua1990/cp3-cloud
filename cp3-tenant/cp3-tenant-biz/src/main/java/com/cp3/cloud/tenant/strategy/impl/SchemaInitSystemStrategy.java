@@ -1,23 +1,23 @@
 package com.cp3.cloud.tenant.strategy.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.cp3.cloud.database.properties.DatabaseProperties;
-import com.cp3.cloud.exception.BizException;
+import com.cp3.base.database.properties.DatabaseProperties;
+import com.cp3.base.exception.BizException;
+import com.cp3.base.utils.StrPool;
 import com.cp3.cloud.tenant.dao.InitDbMapper;
 import com.cp3.cloud.tenant.dto.TenantConnectDTO;
 import com.cp3.cloud.tenant.strategy.InitSystemStrategy;
-import com.cp3.cloud.utils.StrPool;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.StringReader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
@@ -29,36 +29,34 @@ import static com.cp3.cloud.common.constant.BizConstant.EXTEND_DATABASE;
  * 初始化系统
  * <p>
  * 初始化规则：
- * zuihou-authority-server/src/main/resources/sql 路径存放8个sql文件 (每个库对应一个文件)
- * zuihou_base.sql            # 基础库：权限、消息，短信，邮件，文件等
- * data_zuihou_base.sql       # 基础库数据： 如初始用户，初始角色，初始菜单
+ * lamp-authority-server/src/main/resources/sql 路径存放8个sql文件 (每个库对应一个文件)
+ * lamp_base.sql            # 基础库：权限、消息，短信，邮件，文件等
+ * data_lamp_base.sql       # 基础库数据： 如初始用户，初始角色，初始菜单
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/10/25
  */
 @Service("SCHEMA")
 @Slf4j
+@RequiredArgsConstructor
 public class SchemaInitSystemStrategy implements InitSystemStrategy {
     /**
      * 需要初始化的sql文件在classpath中的路径
      */
-    private final static String SQL_RESOURCE_PATH = "sqls/%s.sql";
+    private static final String SQL_RESOURCE_PATH = "sqls/%s.sql";
 
     /**
      * 需要初始化的库
      * 可能不同的服务，会连接不同的库
      */
-    private final static List<String> INIT_DATABASE_LIST = Arrays.asList(BASE_DATABASE, EXTEND_DATABASE);
+    private static final List<String> INIT_DATABASE_LIST = Arrays.asList(BASE_DATABASE, EXTEND_DATABASE);
 
-    @Autowired
-    private DataSource dataSource;
-    @Autowired
-    private InitDbMapper initDbMapper;
+    private final DataSource dataSource;
+    private final InitDbMapper initDbMapper;
+    private final DatabaseProperties databaseProperties;
 
-    @Value("${zuihou.mysql.database}")
+    @Value("${lamp.mysql.database}")
     private String defaultDatabase;
-    @Autowired
-    private DatabaseProperties databaseProperties;
 
 
     @Override
@@ -77,7 +75,7 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
 
     @Override
     public boolean reset(String tenant) {
-        ScriptRunner runner = null;
+        ScriptRunner runner;
         try {
             runner = getScriptRunner();
 
@@ -106,7 +104,7 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
             }
         } catch (Exception e) {
             log.error("初始化表失败", e);
-            throw new BizException(-1, "初始化表失败");
+            throw new BizException("初始化表失败", e);
         }
     }
 
@@ -115,7 +113,7 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
      * 菜单表
      * 资源表
      *
-     * @param tenant
+     * @param tenant 租户编码
      */
     public void initData(ScriptRunner runner, String tenant) {
         try {
@@ -126,7 +124,7 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
             }
         } catch (Exception e) {
             log.error("初始化数据失败", e);
-            throw new BizException(-1, "初始化数据失败");
+            throw new BizException("初始化数据失败", e);
         }
     }
 
@@ -135,7 +133,7 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
             runner.runScript(new StringReader(StrUtil.format("use {};", this.defaultDatabase)));
         } catch (Exception e) {
             log.error("切换为默认数据源失败", e);
-            throw new BizException(-1, "切换为默认数据源失败");
+            throw new BizException("切换为默认数据源失败", e);
         }
     }
 
@@ -160,13 +158,13 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
             // 设置是否输出日志，null不输出日志，不设置自动将日志输出到控制台
             // runner.setLogWriter(null);
 
-            Resources.setCharset(Charset.forName("UTF8"));
+            Resources.setCharset(StandardCharsets.UTF_8);
 
 //            设置分隔符 runner.setDelimiter(";");
             runner.setFullLineDelimiter(false);
             return runner;
         } catch (Exception ex) {
-            throw new BizException(-1, "获取连接失败");
+            throw new BizException("获取连接失败", ex);
         }
     }
 
@@ -177,12 +175,10 @@ public class SchemaInitSystemStrategy implements InitSystemStrategy {
             return true;
         }
 
-        INIT_DATABASE_LIST.forEach((prefix) -> {
-            tenantCodeList.forEach((tenant) -> {
-                String database = new StringBuilder().append(prefix).append(StrPool.UNDERSCORE).append(tenant).toString();
-                initDbMapper.dropDatabase(database);
-            });
-        });
+        INIT_DATABASE_LIST.forEach(prefix -> tenantCodeList.forEach(tenant -> {
+            String database = prefix + StrPool.UNDERSCORE + tenant;
+            initDbMapper.dropDatabase(database);
+        }));
 
         return true;
     }

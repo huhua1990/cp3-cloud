@@ -2,21 +2,20 @@ package com.cp3.cloud.file.strategy.impl;
 
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.file.domain.FileAttrDO;
+import com.cp3.base.basic.R;
+import com.cp3.base.utils.DateUtils;
+import com.cp3.base.utils.StrPool;
 import com.cp3.cloud.file.dto.chunk.FileChunksMergeDTO;
-import com.cp3.cloud.file.entity.File;
+import com.cp3.cloud.file.entity.Attachment;
 import com.cp3.cloud.file.enumeration.IconType;
 import com.cp3.cloud.file.properties.FileServerProperties;
-import com.cp3.cloud.file.service.FileService;
+import com.cp3.cloud.file.service.AttachmentService;
 import com.cp3.cloud.file.strategy.FileChunkStrategy;
 import com.cp3.cloud.file.strategy.FileLock;
 import com.cp3.cloud.file.utils.FileDataTypeUtil;
-import com.cp3.cloud.utils.DateUtils;
-import com.cp3.cloud.utils.StrPool;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -31,15 +30,14 @@ import java.util.concurrent.locks.Lock;
 /**
  * 文件分片处理 抽象策略类
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/06/19
  */
 @Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
-    @Autowired
-    protected FileService fileService;
-    @Autowired
-    protected FileServerProperties fileProperties;
+    protected final AttachmentService fileService;
+    protected final FileServerProperties fileProperties;
 
     /**
      * 秒传验证
@@ -48,17 +46,17 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
      * @param md5 文件的md5签名
      * @return 若存在则返回该文件的路径，不存在则返回null
      */
-    private File md5Check(String md5) {
-        return fileService.getOne(Wrappers.<File>lambdaQuery()
-                .eq(File::getFileMd5, md5).eq(File::getIsDelete, false), false);
+    private Attachment md5Check(String md5) {
+        return fileService.getOne(Wrappers.<Attachment>lambdaQuery()
+                .eq(Attachment::getFileMd5, md5), false);
     }
 
     /**
      * 设置创建日期
      *
-     * @param file
+     * @param file 附件
      */
-    private void setDate(File file) {
+    private void setDate(Attachment file) {
         LocalDateTime now = LocalDateTime.now();
         file.setCreateMonth(DateUtils.formatAsYearMonthEn(now))
                 .setCreateWeek(DateUtils.formatAsYearWeekEn(now))
@@ -66,8 +64,8 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
     }
 
     @Override
-    public File md5Check(String md5, Long folderId, Long accountId) {
-        File file = md5Check(md5);
+    public Attachment md5Check(String md5, Long accountId) {
+        Attachment file = md5Check(md5);
         if (file == null) {
             return null;
         }
@@ -76,17 +74,11 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
         copyFile(file);
 
         file.setId(null)
-                .setCreateUser(accountId)
+                .setCreatedBy(accountId)
                 .setCreateTime(LocalDateTime.now());
         file.setUpdateTime(LocalDateTime.now())
-                .setUpdateUser(accountId);
+                .setUpdatedBy(accountId);
         setDate(file);
-
-        FileAttrDO attr = fileService.getFileAttrDo(folderId);
-        file.setFolderId(folderId)
-                .setTreePath(attr.getTreePath())
-                .setGrade(attr.getGrade())
-                .setFolderName(attr.getFolderName());
 
         fileService.save(file);
         return file;
@@ -95,27 +87,22 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
     /**
      * 让子类自己实现复制
      *
-     * @param file
+     * @param file 附件
      */
-    protected abstract void copyFile(File file);
+    protected abstract void copyFile(Attachment file);
 
     @Override
-    public R<File> chunksMerge(FileChunksMergeDTO info) {
-
-
-        String filename = new StringBuilder(info.getName())
-                .append(StrPool.DOT)
-                .append(info.getExt()).toString();
-        R<File> result = chunksMerge(info, filename);
+    public R<Attachment> chunksMerge(FileChunksMergeDTO info) {
+        String filename = info.getName() + StrPool.DOT + info.getExt();
+        R<Attachment> result = chunksMerge(info, filename);
 
         log.info("path={}", result);
         if (result.getIsSuccess() && result.getData() != null) {
             //文件名
-            File filePo = result.getData();
+            Attachment filePo = result.getData();
 
             filePo.setDataType(FileDataTypeUtil.getDataType(info.getContextType()))
                     .setSubmittedFileName(info.getSubmittedFileName())
-                    .setIsDelete(false)
                     .setSize(info.getSize())
                     .setFileMd5(info.getMd5())
                     .setContextType(info.getContextType())
@@ -124,19 +111,13 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
                     .setIcon(IconType.getIcon(info.getExt()).getIcon());
             setDate(filePo);
 
-            FileAttrDO attr = fileService.getFileAttrDo(info.getFolderId());
-            filePo.setTreePath(attr.getTreePath())
-                    .setGrade(attr.getGrade())
-                    .setFolderId(info.getFolderId())
-                    .setFolderName(attr.getFolderName());
-
             fileService.save(filePo);
             return R.success(filePo);
         }
         return result;
     }
 
-    private R<File> chunksMerge(FileChunksMergeDTO info, String fileName) {
+    private R<Attachment> chunksMerge(FileChunksMergeDTO info, String fileName) {
         String path = FileDataTypeUtil.getUploadPathPrefix(fileProperties.getStoragePath());
         int chunks = info.getChunks();
         String folder = info.getName();
@@ -158,7 +139,7 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
                     //这里存放的文件名一定是数字
                     files.sort(Comparator.comparingInt(f -> Convert.toInt(f.getName(), 0)));
 
-                    R<File> result = merge(files, path, fileName, info);
+                    R<Attachment> result = merge(files, path, fileName, info);
                     files = null;
 
                     //清理：文件夹，tmp文件
@@ -176,7 +157,7 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
             }
         }
         //去持久层查找对应md5签名，直接返回对应path
-        File file = this.md5Check(md5);
+        Attachment file = this.md5Check(md5);
         if (file == null) {
             log.error("文件[签名:" + md5 + "]数据不完整，可能该文件正在合并中");
             return R.fail("数据不完整，可能该文件正在合并中, 也有可能是上传过程中某些分片丢失");
@@ -192,10 +173,10 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
      * @param path     路径
      * @param fileName 唯一名 含后缀
      * @param info     文件信息
-     * @return
-     * @throws IOException
+     * @return 附件信息
+     * @throws IOException IO
      */
-    protected abstract R<File> merge(List<java.io.File> files, String path, String fileName, FileChunksMergeDTO info) throws IOException;
+    protected abstract R<Attachment> merge(List<java.io.File> files, String path, String fileName, FileChunksMergeDTO info) throws IOException;
 
 
     /**
@@ -204,7 +185,7 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
      *
      * @param folder 文件夹名称
      * @param path   上传文件根路径
-     * @return
+     * @return 是否成功
      */
     protected boolean cleanSpace(String folder, String path) {
         //删除分片文件夹
@@ -214,10 +195,7 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
         }
         //删除tmp文件
         garbage = new java.io.File(Paths.get(path, folder + ".tmp").toString());
-        if (!FileUtils.deleteQuietly(garbage)) {
-            return false;
-        }
-        return true;
+        return FileUtils.deleteQuietly(garbage);
     }
 
 
@@ -225,27 +203,21 @@ public abstract class AbstractFileChunkStrategy implements FileChunkStrategy {
      * 获取指定文件的分片数量
      *
      * @param folder 文件夹路径
-     * @return
+     * @return 分片数量
      */
     private int getChunksNum(String folder) {
-        java.io.File[] filesList = this.getChunks(folder);
-        return filesList.length;
+        return this.getChunks(folder).length;
     }
 
     /**
      * 获取指定文件的所有分片
      *
      * @param folder 文件夹路径
-     * @return
+     * @return 分片文件
      */
     private java.io.File[] getChunks(String folder) {
         java.io.File targetFolder = new java.io.File(folder);
-        return targetFolder.listFiles((file) -> {
-            if (file.isDirectory()) {
-                return false;
-            }
-            return true;
-        });
+        return targetFolder.listFiles(file -> !file.isDirectory());
     }
 
 }

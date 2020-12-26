@@ -12,7 +12,7 @@ import lombok.Data;
  * <p>
  * 百度：短信提交状态，1000 表示提交成功                       # https://cloud.baidu.com/doc/SMS/API.html#.E7.9F.AD.E4.BF.A1.E4.B8.8B.E5.8F.91
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-05-15
  */
 @Data

@@ -16,16 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-log-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-cache-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

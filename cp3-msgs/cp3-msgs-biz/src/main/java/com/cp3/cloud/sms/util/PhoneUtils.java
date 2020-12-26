@@ -12,15 +12,17 @@ import java.util.regex.Pattern;
 /**
  * 手机号解析工具类
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/12/24
  */
 @Slf4j
-public class PhoneUtils {
-    public final static String REG_EX = "(.*?<(.*?)?>),";
-    public final static String REG_EX_SIMPLE = "(.*?<(.*?)?>)";
-    public final static String PHONE_SEPARATOR = "<";
-    public final static String CONTACTS_SEPARATOR = ",";
+public final class PhoneUtils {
+    private PhoneUtils() {
+    }
+
+    public static final String REG_EX = "(.*?<(.*?)?>),";
+    public static final String PHONE_SEPARATOR = "<";
+    public static final String CONTACTS_SEPARATOR = ",";
 
     public static Set<String> getPhone(String receiverPhone) {
         return getPhone(receiverPhone, REG_EX);
@@ -32,9 +34,9 @@ public class PhoneUtils {
      * receiverPhone: 格式1： 152188699970,10086
      * receiverPhone: 格式2： 管理员<10086>,张三<10000>
      *
-     * @param receiverPhone
-     * @param regEx
-     * @return
+     * @param receiverPhone 接收人手机
+     * @param regEx         正则
+     * @return 手机号
      */
     public static Set<String> getPhone(String receiverPhone, String regEx) {
         //判断参数类型

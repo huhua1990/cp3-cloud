@@ -2,8 +2,8 @@
 //
 //import com.alibaba.fastjson.JSONObject;
 //import com.cp3.cloud.common.constant.BizMqQueue;
-//import com.cp3.cloud.database.properties.DatabaseProperties;
-//import com.cp3.cloud.mq.properties.MqProperties;
+//import com.cp3.base.database.properties.DatabaseProperties;
+//import com.cp3.base.mq.properties.MqProperties;
 //import com.cp3.cloud.tenant.service.DataSourceService;
 //import lombok.AllArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@
 ///**
 // * 消息队列配置
 // *
-// * @author cp3
+// * @author zuihou
 // * @date 2019/12/17
 // */
 //@Configuration

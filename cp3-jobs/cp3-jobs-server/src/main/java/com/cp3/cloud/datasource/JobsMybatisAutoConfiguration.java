@@ -1,12 +1,12 @@
-package com.cp3.cloud.datasource;
+package com.cp3.base.datasource;
 
 
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.cp3.cloud.authority.service.auth.UserService;
-import com.cp3.cloud.database.datasource.BaseMybatisConfiguration;
-import com.cp3.cloud.database.mybatis.auth.DataScopeInnerInterceptor;
-import com.cp3.cloud.database.properties.DatabaseProperties;
-import com.cp3.cloud.utils.SpringUtils;
+import com.cp3.base.database.datasource.BaseMybatisConfiguration;
+import com.cp3.base.database.mybatis.auth.DataScopeInnerInterceptor;
+import com.cp3.base.database.properties.DatabaseProperties;
+import com.cp3.base.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

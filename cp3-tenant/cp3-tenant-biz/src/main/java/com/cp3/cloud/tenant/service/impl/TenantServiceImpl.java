@@ -1,8 +1,14 @@
 package com.cp3.cloud.tenant.service.impl;
 
 import cn.hutool.core.convert.Convert;
-import com.cp3.cloud.base.service.SuperCacheServiceImpl;
-import com.cp3.cloud.database.mybatis.conditions.Wraps;
+
+import com.cp3.base.basic.service.SuperCacheServiceImpl;
+import com.cp3.base.cache.model.CacheKey;
+import com.cp3.base.cache.model.CacheKeyBuilder;
+import com.cp3.base.database.mybatis.conditions.Wraps;
+import com.cp3.base.basic.utils.BeanPlusUtil;
+import com.cp3.cloud.common.cache.tenant.TenantCacheKeyBuilder;
+import com.cp3.cloud.common.cache.tenant.TenantCodeCacheKeyBuilder;
 import com.cp3.cloud.tenant.dao.TenantMapper;
 import com.cp3.cloud.tenant.dto.TenantConnectDTO;
 import com.cp3.cloud.tenant.dto.TenantSaveDTO;
@@ -11,18 +17,15 @@ import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 import com.cp3.cloud.tenant.enumeration.TenantTypeEnum;
 import com.cp3.cloud.tenant.service.TenantService;
 import com.cp3.cloud.tenant.strategy.InitSystemContext;
-import com.cp3.cloud.utils.BeanPlusUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static com.cp3.cloud.common.constant.CacheKey.TENANT;
-import static com.cp3.cloud.common.constant.CacheKey.TENANT_NAME;
-import static com.cp3.cloud.utils.BizAssert.isFalse;
+import static com.cp3.base.utils.BizAssert.isFalse;
 
 /**
  * <p>
@@ -30,28 +33,25 @@ import static com.cp3.cloud.utils.BizAssert.isFalse;
  * 企业
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-10-24
  */
 @Slf4j
 @Service
+
+@RequiredArgsConstructor
 public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenant> implements TenantService {
 
-    @Autowired
-    private InitSystemContext initSystemContext;
+    private final InitSystemContext initSystemContext;
 
     @Override
-    protected String getRegion() {
-        return TENANT;
+    protected CacheKeyBuilder cacheKeyBuilder() {
+        return new TenantCacheKeyBuilder();
     }
 
-    @Override
-    protected String key(Object... args) {
-        return buildKey(args);
-    }
 
     /**
-     * tanant_name:{tenantcode} -> id 只存租户的id，然后根据id再次查询缓存，这样子的好处是，删除或者修改租户信息时，只需要根据id淘汰缓存即可
+     * tenant_name:{tenantCode} -> id 只存租户的id，然后根据id再次查询缓存，这样子的好处是，删除或者修改租户信息时，只需要根据id淘汰缓存即可
      * 缺点就是 每次查询，需要多查一次缓存
      *
      * @param tenant
@@ -59,22 +59,10 @@ public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenan
      */
     @Override
     public Tenant getByCode(String tenant) {
-        // 优化前
-        /*String key = buildKey(tenant);
-        CacheObject cacheObject = cacheChannel.get(TENANT_NAME, key, (k) -> {
-            Tenant one = super.getOne(Wraps.<Tenant>lbQ().eq(Tenant::getCode, tenant));
-            return one != null ? one.getId() : null;
-        });
-        if (cacheObject.getValue() == null) {
-            return null;
-        }
-        Long id = (Long) cacheObject.getValue();
-        return getByIdCache(id);*/
-
-        // 优化后
-        String key = buildKey(tenant);
-        Function<String, Object> loader = (k) -> getObj(Wraps.<Tenant>lbQ().select(Tenant::getId).eq(Tenant::getCode, tenant), Convert::toLong);
-        return getByKey(TENANT_NAME, key, loader);
+        Function<CacheKey, Object> loader = (k) ->
+                getObj(Wraps.<Tenant>lbQ().select(Tenant::getId).eq(Tenant::getCode, tenant), Convert::toLong);
+        CacheKey cacheKey = new TenantCodeCacheKeyBuilder().key(tenant);
+        return getByKey(cacheKey, loader);
     }
 
     @Override
@@ -90,29 +78,14 @@ public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenan
         // defaults 库
         save(tenant);
 
-        String key = buildKey(tenant.getCode());
-        cacheChannel.set(TENANT_NAME, key, tenant.getId());
-
-        // 3, 初始化库，表, 数据  2.5.1以后，将初始化数据源和创建租户库逻辑分离 参考 this::connect
-//        initSystemContext.init(tenant.getCode());
+        CacheKey cacheKey = new TenantCodeCacheKeyBuilder().key(tenant.getCode());
+        cacheOps.set(cacheKey, tenant.getId());
         return tenant;
     }
 
     @Override
     public boolean check(String tenantCode) {
         return super.count(Wraps.<Tenant>lbQ().eq(Tenant::getCode, tenantCode)) > 0;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean delete(List<Long> ids) {
-        List<String> tenantCodeList = listObjs(Wraps.<Tenant>lbQ().select(Tenant::getCode).in(Tenant::getId, ids), Convert::toStr);
-        if (tenantCodeList.isEmpty()) {
-            return true;
-        }
-        removeByIds(ids);
-
-        return initSystemContext.delete(ids, tenantCodeList);
     }
 
     @Override
@@ -128,12 +101,28 @@ public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenan
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean updateStatus(List<Long> ids, TenantStatusEnum status) {
-        boolean update = super.update(Wraps.<Tenant>lbU().set(Tenant::getStatus, status)
-                .in(Tenant::getId, ids));
+    public Boolean delete(List<Long> ids) {
+        List<String> tenantCodeList = listObjs(Wraps.<Tenant>lbQ().select(Tenant::getCode).in(Tenant::getId, ids), Convert::toStr);
+        if (tenantCodeList.isEmpty()) {
+            return true;
+        }
+        return removeByIds(ids);
+    }
 
-        String[] keys = ids.stream().map(this::key).toArray(String[]::new);
-        cacheChannel.evict(getRegion(), keys);
-        return update;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean deleteAll(List<Long> ids) {
+        List<String> tenantCodeList = listObjs(Wraps.<Tenant>lbQ().select(Tenant::getCode).in(Tenant::getId, ids), Convert::toStr);
+        if (tenantCodeList.isEmpty()) {
+            return true;
+        }
+        removeByIds(ids);
+        return initSystemContext.delete(ids, tenantCodeList);
+    }
+
+
+    @Override
+    public List<Tenant> find() {
+        return list(Wraps.<Tenant>lbQ().eq(Tenant::getStatus, TenantStatusEnum.NORMAL));
     }
 }

@@ -1,9 +1,10 @@
 package com.cp3.cloud.tenant.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cp3.cloud.base.entity.Entity;
+import com.cp3.base.basic.entity.Entity;
 import com.cp3.cloud.tenant.enumeration.TenantConnectTypeEnum;
 import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 import com.cp3.cloud.tenant.enumeration.TenantTypeEnum;
@@ -18,10 +19,11 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
-import static com.cp3.cloud.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
+import static com.cp3.base.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
  * <p>
@@ -29,17 +31,17 @@ import static com.cp3.cloud.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
  * 企业
  * </p>
  *
- * @author cp3
- * @since 2019-10-25
+ * @author zuihou
+ * @since 2020-11-19
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("d_tenant")
+@TableName("c_tenant")
 @ApiModel(value = "Tenant", description = "企业")
+@AllArgsConstructor
 public class Tenant extends Entity<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +50,7 @@ public class Tenant extends Entity<Long> {
      * 企业编码
      */
     @ApiModelProperty(value = "企业编码")
+    @NotEmpty(message = "企业编码不能为空")
     @Length(max = 20, message = "企业编码长度不能超过20")
     @TableField(value = "code", condition = LIKE)
     @Excel(name = "企业编码", width = 20)
@@ -68,26 +71,33 @@ public class Tenant extends Entity<Long> {
      */
     @ApiModelProperty(value = "类型")
     @TableField("type")
-    @Excel(name = "类型", width = 20, replace = {"注册_REGISTER", "创建_CREATE", "_null"})
+    @Excel(name = "类型", width = 20, replace = {"创建_CREATE", "注册_REGISTER", "_null"})
     private TenantTypeEnum type;
 
+    /**
+     * 连接类型
+     * #TenantConnectTypeEnum{LOCAL:本地;REMOTE:远程}
+     */
+    @ApiModelProperty(value = "连接类型")
     @TableField("connect_type")
-    @ApiModelProperty(value = "连接类型", example = "LOCAL,REMOTE")
     @Excel(name = "连接类型", width = 20, replace = {"本地_LOCAL", "远程_REMOTE", "_null"})
     private TenantConnectTypeEnum connectType;
 
     /**
      * 状态
-     * #{NORMAL:正常;FORBIDDEN:禁用;WAITING:待审核;REFUSE:拒绝}
+     * #{NORMAL:正常;WAIT_INIT:待初始化;FORBIDDEN:禁用;WAITING:待审核;REFUSE:拒绝;DELETE:已删除}
      */
     @ApiModelProperty(value = "状态")
     @TableField("status")
-    @Excel(name = "状态", width = 20, replace = {"正常_NORMAL", "待初始化_WAIT_INIT", "禁用_FORBIDDEN", "待审核_WAITING", "拒绝_REFUSE", "DELETE_已删除", "_null"})
+    @Excel(name = "状态", width = 20, replace = {"正常_NORMAL", "待初始化_WAIT_INIT", "禁用_FORBIDDEN", "待审核_WAITING", "拒绝_REFUSE", "已删除_DELETE", "_null"})
     private TenantStatusEnum status;
 
-    @ApiModelProperty(value = "只读")
-    @TableField("readonly")
-    @Excel(name = "只读", replace = {"是_true", "否_false", "_null"})
+    /**
+     * 内置
+     */
+    @ApiModelProperty(value = "内置")
+    @TableField("readonly_")
+    @Excel(name = "内置", replace = {"是_true", "否_false", "_null"})
     private Boolean readonly;
 
     /**
@@ -104,7 +114,7 @@ public class Tenant extends Entity<Long> {
      * 为空表示永久
      */
     @ApiModelProperty(value = "有效期")
-    @TableField("expiration_time")
+    @TableField(value = "expiration_time", updateStrategy = FieldStrategy.IGNORED)
     @Excel(name = "有效期", format = DEFAULT_DATE_TIME_FORMAT, width = 20)
     private LocalDateTime expirationTime;
 
@@ -125,25 +135,26 @@ public class Tenant extends Entity<Long> {
     @Excel(name = "企业简介", width = 20)
     private String describe;
 
+
     @Builder
-    public Tenant(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                  String code, String name, TenantTypeEnum type, TenantStatusEnum status, String duty,
-                  LocalDateTime expirationTime, Boolean readonly, String logo, String describe, TenantConnectTypeEnum connectType) {
+    public Tenant(Long id, LocalDateTime createTime, Long createdBy, LocalDateTime updateTime, Long updatedBy,
+                  String code, String name, TenantTypeEnum type, TenantConnectTypeEnum connectType, TenantStatusEnum status,
+                  Boolean readonly, String duty, LocalDateTime expirationTime, String logo, String describe) {
         this.id = id;
         this.createTime = createTime;
-        this.createUser = createUser;
+        this.createdBy = createdBy;
         this.updateTime = updateTime;
-        this.updateUser = updateUser;
-        this.readonly = readonly;
+        this.updatedBy = updatedBy;
         this.code = code;
         this.name = name;
         this.type = type;
+        this.connectType = connectType;
         this.status = status;
+        this.readonly = readonly;
         this.duty = duty;
         this.expirationTime = expirationTime;
         this.logo = logo;
         this.describe = describe;
-        this.connectType = connectType;
     }
 
 }

@@ -1,24 +1,24 @@
 package com.cp3.cloud.sms.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cp3.cloud.base.service.SuperServiceImpl;
-import com.cp3.cloud.exception.BizException;
+import com.cp3.base.basic.service.SuperServiceImpl;
+import com.cp3.base.exception.BizException;
+import com.cp3.base.utils.StrHelper;
 import com.cp3.cloud.sms.dao.SmsTemplateMapper;
 import com.cp3.cloud.sms.entity.SmsTemplate;
 import com.cp3.cloud.sms.service.SmsTemplateService;
-import com.cp3.cloud.utils.CodeGenerate;
-import com.cp3.cloud.utils.StrHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.cp3.cloud.exception.code.ExceptionCode.BASE_VALID_PARAM;
+import static com.cp3.base.exception.code.ExceptionCode.BASE_VALID_PARAM;
 
 /**
  * <p>
@@ -26,16 +26,13 @@ import static com.cp3.cloud.exception.code.ExceptionCode.BASE_VALID_PARAM;
  * 短信模板
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Slf4j
 @Service
 
 public class SmsTemplateServiceImpl extends SuperServiceImpl<SmsTemplateMapper, SmsTemplate> implements SmsTemplateService {
-
-    @Autowired
-    private CodeGenerate codeGenerate;
 
     private static String getParamByContent(String content, String regEx) {
         //编译正则表达式
@@ -72,7 +69,7 @@ public class SmsTemplateServiceImpl extends SuperServiceImpl<SmsTemplateMapper, 
         if (count > 0) {
             throw BizException.wrap(BASE_VALID_PARAM.build("自定义编码重复"));
         }
-        smsTemplate.setCustomCode(StrHelper.getOrDef(smsTemplate.getCustomCode(), codeGenerate.next()));
+        smsTemplate.setCustomCode(StrHelper.getOrDef(smsTemplate.getCustomCode(), RandomUtil.randomString(8)));
         super.save(smsTemplate);
     }
 

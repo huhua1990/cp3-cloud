@@ -1,6 +1,6 @@
 package com.cp3.cloud.authority.config;
 
-import com.cp3.cloud.boot.handler.DefaultGlobalExceptionHandler;
+import com.cp3.base.boot.handler.AbstractGlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -15,7 +15,7 @@ import javax.servlet.Servlet;
 /**
  * 全局异常处理
  *
- * @author cp3
+ * @author zuihou
  * @date 2020年01月02日17:19:27
  */
 @Configuration
@@ -23,6 +23,6 @@ import javax.servlet.Servlet;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @RestControllerAdvice(annotations = {RestController.class, Controller.class})
 @Slf4j
-public class ExceptionConfiguration extends DefaultGlobalExceptionHandler {
+public class ExceptionConfiguration extends AbstractGlobalExceptionHandler {
 
 }

@@ -1,8 +1,8 @@
-package com.cp3.cloud.jobs.api.fallback;
+package com.cp3.base.jobs.api.fallback;
 
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.jobs.api.JobsTimingApi;
-import com.cp3.cloud.jobs.dto.XxlJobInfo;
+import com.cp3.base.basic.R;
+import com.cp3.base.jobs.api.JobsTimingApi;
+import com.cp3.base.jobs.dto.XxlJobInfo;
 import org.springframework.stereotype.Component;
 
 /**

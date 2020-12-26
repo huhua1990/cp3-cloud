@@ -1,16 +1,17 @@
 package com.cp3.cloud.file.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baidu.fsg.uid.UidGenerator;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cp3.cloud.base.service.SuperServiceImpl;
-import com.cp3.cloud.database.mybatis.auth.DataScope;
-import com.cp3.cloud.database.mybatis.conditions.Wraps;
-import com.cp3.cloud.database.mybatis.conditions.query.LbqWrapper;
-import com.cp3.cloud.database.properties.DatabaseProperties;
-import com.cp3.cloud.exception.BizException;
+import com.cp3.base.basic.service.SuperServiceImpl;
+import com.cp3.base.database.mybatis.conditions.Wraps;
+import com.cp3.base.database.mybatis.conditions.query.LbqWrapper;
+import com.cp3.base.exception.BizException;
+import com.cp3.base.basic.utils.BeanPlusUtil;
+import com.cp3.base.utils.DateUtils;
 import com.cp3.cloud.file.biz.FileBiz;
 import com.cp3.cloud.file.dao.AttachmentMapper;
 import com.cp3.cloud.file.domain.FileDO;
@@ -19,19 +20,15 @@ import com.cp3.cloud.file.dto.AttachmentDTO;
 import com.cp3.cloud.file.dto.AttachmentResultDTO;
 import com.cp3.cloud.file.dto.FilePageReqDTO;
 import com.cp3.cloud.file.entity.Attachment;
-import com.cp3.cloud.file.entity.File;
 import com.cp3.cloud.file.enumeration.DataType;
 import com.cp3.cloud.file.properties.FileServerProperties;
 import com.cp3.cloud.file.service.AttachmentService;
 import com.cp3.cloud.file.strategy.FileStrategy;
-import com.cp3.cloud.utils.BeanPlusUtil;
-import com.cp3.cloud.utils.DateUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -45,21 +42,18 @@ import java.util.stream.Collectors;
  * 附件
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-06-24
  */
 @Slf4j
 @Service
 
+@RequiredArgsConstructor
 public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, Attachment> implements AttachmentService {
-    @Autowired
-    private DatabaseProperties databaseProperties;
-    @Resource
-    private FileStrategy fileStrategy;
-    @Autowired
-    private FileServerProperties fileProperties;
-    @Autowired
-    private FileBiz fileBiz;
+    private final UidGenerator uidGenerator;
+    private final FileStrategy fileStrategy;
+    private final FileServerProperties fileProperties;
+    private final FileBiz fileBiz;
 
     @Override
     public IPage<Attachment> page(IPage<Attachment> page, FilePageReqDTO data) {
@@ -72,19 +66,16 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
                 .like(Attachment::getBizId, attachment.getBizId())
                 .eq(Attachment::getDataType, attachment.getDataType())
                 .orderByDesc(Attachment::getId);
-        return baseMapper.page(page, wrapper, new DataScope());
+        return baseMapper.selectPage(page, wrapper);
     }
 
     @Override
     public AttachmentDTO upload(MultipartFile multipartFile, String tenant, Long id, String bizType, String bizId, Boolean isSingle) {
         //根据业务类型来判断是否生成业务id
         if (StrUtil.isNotEmpty(bizType) && StrUtil.isEmpty(bizId)) {
-            DatabaseProperties.HutoolId idPro = databaseProperties.getHutoolId();
-            bizId = IdUtil.getSnowflake(idPro.getWorkerId(), idPro.getDataCenterId()).nextIdStr();
+            bizId = String.valueOf(uidGenerator.getUid());
         }
-        File file = fileStrategy.upload(multipartFile);
-
-        Attachment attachment = BeanPlusUtil.toBean(file, Attachment.class);
+        Attachment attachment = fileStrategy.upload(multipartFile);
 
         attachment.setBizId(bizId);
         attachment.setBizType(bizType);
@@ -158,7 +149,7 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
 
     @Override
     public void download(HttpServletRequest request, HttpServletResponse response, Long[] ids) throws Exception {
-        List<Attachment> list = (List<Attachment>) super.listByIds(Arrays.asList(ids));
+        List<Attachment> list = super.listByIds(Arrays.asList(ids));
         down(request, response, list);
     }
 

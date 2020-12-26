@@ -1,6 +1,6 @@
 package com.cp3.cloud.authority.enumeration.common;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,8 +15,8 @@ import java.util.stream.Stream;
  * 系统日志
  * </p>
  *
- * @author cp3
- * @date 2019-10-20
+ * @author zuihou
+ * @date 2020-11-20
  */
 @Getter
 @AllArgsConstructor
@@ -27,28 +27,30 @@ public enum LogType implements BaseEnum {
     /**
      * OPT="操作类型"
      */
-    OPT("正常"),
+    OPT("操作类型"),
     /**
      * EX="异常类型"
      */
-    EX("异常"),
+    EX("异常类型"),
     ;
 
     @ApiModelProperty(value = "描述")
     private String desc;
 
 
+    /**
+     * 根据当前枚举的name匹配
+     */
     public static LogType match(String val, LogType def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static LogType get(String val) {
         return match(val, null);
     }
 
-
     public boolean eq(LogType val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override

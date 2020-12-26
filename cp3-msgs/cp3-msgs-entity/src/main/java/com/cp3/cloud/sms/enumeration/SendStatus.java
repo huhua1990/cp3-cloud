@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.enumeration;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,8 +15,8 @@ import java.util.stream.Stream;
  * 短信发送状态
  * </p>
  *
- * @author cp3
- * @date 2019-08-01
+ * @author zuihou
+ * @date 2020-11-21
  */
 @Getter
 @AllArgsConstructor
@@ -42,17 +42,19 @@ public enum SendStatus implements BaseEnum {
     private String desc;
 
 
+    /**
+     * 根据当前枚举的name匹配
+     */
     public static SendStatus match(String val, SendStatus def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static SendStatus get(String val) {
         return match(val, null);
     }
 
-
     public boolean eq(SendStatus val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override

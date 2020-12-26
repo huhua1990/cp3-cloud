@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 /**
  * 租户连接
  *
- * @author cp3
+ * @author zuihou
  * @date 2020/8/25 上午8:56
  */
 @Data
@@ -42,7 +42,7 @@ public class TenantConnectDTO {
     @ApiModelProperty(value = "文件服务连接源")
     private Long fileDatasource;
     @ApiModelProperty(value = "消息服务连接源")
-    private Long msgsDatasource;
+    private Long msgDatasource;
     @ApiModelProperty(value = "认证服务连接源")
     private Long oauthDatasource;
     @ApiModelProperty(value = "网关服务连接源")

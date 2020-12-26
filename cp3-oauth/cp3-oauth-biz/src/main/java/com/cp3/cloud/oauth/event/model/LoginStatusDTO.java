@@ -2,9 +2,9 @@ package com.cp3.cloud.oauth.event.model;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.cp3.cloud.authority.entity.auth.UserToken;
-import com.cp3.cloud.context.BaseContextHandler;
-import com.cp3.cloud.log.util.AddressUtil;
+import com.cp3.base.context.ContextUtil;
+import com.cp3.base.log.util.AddressUtil;
+import com.cp3.cloud.authority.dto.auth.Online;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * 登录状态DTO
  *
- * @author cp3
+ * @author zuihou
  * @date 2020年03月18日17:25:44
  */
 @Data
@@ -69,36 +69,36 @@ public class LoginStatusDTO implements Serializable {
      */
     private String location;
 
-    private UserToken userToken;
+    private Online online;
 
-    public static LoginStatusDTO success(Long id, UserToken userToken) {
+    public static LoginStatusDTO success(Long id, Online online) {
         LoginStatusDTO loginStatus = LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
+                .id(id).tenant(ContextUtil.getTenant())
                 .type(Type.SUCCESS).description("登录成功")
                 .build().setInfo();
-        userToken.setLoginIp(loginStatus.getIp());
-        userToken.setLocation(loginStatus.getLocation());
-        loginStatus.setUserToken(userToken);
+        online.setLoginIp(loginStatus.getIp());
+        online.setLocation(loginStatus.getLocation());
+        loginStatus.setOnline(online);
         return loginStatus;
     }
 
     public static LoginStatusDTO fail(Long id, String description) {
         return LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
+                .id(id).tenant(ContextUtil.getTenant())
                 .type(Type.FAIL).description(description)
                 .build().setInfo();
     }
 
     public static LoginStatusDTO fail(String account, String description) {
         return LoginStatusDTO.builder()
-                .account(account).tenant(BaseContextHandler.getTenant())
+                .account(account).tenant(ContextUtil.getTenant())
                 .type(Type.FAIL).description(description)
                 .build().setInfo();
     }
 
     public static LoginStatusDTO pwdError(Long id, String description) {
         return LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
+                .id(id).tenant(ContextUtil.getTenant())
                 .type(Type.PWD_ERROR).description(description)
                 .build().setInfo();
     }
@@ -123,9 +123,18 @@ public class LoginStatusDTO implements Serializable {
 
     @Getter
     public enum Type {
+        /**
+         * 成功
+         */
         SUCCESS,
+        /**
+         * 密码错误
+         */
         PWD_ERROR,
-        FAIL;
+        /**
+         * 失败
+         */
+        FAIL
     }
 
 }

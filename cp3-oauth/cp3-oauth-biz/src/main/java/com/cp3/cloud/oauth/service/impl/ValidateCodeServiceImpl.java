@@ -1,18 +1,19 @@
 package com.cp3.cloud.oauth.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.common.constant.CacheKey;
-import com.cp3.cloud.exception.BizException;
+import com.cp3.base.basic.R;
+import com.cp3.base.cache.model.CacheKey;
+import com.cp3.base.cache.repository.CacheOps;
+import com.cp3.base.exception.BizException;
+import com.cp3.cloud.common.cache.common.CaptchaCacheKeyBuilder;
 import com.cp3.cloud.oauth.service.ValidateCodeService;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.ChineseCaptcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
-import net.oschina.j2cache.CacheChannel;
-import net.oschina.j2cache.CacheObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,18 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.cp3.cloud.exception.code.ExceptionCode.CAPTCHA_ERROR;
+import static com.cp3.base.exception.code.ExceptionCode.CAPTCHA_ERROR;
 
 /**
  * 验证码服务
  *
- * @author cp3
+ * @author zuihou
  */
 @Service
+@RequiredArgsConstructor
 public class ValidateCodeServiceImpl implements ValidateCodeService {
 
-    @Autowired
-    private CacheChannel cache;
+    private final CacheOps cacheOps;
 
     @Override
     public void create(String key, HttpServletResponse response) throws IOException {
@@ -41,7 +42,10 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         setHeader(response, "arithmetic");
 
         Captcha captcha = createCaptcha("arithmetic");
-        cache.set(CacheKey.CAPTCHA, key, captcha.text().toLowerCase());
+
+        CacheKey cacheKey = new CaptchaCacheKeyBuilder().key(key);
+        cacheOps.set(cacheKey, StringUtils.lowerCase(captcha.text()));
+
         captcha.out(response.getOutputStream());
     }
 
@@ -50,14 +54,15 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         if (StrUtil.isBlank(value)) {
             return R.fail(CAPTCHA_ERROR.build("请输入验证码"));
         }
-        CacheObject cacheObject = cache.get(CacheKey.CAPTCHA, key);
-        if (cacheObject.getValue() == null) {
+        CacheKey cacheKey = new CaptchaCacheKeyBuilder().key(key);
+        String code = cacheOps.get(cacheKey);
+        if (StrUtil.isEmpty(code)) {
             return R.fail(CAPTCHA_ERROR.build("验证码已过期"));
         }
-        if (!StrUtil.equalsIgnoreCase(value, String.valueOf(cacheObject.getValue()))) {
+        if (!StringUtils.equalsIgnoreCase(value, code)) {
             return R.fail(CAPTCHA_ERROR.build("验证码不正确"));
         }
-        cache.evict(CacheKey.CAPTCHA, key);
+        cacheOps.del(cacheKey);
         return R.success(true);
     }
 

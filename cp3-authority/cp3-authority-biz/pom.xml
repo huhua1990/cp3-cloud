@@ -6,13 +6,14 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-authority</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cp3-authority-biz</artifactId>
     <name>${project.artifactId}</name>
     <description>权限服务业务模块</description>
+
     <dependencies>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
@@ -21,42 +22,36 @@
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-databases</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-j2cache-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-dozer-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-boot</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-databases</artifactId>
         </dependency>
 
-        <!-- user 只有权限服务 放在biz 层 -->
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-security-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-cache-starter</artifactId>
         </dependency>
-        <!-- log 只有权限服务biz模块引用，其他服务都在controller模块 -->
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-log-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-injection-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-boot</artifactId>
         </dependency>
 
+        <!-- user 只有权限服务 放在biz层， 其他服务都在controller模块 -->
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-security-starter</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
         </dependency>
 
         <!-- @RefreshScope 需要使用 -->
@@ -65,6 +60,10 @@
             <artifactId>spring-cloud-context</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

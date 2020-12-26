@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.enumeration;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,10 @@ import java.util.stream.Stream;
  * <p>
  * 实体注释中生成的类型枚举
  * 发送任务
- * 所有的短息发送调用，都视为是一次短信任务，任务表只保存数据和执行状态等信息，
- * 具体的发送状态查看发送状态（#sms_send_status）表
  * </p>
  *
- * @author cp3
- * @date 2019-11-22
+ * @author zuihou
+ * @date 2020-11-21
  */
 @Getter
 @AllArgsConstructor
@@ -44,8 +42,11 @@ public enum TaskStatus implements BaseEnum {
     private String desc;
 
 
+    /**
+     * 根据当前枚举的name匹配
+     */
     public static TaskStatus match(String val, TaskStatus def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static TaskStatus get(String val) {
@@ -53,7 +54,7 @@ public enum TaskStatus implements BaseEnum {
     }
 
     public boolean eq(TaskStatus val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override

@@ -5,20 +5,21 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.base.controller.DeleteController;
-import com.cp3.cloud.base.controller.QueryController;
-import com.cp3.cloud.base.controller.SuperSimpleController;
-import com.cp3.cloud.base.request.PageParams;
-import com.cp3.cloud.context.BaseContextHandler;
+import com.cp3.base.annotation.log.SysLog;
+import com.cp3.base.annotation.security.PreAuth;
+import com.cp3.base.basic.R;
+import com.cp3.base.basic.controller.DeleteController;
+import com.cp3.base.basic.controller.QueryController;
+import com.cp3.base.basic.controller.SuperSimpleController;
+import com.cp3.base.basic.request.PageParams;
+import com.cp3.base.context.ContextUtil;
+import com.cp3.base.utils.BizAssert;
 import com.cp3.cloud.file.dto.AttachmentDTO;
 import com.cp3.cloud.file.dto.AttachmentRemoveDTO;
 import com.cp3.cloud.file.dto.AttachmentResultDTO;
 import com.cp3.cloud.file.dto.FilePageReqDTO;
 import com.cp3.cloud.file.entity.Attachment;
 import com.cp3.cloud.file.service.AttachmentService;
-import com.cp3.cloud.log.annotation.SysLog;
-import com.cp3.cloud.utils.BizAssert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,7 +28,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,10 +42,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.cp3.cloud.exception.code.ExceptionCode.BASE_VALID_PARAM;
+import static com.cp3.base.exception.code.ExceptionCode.BASE_VALID_PARAM;
+import static com.cp3.cloud.common.constant.SwaggerConstants.DATA_TYPE_ARRAY;
+import static com.cp3.cloud.common.constant.SwaggerConstants.DATA_TYPE_BOOLEAN;
+import static com.cp3.cloud.common.constant.SwaggerConstants.DATA_TYPE_LONG;
+import static com.cp3.cloud.common.constant.SwaggerConstants.DATA_TYPE_MULTIPART_FILE;
+import static com.cp3.cloud.common.constant.SwaggerConstants.DATA_TYPE_STRING;
+import static com.cp3.cloud.common.constant.SwaggerConstants.PARAM_TYPE_QUERY;
 import static java.util.stream.Collectors.groupingBy;
 
 /**
@@ -53,7 +60,7 @@ import static java.util.stream.Collectors.groupingBy;
  * 附件表 前端控制器
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @since 2019-04-29
  */
 @RestController
@@ -62,13 +69,14 @@ import static java.util.stream.Collectors.groupingBy;
 @Api(value = "附件", tags = "附件")
 @Validated
 @SysLog(enabled = false)
+@PreAuth(replace = "file:attachment:")
 public class AttachmentController extends SuperSimpleController<AttachmentService, Attachment>
         implements QueryController<Attachment, Long, FilePageReqDTO>, DeleteController<Attachment, Long> {
 
     /**
      * 业务类型判断符
      */
-    private final static String TYPE_BIZ_ID = "bizId";
+    private static final String TYPE_BIZ_ID = "bizId";
 
     @Override
     public void query(PageParams<FilePageReqDTO> params, IPage<Attachment> page, Long defSize) {
@@ -82,22 +90,18 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
 
     /**
      * 上传文件
-     *
-     * @param
-     * @return
-     * @author cp3
-     * @date 2019-05-06 16:28
      */
     @ApiOperation(value = "附件上传", notes = "附件上传")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "isSingle", value = "是否单文件", dataType = "boolean", paramType = "query"),
-            @ApiImplicitParam(name = "id", value = "文件id", dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "bizId", value = "业务id", dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "bizType", value = "业务类型", dataType = "long", paramType = "query"),
-            @ApiImplicitParam(name = "file", value = "附件", dataType = "MultipartFile", allowMultiple = true, required = true),
+            @ApiImplicitParam(name = "isSingle", value = "是否单文件", dataType = DATA_TYPE_BOOLEAN, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "id", value = "文件id", dataType = DATA_TYPE_LONG, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "bizId", value = "业务id", dataType = DATA_TYPE_STRING, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "bizType", value = "业务类型", dataType = DATA_TYPE_STRING, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "file", value = "附件", dataType = DATA_TYPE_MULTIPART_FILE, allowMultiple = true, required = true),
     })
     @PostMapping(value = "/upload")
     @SysLog("上传附件")
+    @PreAuth("hasAnyPermission('{}add')")
     public R<AttachmentDTO> upload(
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(value = "isSingle", required = false, defaultValue = "false") Boolean isSingle,
@@ -109,7 +113,7 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
         if (file.isEmpty()) {
             return R.fail(BASE_VALID_PARAM.build("请求中必须至少包含一个有效文件"));
         }
-        String tenant = BaseContextHandler.getTenant();
+        String tenant = ContextUtil.getTenant();
 
         AttachmentDTO attachment = baseService.upload(file, tenant, id, bizType, bizId, isSingle);
 
@@ -120,6 +124,7 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
     @ApiOperation(value = "根据业务类型或业务id删除文件", notes = "根据业务类型或业务id删除文件")
     @DeleteMapping(value = "/biz")
     @SysLog("根据业务类型删除附件")
+    @PreAuth("hasAnyPermission('{}delete')")
     public R<Boolean> removeByBizIdAndBizType(@RequestBody AttachmentRemoveDTO dto) {
         return R.success(baseService.removeByBizIdAndBizType(dto.getBizId(), dto.getBizType()));
     }
@@ -130,6 +135,7 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
     )
     @GetMapping
     @SysLog("根据业务类型查询附件")
+    @PreAuth("hasAnyPermission('{}view')")
     public R<List<AttachmentResultDTO>> findAttachment(@RequestParam(value = "bizTypes", required = false) String[] bizTypes,
                                                        @RequestParam(value = "bizIds", required = false) String[] bizIds) {
         //不能同时为空
@@ -140,6 +146,7 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
     @ApiOperation(value = "根据业务类型或者业务id查询附件", notes = "根据业务类型或者业务id查询附件")
     @GetMapping(value = "/biz/{type}")
     @SysLog("根据业务类型分组查询附件")
+    @PreAuth("hasAnyPermission('{}view')")
     public R<Map<String, List<Attachment>>> findAttachmentByBiz(@PathVariable String type, @RequestParam("biz[]") String[] biz) {
         SFunction<Attachment, String> sf = Attachment::getBizType;
         if (TYPE_BIZ_ID.equalsIgnoreCase(type)) {
@@ -147,7 +154,7 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
         }
         List<Attachment> list = baseService.list(Wrappers.<Attachment>lambdaQuery().in(sf, biz).orderByAsc(Attachment::getCreateTime));
         if (list.isEmpty()) {
-            return R.success(MapUtils.EMPTY_MAP);
+            return R.success(Collections.emptyMap());
         }
         if (TYPE_BIZ_ID.equalsIgnoreCase(type)) {
             return R.success(list.stream().collect(groupingBy(Attachment::getBizType)));
@@ -160,13 +167,12 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
     /**
      * 下载一个文件或多个文件打包下载
      *
-     * @param ids      文件id
-     * @param response
-     * @throws Exception
+     * @param ids 文件id
      */
     @ApiOperation(value = "根据文件id打包下载", notes = "根据附件id下载多个打包的附件")
     @GetMapping(value = "/download", produces = "application/octet-stream")
     @SysLog("下载附件")
+    @PreAuth("hasAnyPermission('{}download')")
     public void download(
             @ApiParam(name = "ids[]", value = "文件id 数组")
             @RequestParam(value = "ids[]") Long[] ids,
@@ -180,17 +186,17 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
      *
      * @param bizIds   业务id
      * @param bizTypes 业务类型
-     * @return
-     * @author cp3
+     * @author zuihou
      * @date 2019-05-12 21:23
      */
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "bizIds[]", value = "业务id数组", dataType = "array", paramType = "query"),
-            @ApiImplicitParam(name = "bizTypes[]", value = "业务类型数组", dataType = "array", paramType = "query"),
+            @ApiImplicitParam(name = "bizIds[]", value = "业务id数组", dataType = DATA_TYPE_ARRAY, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "bizTypes[]", value = "业务类型数组", dataType = DATA_TYPE_ARRAY, paramType = PARAM_TYPE_QUERY),
     })
     @ApiOperation(value = "根据业务类型/业务id打包下载", notes = "根据业务id下载一个文件或多个文件打包下载")
     @GetMapping(value = "/download/biz", produces = "application/octet-stream")
     @SysLog("根据业务类型下载附件")
+    @PreAuth("hasAnyPermission('{}download')")
     public void downloadByBiz(
             @RequestParam(value = "bizIds[]", required = false) String[] bizIds,
             @RequestParam(value = "bizTypes[]", required = false) String[] bizTypes,
@@ -204,17 +210,17 @@ public class AttachmentController extends SuperSimpleController<AttachmentServic
      *
      * @param url      文件链接
      * @param filename 文件名称
-     * @return
-     * @author cp3
+     * @author zuihou
      * @date 2019-05-12 21:24
      */
     @ApiOperation(value = "根据url下载文件(不推荐)", notes = "根据文件的url下载文件(不推荐使用，若要根据url下载，请执行通过nginx)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "url", value = "文件url", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "filename", value = "文件名", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "url", value = "文件url", dataType = DATA_TYPE_STRING, paramType = PARAM_TYPE_QUERY),
+            @ApiImplicitParam(name = "filename", value = "文件名", dataType = DATA_TYPE_STRING, paramType = PARAM_TYPE_QUERY),
     })
     @GetMapping(value = "/download/url", produces = "application/octet-stream")
     @SysLog("根据文件连接下载文件")
+    @PreAuth("hasAnyPermission('{}download')")
     public void downloadUrl(@RequestParam(value = "url") String url, @RequestParam(value = "filename", required = false) String filename,
                             HttpServletRequest request, HttpServletResponse response) throws Exception {
         BizAssert.isTrue(StrUtil.isNotEmpty(url), BASE_VALID_PARAM.build("附件下载地址不能为空"));

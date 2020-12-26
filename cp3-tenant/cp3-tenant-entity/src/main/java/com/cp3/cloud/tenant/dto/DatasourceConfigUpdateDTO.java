@@ -1,6 +1,6 @@
 package com.cp3.cloud.tenant.dto;
 
-import com.cp3.cloud.base.entity.SuperEntity;
+import com.cp3.base.basic.entity.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -21,8 +22,8 @@ import java.io.Serializable;
  * 数据源
  * </p>
  *
- * @author cp3
- * @since 2020-08-21
+ * @author zuihou
+ * @since 2020-11-19
  */
 @Data
 @NoArgsConstructor
@@ -44,30 +45,35 @@ public class DatasourceConfigUpdateDTO implements Serializable {
      * 名称
      */
     @ApiModelProperty(value = "名称")
+    @NotEmpty(message = "名称不能为空")
     @Length(max = 255, message = "名称长度不能超过255")
     private String name;
     /**
      * 账号
      */
     @ApiModelProperty(value = "账号")
+    @NotEmpty(message = "账号不能为空")
     @Length(max = 255, message = "账号长度不能超过255")
     private String username;
     /**
      * 密码
      */
     @ApiModelProperty(value = "密码")
+    @NotEmpty(message = "密码不能为空")
     @Length(max = 255, message = "密码长度不能超过255")
     private String password;
     /**
      * 链接
      */
     @ApiModelProperty(value = "链接")
+    @NotEmpty(message = "链接不能为空")
     @Length(max = 255, message = "链接长度不能超过255")
     private String url;
     /**
      * 驱动
      */
     @ApiModelProperty(value = "驱动")
+    @NotEmpty(message = "驱动不能为空")
     @Length(max = 255, message = "驱动长度不能超过255")
     private String driverClassName;
 }

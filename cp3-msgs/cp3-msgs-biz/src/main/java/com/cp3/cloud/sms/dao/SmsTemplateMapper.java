@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.dao;
 
-import com.cp3.cloud.base.mapper.SuperMapper;
+import com.cp3.base.basic.mapper.SuperMapper;
 import com.cp3.cloud.sms.entity.SmsTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * 短信模板
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Repository

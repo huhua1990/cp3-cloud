@@ -1,74 +1,68 @@
 package com.cp3.cloud.file.controller;
 
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.context.BaseContextHandler;
-import com.cp3.cloud.file.domain.FileAttrDO;
+import com.cp3.base.annotation.log.SysLog;
+import com.cp3.base.basic.R;
+import com.cp3.base.context.ContextUtil;
 import com.cp3.cloud.file.dto.chunk.FileChunkCheckDTO;
 import com.cp3.cloud.file.dto.chunk.FileChunksMergeDTO;
 import com.cp3.cloud.file.dto.chunk.FileUploadDTO;
-import com.cp3.cloud.file.entity.File;
+import com.cp3.cloud.file.entity.Attachment;
 import com.cp3.cloud.file.manager.WebUploader;
 import com.cp3.cloud.file.properties.FileServerProperties;
-import com.cp3.cloud.file.service.FileService;
+import com.cp3.cloud.file.service.AttachmentService;
 import com.cp3.cloud.file.strategy.FileChunkStrategy;
 import com.cp3.cloud.file.strategy.FileStrategy;
 import com.cp3.cloud.file.utils.FileDataTypeUtil;
-import com.cp3.cloud.log.annotation.SysLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.nio.file.Paths;
 
 /**
  * 注意：该类下的所有方法均需要webuploder.js插件进行配合使用。
  * md5
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/08/24
  */
 @RestController
 @Slf4j
 @RequestMapping("/chunk")
 @Api(value = "文件续传+秒传", tags = "文件续传+秒传功能，所有方法均需要webuploder.js插件进行配合使用， 且4个方法需要配合使用，单核接口没有意义")
+@RequiredArgsConstructor
 public class FileChunkController {
-    @Autowired
-    private FileServerProperties fileProperties;
-    @Autowired
-    private FileService fileService;
-    @Resource
-    private FileStrategy fileStrategy;
-    @Resource
-    private FileChunkStrategy fileChunkStrategy;
-    @Autowired
-    private WebUploader wu;
+    private final FileServerProperties fileProperties;
+    private final AttachmentService attachmentService;
+    private final FileStrategy fileStrategy;
+    private final FileChunkStrategy fileChunkStrategy;
+    private final WebUploader wu;
 
 
     /**
      * 采用md5 上传前的验证
      *
      * @param md5 文件md5
-     * @return
      */
     @ApiOperation(value = "秒传接口，上传文件前先验证， 存在则启动秒传", notes = "前端通过webUploader获取文件md5，上传前的验证")
     @RequestMapping(value = "/md5", method = RequestMethod.POST)
     @ResponseBody
-    public R<Boolean> saveMd5Check(@RequestParam(name = "md5") String md5,
-                                   @RequestParam(name = "folderId", defaultValue = "0") Long folderId) {
-        Long accountId = BaseContextHandler.getUserId();
-        File file = fileChunkStrategy.md5Check(md5, folderId, accountId);
-        return R.success(file != null ? true : false);
+    public R<Boolean> saveMd5Check(@RequestParam(name = "md5") String md5) {
+        Long accountId = ContextUtil.getUserId();
+        Attachment file = fileChunkStrategy.md5Check(md5, accountId);
+        return R.success(file != null);
     }
 
     /**
      * 检查分片存不存在
-     *
-     * @param info
-     * @return
      */
     @ApiOperation(value = "续传接口，检查每个分片存不存在", notes = "断点续传功能检查分片是否存在， 已存在的分片无需重复上传， 达到续传效果")
     @RequestMapping(value = "/check", method = RequestMethod.POST)
@@ -85,10 +79,6 @@ public class FileChunkController {
     /**
      * 分片上传
      * 该接口不能用作 单文件上传！
-     *
-     * @param info
-     * @param file
-     * @return
      */
     @ApiOperation(value = "分片上传", notes = "前端通过webUploader获取截取分片， 然后逐个上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -108,23 +98,17 @@ public class FileChunkController {
         文件大小 小于 单个分片时，会执行这里的代码
         */
         if (info.getChunks() == null || info.getChunks() <= 0) {
-            File upload = fileStrategy.upload(file);
-
-            FileAttrDO fileAttrDO = fileService.getFileAttrDo(info.getFolderId());
-            upload.setFolderId(info.getFolderId());
+            Attachment upload = fileStrategy.upload(file);
             upload.setFileMd5(info.getMd5());
-            upload.setFolderName(fileAttrDO.getFolderName());
-            upload.setGrade(fileAttrDO.getGrade());
-            upload.setTreePath(fileAttrDO.getTreePath());
-            fileService.save(upload);
+            attachmentService.save(upload);
             return R.success(file.getOriginalFilename());
         } else {
             //为上传的文件准备好对应的位置
             java.io.File target = wu.getReadySpace(info, uploadFolder);
-            log.info("target={}", target.getAbsolutePath());
             if (target == null) {
                 return R.fail(wu.getErrorMsg());
             }
+            log.info("target={}", target.getAbsolutePath());
             //保存上传文件
             file.transferTo(target);
             return R.success(target.getName());
@@ -138,15 +122,13 @@ public class FileChunkController {
      * nio合并优点： 有效防止大文件的内存溢出
      *
      * @param info
-     * @return
      */
     @ApiOperation(value = "分片合并", notes = "所有分片上传成功后，调用该接口对分片进行合并")
     @RequestMapping(value = "/merge", method = RequestMethod.POST)
     @ResponseBody
     @SysLog("上传大文件")
-    public R<File> saveChunksMerge(@RequestBody FileChunksMergeDTO info) {
+    public R<Attachment> saveChunksMerge(@RequestBody FileChunksMergeDTO info) {
         log.info("info={}", info);
-
         return fileChunkStrategy.chunksMerge(info);
     }
 

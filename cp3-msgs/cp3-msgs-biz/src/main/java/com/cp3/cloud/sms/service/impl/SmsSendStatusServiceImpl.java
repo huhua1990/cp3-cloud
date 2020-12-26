@@ -1,7 +1,7 @@
 package com.cp3.cloud.sms.service.impl;
 
 
-import com.cp3.cloud.base.service.SuperServiceImpl;
+import com.cp3.base.basic.service.SuperServiceImpl;
 import com.cp3.cloud.sms.dao.SmsSendStatusMapper;
 import com.cp3.cloud.sms.entity.SmsSendStatus;
 import com.cp3.cloud.sms.service.SmsSendStatusService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 短信发送状态
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Slf4j

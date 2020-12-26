@@ -3,8 +3,8 @@ package com.cp3.cloud.authority.config.datasource;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
-import com.cp3.cloud.database.datasource.defaults.MasterDatabaseConfiguration;
-import com.cp3.cloud.database.properties.DatabaseProperties;
+import com.cp3.base.database.datasource.defaults.BaseMasterDatabaseConfiguration;
+import com.cp3.base.database.properties.DatabaseProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
@@ -21,32 +21,34 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.cp3.cloud.common.constant.BizConstant.BUSINESS_PACKAGE;
+import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
+
 /**
- * zuihou.database.multiTenantType != DATASOURCE 时，该类启用.
- * 此时，项目的多租户模式切换成：${zuihou.database.multiTenantType}。
+ * lamp.database.multiTenantType != DATASOURCE 时，该类启用.
+ * 此时，项目的多租户模式切换成：${lamp.database.multiTenantType}。
  * <p>
  * NONE("非租户模式"): 不存在租户的概念
  * COLUMN("字段模式"): 在sql中拼接 tenant_code 字段
  * SCHEMA("独立schema模式"): 在sql中拼接 数据库 schema
  * <p>
- * COLUMN和SCHEMA模式的实现 参考下面的 @see 中的3个类
+ * COLUMN和SCHEMA模式的实现 参考下面的 @see 中的2个类
  *
- * @author cp3
- * @createTime 2017-11-18 0:34
+ * @author zuihou
+ * @date 2017-11-18 0:34
  * 断点查看原理：👇👇👇
- * @see com.cp3.cloud.database.datasource.BaseMybatisConfiguration#mybatisPlusInterceptor()
- * @see com.cp3.cloud.boot.interceptor.HeaderThreadLocalInterceptor
- *
+ * @see com.cp3.base.database.datasource.BaseMybatisConfiguration#mybatisPlusInterceptor()
+ * @see com.cp3.base.boot.interceptor.HeaderThreadLocalInterceptor
  */
 @Configuration
 @Slf4j
 @MapperScan(
-        basePackages = {"com.cp3.cloud",},
+        basePackages = {UTIL_PACKAGE, BUSINESS_PACKAGE},
         annotationClass = Repository.class,
-        sqlSessionFactoryRef = MasterDatabaseConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
+        sqlSessionFactoryRef = BaseMasterDatabaseConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
 @EnableConfigurationProperties({MybatisPlusProperties.class})
-@ConditionalOnExpression("!'DATASOURCE'.equals('${zuihou.database.multiTenantType}')")
-public class AuthorityDatabaseAutoConfiguration extends MasterDatabaseConfiguration {
+@ConditionalOnExpression("!'DATASOURCE'.equals('${lamp.database.multiTenantType}')")
+public class AuthorityDatabaseAutoConfiguration extends BaseMasterDatabaseConfiguration {
 
     public AuthorityDatabaseAutoConfiguration(MybatisPlusProperties properties,
                                               DatabaseProperties databaseProperties,
@@ -61,7 +63,7 @@ public class AuthorityDatabaseAutoConfiguration extends MasterDatabaseConfigurat
         super(properties, databaseProperties, interceptorsProvider, typeHandlersProvider,
                 languageDriversProvider, resourceLoader, databaseIdProvider,
                 configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
-        log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 AuthorityDatabaseAutoConfiguration");
+        log.debug("检测到 lamp.database.multiTenantType!=DATASOURCE，加载了 AuthorityDatabaseAutoConfiguration");
     }
 
 }

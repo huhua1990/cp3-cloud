@@ -1,68 +1,72 @@
+/*
+ * Copyright 2006-2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 package com.cp3.cloud.oauth.granter;
 
-import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import com.cp3.base.basic.R;
+import com.cp3.base.boot.utils.WebUtils;
+import com.cp3.base.context.ContextUtil;
+import com.cp3.base.database.properties.DatabaseProperties;
+import com.cp3.base.database.properties.MultiTenantType;
+import com.cp3.base.exception.code.ExceptionCode;
+import com.cp3.base.jwt.TokenUtil;
+import com.cp3.base.jwt.model.AuthInfo;
+import com.cp3.base.jwt.model.JwtUserInfo;
+import com.cp3.base.jwt.utils.JwtUtil;
+import com.cp3.base.basic.utils.BeanPlusUtil;
+import com.cp3.base.utils.BizAssert;
+import com.cp3.base.utils.SpringUtils;
+import com.cp3.base.utils.StrHelper;
+import com.cp3.base.utils.StrPool;
 import com.cp3.cloud.authority.dto.auth.LoginParamDTO;
+import com.cp3.cloud.authority.dto.auth.Online;
 import com.cp3.cloud.authority.entity.auth.Application;
 import com.cp3.cloud.authority.entity.auth.User;
-import com.cp3.cloud.authority.entity.auth.UserToken;
 import com.cp3.cloud.authority.service.auth.ApplicationService;
+import com.cp3.cloud.authority.service.auth.OnlineService;
 import com.cp3.cloud.authority.service.auth.UserService;
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.boot.utils.WebUtils;
-import com.cp3.cloud.context.BaseContextHandler;
-import com.cp3.cloud.database.properties.DatabaseProperties;
-import com.cp3.cloud.database.properties.MultiTenantType;
-import com.cp3.cloud.exception.code.ExceptionCode;
-import com.cp3.cloud.jwt.TokenUtil;
-import com.cp3.cloud.jwt.model.AuthInfo;
-import com.cp3.cloud.jwt.model.JwtUserInfo;
-import com.cp3.cloud.jwt.utils.JwtUtil;
 import com.cp3.cloud.oauth.event.LoginEvent;
 import com.cp3.cloud.oauth.event.model.LoginStatusDTO;
 import com.cp3.cloud.oauth.utils.TimeUtils;
 import com.cp3.cloud.tenant.entity.Tenant;
 import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 import com.cp3.cloud.tenant.service.TenantService;
-import com.cp3.cloud.utils.BeanPlusUtil;
-import com.cp3.cloud.utils.BizAssert;
-import com.cp3.cloud.utils.DateUtils;
-import com.cp3.cloud.utils.SpringUtils;
-import com.cp3.cloud.utils.StrHelper;
-import com.cp3.cloud.utils.StrPool;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.oschina.j2cache.CacheChannel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
-import static com.cp3.cloud.context.BaseContextConstants.BASIC_HEADER_KEY;
-import static com.cp3.cloud.utils.BizAssert.gt;
-import static com.cp3.cloud.utils.BizAssert.notNull;
+import static com.cp3.base.context.ContextConstants.BASIC_HEADER_KEY;
+import static com.cp3.base.utils.BizAssert.gt;
+import static com.cp3.base.utils.BizAssert.notNull;
 
 /**
  * 验证码TokenGranter
  *
- * @author Chill
+ * @author zuihou
  */
 @Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractTokenGranter implements TokenGranter {
-    @Autowired
-    protected TokenUtil tokenUtil;
-    @Autowired
-    protected UserService userService;
-    @Autowired
-    protected TenantService tenantService;
-    @Autowired
-    protected CacheChannel cacheChannel;
-    @Autowired
-    protected ApplicationService applicationService;
-    @Autowired
-    protected DatabaseProperties databaseProperties;
+    protected final TokenUtil tokenUtil;
+    protected final UserService userService;
+    protected final TenantService tenantService;
+    protected final ApplicationService applicationService;
+    protected final DatabaseProperties databaseProperties;
+    protected final OnlineService onlineService;
 
     /**
      * 处理登录逻辑
@@ -76,55 +80,52 @@ public abstract class AbstractTokenGranter implements TokenGranter {
         }
         // 1，检测租户是否可用
         if (!MultiTenantType.NONE.eq(databaseProperties.getMultiTenantType())) {
-            Tenant tenant = this.tenantService.getByCode(loginParam.getTenant());
+            Tenant tenant = this.tenantService.getByCode(ContextUtil.getTenant());
             notNull(tenant, "企业不存在");
             BizAssert.equals(TenantStatusEnum.NORMAL, tenant.getStatus(), "企业不可用~");
             if (tenant.getExpirationTime() != null) {
                 gt(LocalDateTime.now(), tenant.getExpirationTime(), "企业服务已到期~");
             }
-            BaseContextHandler.setTenant(tenant.getCode());
         }
 
         // 2.检测client是否可用
-        R<String[]> checkR = checkClient();
-        if (checkR.getIsError()) {
-            return R.fail(checkR.getMsg());
+        R<String[]> checkClient = checkClient();
+        if (!checkClient.getIsSuccess()) {
+            return R.fail(checkClient.getMsg());
         }
 
         // 3. 验证登录
         R<User> result = this.getUser(loginParam.getAccount(), loginParam.getPassword());
-        if (result.getIsError()) {
+        if (!result.getIsSuccess()) {
             return R.fail(result.getCode(), result.getMsg());
         }
 
-        // 4.查询用户的权限
+        // 4.生成 token
         User user = result.getData();
-
-        // 5.生成 token
         AuthInfo authInfo = this.createToken(user);
 
-        UserToken userToken = getUserToken(checkR.getData()[0], authInfo);
+        Online online = getOnline(checkClient.getData()[0], authInfo);
 
         //成功登录事件
-        SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.success(user.getId(), userToken)));
+        LoginStatusDTO loginStatus = LoginStatusDTO.success(user.getId(), online);
+        SpringUtils.publishEvent(new LoginEvent(loginStatus));
+
+        onlineService.save(online);
         return R.success(authInfo);
     }
 
-    private UserToken getUserToken(String clientId, AuthInfo authInfo) {
-        UserToken userToken = new UserToken();
-        Map<String, String> fieldMapping = new HashMap<>();
-        fieldMapping.put("userId", "createUser");
-        BeanPlusUtil.copyProperties(authInfo, userToken, CopyOptions.create().setFieldMapping(fieldMapping));
-        userToken.setClientId(clientId);
-        userToken.setExpireTime(DateUtils.date2LocalDateTime(authInfo.getExpiration()));
-        return userToken;
+    protected Online getOnline(String clientId, AuthInfo authInfo) {
+        Online online = new Online();
+        BeanPlusUtil.copyProperties(authInfo, online);
+        online.setClientId(clientId);
+        online.setExpireTime(authInfo.getExpiration());
+        online.setLoginTime(LocalDateTime.now());
+        return online;
     }
 
 
     /**
      * 检测 client
-     *
-     * @return
      */
     protected R<String[]> checkClient() {
         String basicHeader = ServletUtil.getHeader(WebUtils.request(), BASIC_HEADER_KEY, StrPool.UTF_8);
@@ -134,7 +135,7 @@ public abstract class AbstractTokenGranter implements TokenGranter {
         if (application == null) {
             return R.fail("请填写正确的客户端ID或者客户端秘钥");
         }
-        if (!application.getStatus()) {
+        if (!application.getState()) {
             return R.fail("客户端[%s]已被禁用", application.getClientId());
         }
         return R.success(client);
@@ -151,12 +152,12 @@ public abstract class AbstractTokenGranter implements TokenGranter {
     protected R<User> getUser(String account, String password) {
         User user = this.userService.getByAccount(account);
         // 密码错误
-        String passwordMd5 = cn.hutool.crypto.SecureUtil.md5(password);
         if (user == null) {
             return R.fail(ExceptionCode.JWT_USER_INVALID);
         }
 
-        if (!user.getPassword().equalsIgnoreCase(passwordMd5)) {
+        String passwordMd5 = SecureUtil.sha256(password + user.getSalt());
+        if (!passwordMd5.equalsIgnoreCase(user.getPassword())) {
             String msg = "用户名或密码错误!";
             // 密码错误事件
             SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.pwdError(user.getId(), msg)));
@@ -170,13 +171,13 @@ public abstract class AbstractTokenGranter implements TokenGranter {
             return R.fail(msg);
         }
 
-        if (!user.getStatus()) {
+        if (!user.getState()) {
             String msg = "用户被禁用，请联系管理员！";
             SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), msg)));
             return R.fail(msg);
         }
 
-        // 用户锁定
+        //TODO 用户锁定
         Integer maxPasswordErrorNum = 0;
         Integer passwordErrorNum = Convert.toInt(user.getPasswordErrorNum(), 0);
         if (maxPasswordErrorNum > 0 && passwordErrorNum > maxPasswordErrorNum) {

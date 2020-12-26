@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 短信发送DO
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/12/20
  */
 @Data

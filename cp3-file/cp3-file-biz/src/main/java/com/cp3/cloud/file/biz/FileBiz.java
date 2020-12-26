@@ -2,12 +2,14 @@ package com.cp3.cloud.file.biz;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import com.cp3.base.utils.CollHelper;
+import com.cp3.base.utils.StrPool;
 import com.cp3.cloud.file.domain.FileDO;
 import com.cp3.cloud.file.enumeration.DataType;
 import com.cp3.cloud.file.properties.FileServerProperties;
 import com.cp3.cloud.file.utils.ZipUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,18 +23,18 @@ import java.util.function.Predicate;
 /**
  * 文件和附件的一些公共方法
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/05/06
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class FileBiz {
 
-    @Autowired
-    private FileServerProperties fileProperties;
+    private final FileServerProperties fileProperties;
 
     private static String buildNewFileName(String filename, Integer order) {
-        return StrUtil.strBuilder(filename).insert(filename.lastIndexOf("."), "(" + order + ")").toString();
+        return StrUtil.strBuilder(filename).insert(filename.lastIndexOf(StrPool.DOT), "(" + order + ")").toString();
     }
 
 
@@ -52,13 +54,13 @@ public class FileBiz {
             extName = StrUtil.subBefore(extName, ".", true) + "等.zip";
         }
 
-        Map<String, String> map = new LinkedHashMap<>(list.size());
-        Map<String, Integer> duplicateFile = new HashMap<>(list.size());
+        Map<String, String> map = new LinkedHashMap<>(CollHelper.initialCapacity(list.size()));
+        Map<String, Integer> duplicateFile = new HashMap<>(map.size());
         list.stream()
                 //过滤不符合要求的文件
                 .filter(getFilePredicate())
                 //将外网地址转成内网地址
-                .map(file -> {
+                .peek(file -> {
                     String url = file.getUrl();
                     if (StrUtil.isNotEmpty(innerUriPrefix)) {
                         //转为内网渠道下载
@@ -66,7 +68,6 @@ public class FileBiz {
                         log.info("文件转内网 url地址 ={}", url);
                     }
                     file.setUrl(url);
-                    return file;
                 })
                 //循环处理相同的文件名
                 .forEach(file -> {
@@ -83,7 +84,7 @@ public class FileBiz {
                 });
 
 
-        ZipUtils.zipFilesByInputStream(map, Long.valueOf(fileSize), extName, request, response);
+        ZipUtils.zipFilesByInputStream(map, fileSize, extName, request, response);
     }
 
 

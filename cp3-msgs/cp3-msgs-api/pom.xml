@@ -6,7 +6,7 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-msgs</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

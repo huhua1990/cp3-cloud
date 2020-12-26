@@ -8,7 +8,9 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.cp3.cloud.sms.dao.SmsTaskMapper;
 import com.cp3.cloud.sms.enumeration.ProviderType;
+import com.cp3.cloud.sms.service.SmsSendStatusService;
 import com.cp3.cloud.sms.strategy.domain.SmsDO;
 import com.cp3.cloud.sms.strategy.domain.SmsResult;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 /**
  * ali 发送短信实现类
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/12/20
  */
 @Component("ALI")
@@ -33,6 +35,10 @@ public class SmsAliStrategy extends AbstractSmsStrategy {
      */
     private static final String DOMAIN = "dysmsapi.aliyuncs.com";
 
+    public SmsAliStrategy(SmsTaskMapper smsTaskMapper, SmsSendStatusService smsSendStatusService) {
+        super(smsTaskMapper, smsSendStatusService);
+    }
+
     @Override
     protected SmsResult send(SmsDO smsDO) {
         //可自助调整超时时间
@@ -42,7 +48,6 @@ public class SmsAliStrategy extends AbstractSmsStrategy {
         try {
             //初始化acsClient,暂不支持region化
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", smsDO.getAppId(), smsDO.getAppSecret());
-//            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", PRODUCT, DOMAIN);
             DefaultProfile.addEndpoint("cn-hangzhou", PRODUCT, DOMAIN);
             IAcsClient acsClient = new DefaultAcsClient(profile);
 

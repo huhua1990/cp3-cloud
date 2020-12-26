@@ -1,10 +1,9 @@
 package com.cp3.cloud.tenant.service;
 
-import com.cp3.cloud.base.service.SuperCacheService;
+import com.cp3.base.basic.service.SuperCacheService;
 import com.cp3.cloud.tenant.dto.TenantConnectDTO;
 import com.cp3.cloud.tenant.dto.TenantSaveDTO;
 import com.cp3.cloud.tenant.entity.Tenant;
-import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 
 import java.util.List;
 
@@ -14,56 +13,63 @@ import java.util.List;
  * 企业
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-10-24
  */
 public interface TenantService extends SuperCacheService<Tenant> {
     /**
      * 检测 租户编码是否存在
      *
-     * @param tenantCode
-     * @return
+     * @param tenantCode 租户编码
+     * @return 是否存在
      */
     boolean check(String tenantCode);
 
     /**
      * 保存
      *
-     * @param data
-     * @return
+     * @param data 租户保存数据
+     * @return 租户
      */
     Tenant save(TenantSaveDTO data);
 
     /**
      * 根据编码获取
      *
-     * @param tenant
-     * @return
+     * @param tenant 租户编码
+     * @return 租户
      */
     Tenant getByCode(String tenant);
-
-    /**
-     * 删除租户数据
-     *
-     * @param ids
-     * @return
-     */
-    Boolean delete(List<Long> ids);
 
     /**
      * 通知所有服务链接数据源
      *
      * @param tenantConnect 链接信息
-     * @return
+     * @return 是否链接成功
      */
     Boolean connect(TenantConnectDTO tenantConnect);
 
+
     /**
-     * 修改租户状态
+     * 删除租户数据
      *
-     * @param ids
-     * @param status
-     * @return
+     * @param ids id
+     * @return 是否成功
      */
-    Boolean updateStatus(List<Long> ids, TenantStatusEnum status);
+    Boolean delete(List<Long> ids);
+
+    /**
+     * 删除租户和基础数据
+     *
+     * @param ids id
+     * @return 是否成功
+     */
+    Boolean deleteAll(List<Long> ids);
+
+    /**
+     * 查询所有可用的租户
+     *
+     * @return 租户信息
+     */
+    List<Tenant> find();
 }

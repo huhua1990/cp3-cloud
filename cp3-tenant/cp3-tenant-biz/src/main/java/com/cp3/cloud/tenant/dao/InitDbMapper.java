@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 初始化数据库DAO
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/09/02
  */
 @Repository
@@ -16,8 +16,8 @@ public interface InitDbMapper {
     /**
      * 创建数据库
      *
-     * @param database
-     * @return
+     * @param database 数据库
+     * @return 创建数量
      */
     int createDatabase(@Param("database") String database);
 
@@ -25,8 +25,8 @@ public interface InitDbMapper {
     /**
      * 删除数据库
      *
-     * @param database
-     * @return
+     * @param database 数据库
+     * @return 删除数量
      */
     int dropDatabase(@Param("database") String database);
 

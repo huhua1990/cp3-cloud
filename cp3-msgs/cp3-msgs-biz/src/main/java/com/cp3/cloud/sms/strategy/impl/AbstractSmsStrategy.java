@@ -1,7 +1,7 @@
 package com.cp3.cloud.sms.strategy.impl;
 
 
-import com.cp3.cloud.base.R;
+import com.cp3.base.basic.R;
 import com.cp3.cloud.sms.dao.SmsTaskMapper;
 import com.cp3.cloud.sms.entity.SmsSendStatus;
 import com.cp3.cloud.sms.entity.SmsTask;
@@ -12,8 +12,8 @@ import com.cp3.cloud.sms.strategy.SmsStrategy;
 import com.cp3.cloud.sms.strategy.domain.SmsDO;
 import com.cp3.cloud.sms.strategy.domain.SmsResult;
 import com.cp3.cloud.sms.util.PhoneUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,17 +23,16 @@ import java.util.stream.Collectors;
 /**
  * 抽象短信策略
  *
- * @author cp3
+ * @author zuihou
  * @date 2018/12/20
  */
 @Slf4j
 
+@RequiredArgsConstructor
 public abstract class AbstractSmsStrategy implements SmsStrategy {
 
-    @Autowired
-    private SmsTaskMapper smsTaskMapper;
-    @Autowired
-    private SmsSendStatusService smsSendStatusService;
+    private final SmsTaskMapper smsTaskMapper;
+    private final SmsSendStatusService smsSendStatusService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -92,8 +91,8 @@ public abstract class AbstractSmsStrategy implements SmsStrategy {
     /**
      * 子类执行具体的发送任务
      *
-     * @param smsDO
-     * @return
+     * @param smsDO 短信参数
+     * @return 短信返回值
      */
     protected abstract SmsResult send(SmsDO smsDO);
 }

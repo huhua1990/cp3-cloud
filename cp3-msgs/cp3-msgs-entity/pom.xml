@@ -6,7 +6,7 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-msgs</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -22,19 +22,23 @@
             <version>${cp3-cloud-project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-injection-starter</artifactId>
+        <!--<dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-injection-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-annotation</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-annotation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
         </dependency>
     </dependencies>
 </project>

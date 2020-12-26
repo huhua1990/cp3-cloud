@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.enumeration;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * 验证码类型
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/08/06
  */
 @Getter
@@ -47,11 +47,11 @@ public enum TemplateCodeType implements BaseEnum {
     }
 
     public boolean eq(TemplateCodeType val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override
-    @ApiModelProperty(value = "编码", allowableValues = "ZUIHOU_COMMON,TFD_REG,SGW_REG", example = "ZUIHOU_COMMON")
+    @ApiModelProperty(value = "编码", allowableValues = "LAMP_COMMON,TFD_REG,SGW_REG", example = "LAMP_COMMON")
     public String getCode() {
         return this.name();
     }

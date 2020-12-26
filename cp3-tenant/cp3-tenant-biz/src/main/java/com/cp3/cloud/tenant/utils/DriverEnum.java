@@ -3,7 +3,7 @@ package com.cp3.cloud.tenant.utils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author cp3
+ * @author zuihou
  */
 @Slf4j
 public enum DriverEnum {
@@ -27,7 +27,7 @@ public enum DriverEnum {
     /**
      * 驱动
      */
-    private String driver;
+    private final String driver;
 
     DriverEnum(String driver) {
         this.driver = driver;

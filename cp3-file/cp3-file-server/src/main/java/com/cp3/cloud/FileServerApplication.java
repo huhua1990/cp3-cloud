@@ -1,6 +1,7 @@
 package com.cp3.cloud;
 
-import com.cp3.cloud.security.annotation.EnableLoginArgResolver;
+import com.cp3.base.security.annotation.EnableLoginArgResolver;
+import com.cp3.base.validator.annotation.EnableFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,25 +9,32 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import static com.cp3.cloud.common.constant.BizConstant.BUSINESS_PACKAGE;
+import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
+
 /**
- * @author cp3
+ * @author zuihou
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableHystrix
+@ComponentScan({
+        UTIL_PACKAGE, BUSINESS_PACKAGE
+})
 @EnableFeignClients(value = {
-        "com.cp3.cloud",
+        UTIL_PACKAGE, BUSINESS_PACKAGE
 })
 @EnableTransactionManagement
 @Slf4j
 @EnableLoginArgResolver
-//@EnableFormValidator
+@EnableFormValidator
 public class FileServerApplication {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext application = SpringApplication.run(FileServerApplication.class, args);
@@ -38,9 +46,9 @@ public class FileServerApplication {
                         "----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
                 InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"),
+                env.getProperty("server.port", "8080"),
                 "127.0.0.1",
-                env.getProperty("server.port"));
+                env.getProperty("server.port", "8080"));
 
     }
 }

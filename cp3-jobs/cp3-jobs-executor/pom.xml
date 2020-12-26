@@ -6,7 +6,7 @@
         <artifactId>cp3-jobs</artifactId>
         <groupId>com.cp3.cloud</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-databases</artifactId>
+            <artifactId>cp3-databases</artifactId>
         </dependency>
         <dependency>
             <groupId>com.cp3.cloud</groupId>

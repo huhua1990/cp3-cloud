@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * 分片上传工具类
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-06-14 11:50
  */
 @Service
@@ -33,7 +33,7 @@ public class WebUploader {
      *
      * @param file 分片文件的路径
      * @param size 分片文件的大小
-     * @return
+     * @return 一致返回true
      */
     public boolean chunkCheck(String file, Long size) {
         //检查目标分片是否存在且完整
@@ -47,7 +47,7 @@ public class WebUploader {
      *
      * @param info 上传文件的相关信息
      * @param path 文件保存根路径
-     * @return
+     * @return 文件
      */
     public java.io.File getReadySpace(FileUploadDTO info, String path) {
         //创建上传文件所需的文件夹
@@ -83,7 +83,7 @@ public class WebUploader {
      *
      * @param file   文件夹路径
      * @param hasTmp 是否有临时文件
-     * @return
+     * @return 创建成功返回true
      */
     private boolean createFileFolder(String file, boolean hasTmp) {
         //创建存放分片文件的临时文件夹
@@ -122,25 +122,21 @@ public class WebUploader {
      * MD5签名
      *
      * @param content 要签名的内容
-     * @return
+     * @return md5
      */
     private String md5(String content) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(content.getBytes("UTF-8"));
+            md5.update(content.getBytes(StandardCharsets.UTF_8));
             byte[] tmpFolder = md5.digest();
 
-            for (int i = 0; i < tmpFolder.length; i++) {
-                sb.append(Integer.toString((tmpFolder[i] & 0xff) + 0x100, 16).substring(1));
+            for (byte b : tmpFolder) {
+                sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
             }
 
             return sb.toString();
         } catch (NoSuchAlgorithmException ex) {
-            log.error("无法生成文件的MD5签名", ex);
-            this.setErrorMsg("无法生成文件的MD5签名");
-            return null;
-        } catch (UnsupportedEncodingException ex) {
             log.error("无法生成文件的MD5签名", ex);
             this.setErrorMsg("无法生成文件的MD5签名");
             return null;
@@ -150,7 +146,7 @@ public class WebUploader {
     /**
      * 获取错误详细
      *
-     * @return
+     * @return 错误消息
      */
     public String getErrorMsg() {
         return this.msg;

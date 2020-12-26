@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.service;
 
-import com.cp3.cloud.base.service.SuperService;
+import com.cp3.base.basic.service.SuperService;
 import com.cp3.cloud.sms.entity.SmsTask;
 import com.cp3.cloud.sms.enumeration.TemplateCodeType;
 
@@ -12,22 +12,22 @@ import com.cp3.cloud.sms.enumeration.TemplateCodeType;
  * 具体的发送状态查看发送状态（#sms_send_status）表
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 public interface SmsTaskService extends SuperService<SmsTask> {
     /**
      * 保存任务
      *
-     * @param smsTask
-     * @return
+     * @param smsTask 短信任务
+     * @param type    类型
      */
     void saveTask(SmsTask smsTask, TemplateCodeType type);
 
     /**
      * 修改短信任务
      *
-     * @param smsTask
+     * @param smsTask 短信任务
      */
     void update(SmsTask smsTask);
 }

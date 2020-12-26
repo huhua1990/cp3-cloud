@@ -19,41 +19,26 @@
             <artifactId>cp3-oauth-controller</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-file-entity</artifactId>
-            <version>${cp3-cloud-project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-msgs-entity</artifactId>
-            <version>${cp3-cloud-project.version}</version>
-        </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-swagger2-starter</artifactId>
-        </dependency>
-        <!--<dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-validator-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-swagger2-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-xss-starter</artifactId>
-        </dependency>-->
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-validator-starter</artifactId>
+        </dependency>
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-xss-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
             <artifactId>cp3-cloud-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-j2cache-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-zipkin-client-starter</artifactId>
         </dependency>
 
         <dependency>

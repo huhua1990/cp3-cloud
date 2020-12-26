@@ -11,6 +11,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,8 +21,8 @@ import java.time.LocalDateTime;
  * 企业
  * </p>
  *
- * @author cp3
- * @since 2019-10-24
+ * @author zuihou
+ * @since 2020-11-19
  */
 @Data
 @NoArgsConstructor
@@ -39,6 +40,7 @@ public class TenantSaveDTO implements Serializable {
      * 企业编码
      */
     @ApiModelProperty(value = "企业编码")
+    @NotEmpty(message = "企业编码不能为空")
     @Length(max = 20, message = "企业编码长度不能超过20")
     private String code;
     /**
@@ -53,25 +55,23 @@ public class TenantSaveDTO implements Serializable {
     @ApiModelProperty(value = "责任人")
     @Length(max = 50, message = "责任人长度不能超过50")
     private String duty;
-
     /**
      * 有效期
      * 为空表示永久
      */
     @ApiModelProperty(value = "有效期")
     private LocalDateTime expirationTime;
-
     /**
      * logo地址
      */
     @ApiModelProperty(value = "logo地址")
     @Length(max = 255, message = "logo地址长度不能超过255")
     private String logo;
-
     /**
      * 企业简介
      */
     @ApiModelProperty(value = "企业简介")
     @Length(max = 255, message = "企业简介长度不能超过255")
     private String describe;
+
 }

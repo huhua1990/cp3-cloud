@@ -1,12 +1,13 @@
 package com.cp3.cloud.sms.controller;
 
 
-import com.cp3.cloud.base.R;
-import com.cp3.cloud.base.controller.SuperController;
-import com.cp3.cloud.database.mybatis.conditions.Wraps;
-import com.cp3.cloud.security.annotation.PreAuth;
+import com.cp3.base.annotation.security.PreAuth;
+import com.cp3.base.basic.R;
+import com.cp3.base.basic.controller.SuperController;
+import com.cp3.base.database.mybatis.conditions.Wraps;
+import com.cp3.base.basic.utils.BeanPlusUtil;
 import com.cp3.cloud.sms.dto.SmsSendTaskDTO;
-import com.cp3.cloud.sms.dto.SmsTaskPageDTO;
+import com.cp3.cloud.sms.dto.SmsTaskPageQuery;
 import com.cp3.cloud.sms.dto.SmsTaskSaveDTO;
 import com.cp3.cloud.sms.dto.SmsTaskUpdateDTO;
 import com.cp3.cloud.sms.entity.SmsSendStatus;
@@ -14,11 +15,10 @@ import com.cp3.cloud.sms.entity.SmsTask;
 import com.cp3.cloud.sms.enumeration.SourceType;
 import com.cp3.cloud.sms.service.SmsSendStatusService;
 import com.cp3.cloud.sms.service.SmsTaskService;
-import com.cp3.cloud.utils.BeanPlusUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +35,7 @@ import java.util.List;
  * 具体的发送状态查看发送状态（#sms_send_status）表
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Slf4j
@@ -43,16 +43,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/smsTask")
 @Api(value = "SmsTask", tags = "发送任务")
-@PreAuth(replace = "sms:manage:")
-public class SmsTaskController extends SuperController<SmsTaskService, Long, SmsTask, SmsTaskPageDTO, SmsTaskSaveDTO, SmsTaskUpdateDTO> {
+@PreAuth(replace = "msg:sms:")
+@RequiredArgsConstructor
+public class SmsTaskController extends SuperController<SmsTaskService, Long, SmsTask, SmsTaskPageQuery, SmsTaskSaveDTO, SmsTaskUpdateDTO> {
 
-    @Autowired
-    private SmsSendStatusService smsSendStatusService;
+    private final SmsSendStatusService smsSendStatusService;
 
 
     @ApiOperation(value = "发送短信", notes = "短信发送，需要先在短信系统，或者短信数据库中进行配置供应商和模板")
     @RequestMapping(value = "/send", method = RequestMethod.POST)
-    @PreAuth("hasPermit('{}add')")
+    @PreAuth("hasAnyPermission('{}add')")
     public R<SmsTask> save(@RequestBody SmsSendTaskDTO smsTaskDTO) {
         SmsTask smsTask = BeanPlusUtil.toBean(smsTaskDTO, SmsTask.class);
         smsTask.setSourceType(SourceType.SERVICE);

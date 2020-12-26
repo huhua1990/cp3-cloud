@@ -10,20 +10,22 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 文件锁工具类
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-06-14
  */
 @Component
-public class FileLock {
+public final class FileLock {
+    private FileLock() {
+    }
 
-    private static Map<String, Lock> LOCKS = new HashMap<String, Lock>();
+    private static final Map<String, Lock> LOCKS = new HashMap<>(16);
 
     /**
      * 获取锁
      *
-     * @param key
+     * @param key key
      * @return java.util.concurrent.locks.Lock
-     * @author cp3
+     * @author zuihou
      * @date 2019-06-14 11:30
      */
     public static synchronized Lock getLock(String key) {
@@ -39,10 +41,7 @@ public class FileLock {
     /**
      * 删除锁
      *
-     * @param key
-     * @return void
-     * @author cp3
-     * @date 2019-06-14 11:33
+     * @param key keu
      */
     public static synchronized void removeLock(String key) {
         LOCKS.remove(key);

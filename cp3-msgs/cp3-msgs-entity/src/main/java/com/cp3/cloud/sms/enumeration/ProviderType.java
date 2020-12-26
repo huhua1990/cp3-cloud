@@ -1,6 +1,6 @@
 package com.cp3.cloud.sms.enumeration;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * 短信供应商
  * </p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019-08-01
  */
 @Getter
@@ -46,7 +46,7 @@ public enum ProviderType implements BaseEnum {
     private String regex;
 
     public static ProviderType match(String val, ProviderType def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static ProviderType get(String val) {
@@ -54,7 +54,7 @@ public enum ProviderType implements BaseEnum {
     }
 
     public boolean eq(ProviderType val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
     @Override

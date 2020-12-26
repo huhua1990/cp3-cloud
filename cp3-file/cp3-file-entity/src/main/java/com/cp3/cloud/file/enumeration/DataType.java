@@ -1,25 +1,26 @@
 package com.cp3.cloud.file.enumeration;
 
-import com.cp3.cloud.base.BaseEnum;
+import com.cp3.base.basic.BaseEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.stream.Stream;
-
 
 /**
  * <p>
  * 实体注释中生成的类型枚举
- * 文件回收站
+ * 附件
  * </p>
  *
- * @author cp3
- * @date 2019-06-24
+ * @author zuihou
+ * @date 2020-11-20
  */
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "DataType", description = "数据类型-枚举")
 public enum DataType implements BaseEnum {
 
@@ -52,21 +53,24 @@ public enum DataType implements BaseEnum {
     @ApiModelProperty(value = "描述")
     private String desc;
 
+
+    /**
+     * 根据当前枚举的name匹配
+     */
     public static DataType match(String val, DataType def) {
-        return Stream.of(values()).parallel().filter((item) -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static DataType get(String val) {
         return match(val, null);
     }
 
-
     public boolean eq(DataType val) {
-        return val == null ? false : eq(val.name());
+        return val != null && eq(val.name());
     }
 
-    @ApiModelProperty(value = "编码", allowableValues = "DIR,IMAGE,VIDEO,AUDIO,DOC,OTHER", example = "DIR")
     @Override
+    @ApiModelProperty(value = "编码", allowableValues = "DIR,IMAGE,VIDEO,AUDIO,DOC,OTHER", example = "DIR")
     public String getCode() {
         return this.name();
     }

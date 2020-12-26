@@ -1,26 +1,33 @@
 package com.cp3.cloud.file.utils;
 
 
-import com.cp3.cloud.exception.BizException;
-import com.cp3.cloud.utils.StrPool;
+import com.cp3.base.exception.BizException;
+import com.cp3.base.utils.StrPool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static com.cp3.cloud.utils.StrPool.SLASH;
+import static com.cp3.base.utils.StrPool.SLASH;
 
 
 /**
@@ -31,8 +38,10 @@ import static com.cp3.cloud.utils.StrPool.SLASH;
  */
 @Slf4j
 public class ZipUtils {
+    private ZipUtils() {
+    }
 
-    private final static String AGENT_FIREFOX = "firefox";
+    private static final String AGENT_FIREFOX = "firefox";
 
     private static void zipFiles(ZipOutputStream out, String path, File... srcFiles) {
         path = path.replaceAll("\\*", SLASH);
@@ -63,16 +72,16 @@ public class ZipUtils {
                 }
             }
         } catch (Exception e) {
-            log.info("ZipUtils error {} ", e);
+            log.info("ZipUtils error ", e);
         }
     }
 
     /**
      * 通过流打包下载文件
      *
-     * @param out
-     * @param fileName
-     * @param
+     * @param out      输出刘
+     * @param fileName 文件名
+     * @param is       输入流
      */
     public static void zipFilesByInputStream(ZipOutputStream out, String fileName, InputStream is) throws Exception {
         byte[] buf = new byte[1024];
@@ -83,8 +92,6 @@ public class ZipUtils {
                 out.write(buf, 0, len);
             }
             is.close();
-        } catch (Exception e) {
-            throw e;
         } finally {
             if (is != null) {
                 is.close();
@@ -95,10 +102,9 @@ public class ZipUtils {
     /**
      * 下载指定输入流的图片
      *
-     * @param
-     * @param
-     * @param
-     * @throws Exception
+     * @param is  输入流
+     * @param out 输出流
+     * @throws Exception 异常
      */
     private static void downloadFile(InputStream is, OutputStream out) throws Exception {
         try {
@@ -107,8 +113,6 @@ public class ZipUtils {
             while ((length = is.read(b)) > 0) {
                 out.write(b, 0, length);
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             if (out != null) {
                 out.close();
@@ -152,8 +156,6 @@ public class ZipUtils {
                     }
                 }
             }
-        } catch (ZipException e) {
-            throw e;
         }
     }
 
@@ -164,7 +166,7 @@ public class ZipUtils {
         String downloadFileName;
         String agent = request.getHeader("USER-AGENT");
         if (agent != null && agent.toLowerCase().indexOf(AGENT_FIREFOX) > 0) {
-            downloadFileName = "=?UTF-8?B?" + (new String(Base64.encodeBase64((extName).getBytes("UTF-8")))) + "?=";
+            downloadFileName = "=?UTF-8?B?" + (new String(Base64.encodeBase64((extName).getBytes(StandardCharsets.UTF_8)))) + "?=";
         } else {
             //~ \ / |:"<>?   这些字符不能被替换，因为系统允许文件名有这些字符！！
             downloadFileName = URLEncoder.encode(extName, "UTF-8")
@@ -191,10 +193,10 @@ public class ZipUtils {
             log.info("downloadFileName={}", downloadFileName);
         }
         response.setHeader("Content-Disposition", "attachment;fileName=" + downloadFileName);
-        if (fileSize != null && fileSize > 0) {
-            // 加了这个下载会报错？
+        // 加了这个下载会报错？
+//        if (fileSize != null && fileSize > 0) {
 //            response.setHeader("Content-Length", String.valueOf(fileSize));
-        }
+//        }
 
         ServletOutputStream out = response.getOutputStream();
         if (fileMap.size() == 1) {
@@ -206,7 +208,7 @@ public class ZipUtils {
                 connection = getConnection(url);
                 ZipUtils.downloadFile(connection.getInputStream(), out);
             } catch (Exception e) {
-                throw new BizException("文件地址连接超时");
+                throw new BizException("文件地址连接超时", e);
             }
             return;
         }
@@ -236,9 +238,7 @@ public class ZipUtils {
                     if (bis != null) {
                         bis.close();
                     }
-                    if (zos != null) {
-                        zos.closeEntry();
-                    }
+                    zos.closeEntry();
                 }
             }
         }
@@ -246,8 +246,8 @@ public class ZipUtils {
 
     private static HttpURLConnection getConnection(String url) throws Exception {
         log.info("url={}", url);
-        URL conURL = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) conURL.openConnection();
+        URL conUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) conUrl.openConnection();
         connection.connect();
         return connection;
     }

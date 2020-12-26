@@ -3,7 +3,7 @@ package com.cp3.cloud.tenant.entity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cp3.cloud.base.entity.Entity;
+import com.cp3.base.basic.entity.Entity;
 import com.cp3.cloud.tenant.enumeration.TenantConnectTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,6 +16,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
@@ -26,15 +27,15 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
  * 数据源
  * </p>
  *
- * @author cp3
- * @since 2020-08-21
+ * @author zuihou
+ * @since 2020-11-19
  */
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("d_datasource_config")
+@TableName("c_datasource_config")
 @ApiModel(value = "DatasourceConfig", description = "数据源")
 @AllArgsConstructor
 public class DatasourceConfig extends Entity<Long> {
@@ -45,6 +46,7 @@ public class DatasourceConfig extends Entity<Long> {
      * 名称
      */
     @ApiModelProperty(value = "名称")
+    @NotEmpty(message = "名称不能为空")
     @Length(max = 255, message = "名称长度不能超过255")
     @TableField(value = "name", condition = LIKE)
     @Excel(name = "名称")
@@ -54,6 +56,7 @@ public class DatasourceConfig extends Entity<Long> {
      * 账号
      */
     @ApiModelProperty(value = "账号")
+    @NotEmpty(message = "账号不能为空")
     @Length(max = 255, message = "账号长度不能超过255")
     @TableField(value = "username", condition = LIKE)
     @Excel(name = "账号")
@@ -63,6 +66,7 @@ public class DatasourceConfig extends Entity<Long> {
      * 密码
      */
     @ApiModelProperty(value = "密码")
+    @NotEmpty(message = "密码不能为空")
     @Length(max = 255, message = "密码长度不能超过255")
     @TableField(value = "password", condition = LIKE)
     @Excel(name = "密码")
@@ -72,6 +76,7 @@ public class DatasourceConfig extends Entity<Long> {
      * 链接
      */
     @ApiModelProperty(value = "链接")
+    @NotEmpty(message = "链接不能为空")
     @Length(max = 255, message = "链接长度不能超过255")
     @TableField(value = "url", condition = LIKE)
     @Excel(name = "链接")
@@ -81,6 +86,7 @@ public class DatasourceConfig extends Entity<Long> {
      * 驱动
      */
     @ApiModelProperty(value = "驱动")
+    @NotEmpty(message = "驱动不能为空")
     @Length(max = 255, message = "驱动长度不能超过255")
     @TableField(value = "driver_class_name", condition = LIKE)
     @Excel(name = "驱动")
@@ -94,13 +100,13 @@ public class DatasourceConfig extends Entity<Long> {
     private TenantConnectTypeEnum type;
 
     @Builder
-    public DatasourceConfig(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
+    public DatasourceConfig(Long id, LocalDateTime createTime, Long createdBy, LocalDateTime updateTime, Long updatedBy,
                             String name, String username, String password, String url, String driverClassName) {
         this.id = id;
         this.createTime = createTime;
-        this.createUser = createUser;
+        this.createdBy = createdBy;
         this.updateTime = updateTime;
-        this.updateUser = updateUser;
+        this.updatedBy = updatedBy;
         this.name = name;
         this.username = username;
         this.password = password;

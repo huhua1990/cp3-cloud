@@ -6,7 +6,7 @@
         <groupId>com.cp3.cloud</groupId>
         <artifactId>cp3-tenant</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -28,31 +28,27 @@
 
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
+            <groupId>com.cp3.base</groupId>
             <artifactId>cp3-cloud-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-swagger2-starter</artifactId>
-        </dependency>
-        <!--<dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-validator-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-swagger2-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-xss-starter</artifactId>
-        </dependency>-->
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-validator-starter</artifactId>
+        </dependency>
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-zipkin-client-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-xss-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-zipkin-client-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-j2cache-starter</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,17 +88,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
             <scope>test</scope>
         </dependency>
 

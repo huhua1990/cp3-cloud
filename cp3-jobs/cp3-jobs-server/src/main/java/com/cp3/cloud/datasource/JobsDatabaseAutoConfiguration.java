@@ -1,11 +1,11 @@
-package com.cp3.cloud.datasource;
+package com.cp3.base.datasource;
 
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
-import com.cp3.cloud.database.datasource.defaults.MasterDatabaseConfiguration;
-import com.cp3.cloud.database.properties.DatabaseProperties;
+import com.cp3.base.database.datasource.defaults.MasterDatabaseConfiguration;
+import com.cp3.base.database.properties.DatabaseProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;

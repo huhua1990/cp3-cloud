@@ -8,18 +8,10 @@ import java.util.List;
  * 初始化系统
  * <p>
  *
- * @author cp3
+ * @author zuihou
  * @date 2019/10/25
  */
 public interface InitSystemStrategy {
-//    /**
-//     * 初始化系统
-//     *
-//     * @param tenant 租户编码
-//     * @return 是否成功
-//     */
-//    @Deprecated
-//    boolean init(String tenant);
 
     /**
      * 初始化 服务链接

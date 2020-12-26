@@ -4,8 +4,8 @@ package com.cp3.cloud.area2;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.log.StaticLog;
+import com.cp3.base.model.RemoteData;
 import com.cp3.cloud.authority.entity.common.Area;
-import com.cp3.cloud.model.RemoteData;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 将国家统计局的数据封装成list
  *
- * @author cp3
+ * @author zuihou
  * @date 2020年05月08日15:09:15
  */
 @Component
@@ -106,7 +106,6 @@ public class CityParser implements ICityParser {
             if (links == null || links.size() != 2) {
                 continue;
             }
-            String href = links.get(0).attr("href");
             String countyCode = links.get(0).text();
             String countyName = links.get(1).text();
 
