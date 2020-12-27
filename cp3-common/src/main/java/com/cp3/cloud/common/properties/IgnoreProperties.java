@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = IgnoreProperties.PREFIX)
 public class IgnoreProperties {
-    public static final String PREFIX = "lamp.ignore";
+    public static final String PREFIX = "cp3.ignore";
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     private List<String> baseUri = CollUtil.newArrayList(

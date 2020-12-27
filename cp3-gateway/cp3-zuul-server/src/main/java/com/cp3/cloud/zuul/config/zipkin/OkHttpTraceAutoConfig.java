@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019-12-09 17:23
  */
 @Configuration
-@ConditionalOnProperty(name = "lamp.zipkin.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "cp3.zipkin.enabled", havingValue = "true")
 public class OkHttpTraceAutoConfig {
 
     /**

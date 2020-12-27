@@ -26,8 +26,8 @@ import static com.cp3.cloud.common.constant.BizConstant.BUSINESS_PACKAGE;
 import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
 
 /**
- * lamp.database.multiTenantType != DATASOURCE 时，该类启用.
- * 此时，项目的多租户模式切换成：${lamp.database.multiTenantType}。
+ * cp3.database.multiTenantType != DATASOURCE 时，该类启用.
+ * 此时，项目的多租户模式切换成：${cp3.database.multiTenantType}。
  * <p>
  * NONE("非租户模式"): 不存在租户的概念
  * COLUMN("字段模式"): 在sql中拼接 tenant_code 字段
@@ -48,7 +48,7 @@ import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
         annotationClass = Repository.class,
         sqlSessionFactoryRef = FileDatabaseAutoConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
 @EnableConfigurationProperties({MybatisPlusProperties.class})
-@ConditionalOnExpression("!'DATASOURCE'.equals('${lamp.database.multiTenantType}')")
+@ConditionalOnExpression("!'DATASOURCE'.equals('${cp3.database.multiTenantType}')")
 public class FileDatabaseAutoConfiguration extends BaseMasterDatabaseConfiguration {
 
     public FileDatabaseAutoConfiguration(MybatisPlusProperties properties,

@@ -53,7 +53,7 @@ import static com.cp3.base.exception.code.ExceptionCode.JWT_OFFLINE;
 public class TokenContextFilter implements WebFilter, Ordered {
     @Value("${spring.profiles.active:dev}")
     protected String profiles;
-    @Value("${lamp.database.multiTenantType:SCHEMA}")
+    @Value("${cp3.database.multiTenantType:SCHEMA}")
     protected String multiTenantType;
     private final IgnoreProperties ignoreProperties;
     private final TokenUtil tokenUtil;

@@ -15,7 +15,7 @@ import java.util.Set;
  * @author zuihou
  * @date 2019/08/02
  */
-@FeignClient(name = "${lamp.feign.oauth-server:lamp-oauth-server}", path = "/org",
+@FeignClient(name = "${cp3.feign.oauth-server:cp3-oauth-server}", path = "/org",
         qualifier = "orgApi", fallback = OrgApiFallback.class)
 public interface OrgApi {
 

@@ -56,7 +56,7 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
             }
             try {
                 // 通过 restTemplate 远程调用各个服务的 /swagger-resources 地址。获取各个服务的swagger配置
-                // 访问地址： http://lamp-test-server/swagger-resources  （其中 lamp-test-server 必须是服务的注册到nacos中的名称，否则无法调用成功 ）
+                // 访问地址： http://cp3-test-server/swagger-resources  （其中 cp3-test-server 必须是服务的注册到nacos中的名称，否则无法调用成功 ）
                 JSONArray list = restTemplate.getForObject("http://" + route.getLocation() + url, JSONArray.class);
                 if (list != null && !list.isEmpty()) {
                     for (int i = 0; i < list.size(); i++) {

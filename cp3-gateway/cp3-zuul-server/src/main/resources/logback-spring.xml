@@ -4,13 +4,13 @@
     <include resource="com/cp3/base/log/logback/defaults.xml"/>
 
     <springProfile name="test,docker,prod">
-        <logger name="com.cp3.base.zuul" additivity="true" level="INFO">
+        <logger name="com.cp3.cloud.zuul" additivity="true" level="INFO">
             <appender-ref ref="ASYNC_CONTROLLER_APPENDER"/>
         </logger>
     </springProfile>
 
     <springProfile name="dev">
-        <logger name="com.cp3.base.zuul" additivity="true" level="INFO">
+        <logger name="com.cp3.cloud.zuul" additivity="true" level="INFO">
             <appender-ref ref="CONTROLLER_APPENDER"/>
         </logger>
     </springProfile>

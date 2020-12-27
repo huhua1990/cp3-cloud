@@ -20,7 +20,7 @@ import java.io.File;
 @ConfigurationProperties(prefix = FileServerProperties.PREFIX)
 @RefreshScope
 public class FileServerProperties {
-    public static final String PREFIX = "lamp.file";
+    public static final String PREFIX = "cp3.file";
     /**
      * 为以下3个值，指定不同的自动化配置
      * qiniu：七牛oss

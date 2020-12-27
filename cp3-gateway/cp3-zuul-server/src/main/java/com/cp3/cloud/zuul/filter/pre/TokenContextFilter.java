@@ -47,7 +47,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 public class TokenContextFilter extends BaseFilter {
     private final TokenUtil tokenUtil;
     private final CacheOps cacheOps;
-    @Value("${lamp.database.multiTenantType:SCHEMA}")
+    @Value("${cp3.database.multiTenantType:SCHEMA}")
     protected String multiTenantType;
 
     public TokenContextFilter(IgnoreProperties ignoreProperties, RouteLocator routeLocator, TokenUtil tokenUtil, CacheOps cacheOps) {

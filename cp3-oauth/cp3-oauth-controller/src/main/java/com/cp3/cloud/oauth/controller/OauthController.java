@@ -42,7 +42,7 @@ public class OauthController {
     private final OnlineService onlineService;
 
     /**
-     * 租户登录 lamp-ui 系统
+     * 租户登录 cp3-ui 系统
      */
     @ApiOperation(value = "登录接口", notes = "登录或者清空缓存时调用")
     @PostMapping(value = "/noToken/login")

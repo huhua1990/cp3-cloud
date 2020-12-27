@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author zuihou
  * @date 2019/06/21
  */
-@FeignClient(name = "${lamp.feign.msg-server:lamp-msg-server}", fallback = SmsApiFallback.class)
+@FeignClient(name = "${cp3.feign.msg-server:cp3-msg-server}", fallback = SmsApiFallback.class)
 public interface SmsApi {
     /**
      * 短信发送

@@ -25,7 +25,7 @@
 
     <modules>
         <!--<module>cp3-cloud-mall</module>-->
-        <module>cp3-base</module>
+        <!--<module>cp3-base</module>-->
         <!--<module>cp3-support</module>-->
         <module>cp3-common</module>
         <module>cp3-gateway</module>
@@ -41,7 +41,6 @@
         <cp3-base.version>2.0.0-RELEASE</cp3-base.version>
         <cp3-cloud-project.version>1.0.0-SNAPSHOT</cp3-cloud-project.version>
         <java.version>1.8</java.version>
-        <seata.version>1.3.0</seata.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -142,12 +141,6 @@
                 <groupId>com.cp3.base</groupId>
                 <artifactId>cp3-xss-starter</artifactId>
                 <version>${cp3-base.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.seata</groupId>
-                <artifactId>seata-spring-boot-starter</artifactId>
-                <version>${seata.version}</version>
             </dependency>
 
         </dependencies>

@@ -27,8 +27,8 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * 如果能想要调试那个服务，就只启动那个服务，跟测试环境共用一套eureka，并且能将每个请求准确路由到自己的服务就完美了。
  * <p>
  * 使用场景:
- * 用户zuihou，在启动 lamp-authority-server 时， 将改成 spring.application.name: lamp-authority-server-zuihou ，
- * 通过在请求每个请求头中增加 serviceSuffix=zuihou , 请求就能通过网关路由到 zuihou 的机器上
+ * 用户cp4，在启动 cp3-authority-server 时， 将改成 spring.application.name: cp3-authority-server-cp4 ，
+ * 通过在请求每个请求头中增加 serviceSuffix=cp4 , 请求就能通过网关路由到 cp4 的机器上
  * <p>
  * 该过滤器请勿使用在正式环境
  *

@@ -15,7 +15,7 @@ import java.util.Set;
  * @author zuihou
  * @date 2019/07/26
  */
-@FeignClient(name = "${lamp.feign.oauth-server:lamp-oauth-server}", path = "dictionary",
+@FeignClient(name = "${cp3.feign.oauth-server:cp3-oauth-server}", path = "dictionary",
         qualifier = "dictionaryApi", fallback = DictionaryApiFallback.class)
 public interface DictionaryApi {
 

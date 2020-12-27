@@ -40,7 +40,7 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
      */
     @Override
     public List<SwaggerResource> get() {
-        String url = "/swagger-resources?lamp=";
+        String url = "/swagger-resources?cp3=";
         //获取所有router
         List<SwaggerResource> resources = new ArrayList<>();
 

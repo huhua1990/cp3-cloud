@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author zuihou
  * @date 2019/06/21
  */
-@FeignClient(name = "${lamp.feign.file-server:lamp-file-server}")
+@FeignClient(name = "${cp3.feign.file-server:cp3-file-server}")
 public interface AttachmentApi {
 
     /**

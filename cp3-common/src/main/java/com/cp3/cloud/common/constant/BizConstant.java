@@ -45,7 +45,7 @@ public interface BizConstant {
     /**
      * 默认的定时任务组
      */
-    String DEF_JOB_GROUP_NAME = "lamp-jobs-server";
+    String DEF_JOB_GROUP_NAME = "cp3-jobs-server";
     /**
      * 短信发送处理器
      */
@@ -54,24 +54,24 @@ public interface BizConstant {
     /**
      * 基础库
      */
-    String BASE_DATABASE = "lamp_base";
+    String BASE_DATABASE = "cp3_base";
     /**
      * 扩展库
      */
-    String EXTEND_DATABASE = "lamp_extend";
+    String EXTEND_DATABASE = "cp3_extend";
 
     /**
      * 被T
      */
     String LOGIN_STATUS = "T";
 
-    String AUTHORITY = "lamp-authority-server";
-    String FILE = "lamp-file-server";
-    String MSG = "lamp-msg-server";
-    String OAUTH = "lamp-oauth-server";
-    String GATE = "lamp-gateway-server";
-    String ORDER = "lamp-example-server";
-    String DEMO = "lamp-demo-server";
+    String AUTHORITY = "cp3-authority-server";
+    String FILE = "cp3-file-server";
+    String MSG = "cp3-msgs-server";
+    String OAUTH = "cp3-oauth-server";
+    String GATE = "cp3-gateway-server";
+    String ORDER = "cp3-example-server";
+    String DEMO = "cp3-demo-server";
 
     /**
      * 初始化数据源时json的参数，

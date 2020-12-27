@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MsgWebConfiguration extends BaseConfig {
     /**
-     * lamp.log.enabled = true 并且 lamp.log.type=DB时实例该类
+     * cp3.log.enabled = true 并且 cp3.log.type=DB时实例该类
      *
      * @param logApi 日志api
      * @return 监听
      */
     @Bean
-    @ConditionalOnExpression("${lamp.log.enabled:true} && 'DB'.equals('${lamp.log.type:LOGGER}')")
+    @ConditionalOnExpression("${cp3.log.enabled:true} && 'DB'.equals('${cp3.log.type:LOGGER}')")
     public SysLogListener sysLogListener(LogApi logApi) {
         return new SysLogListener(logApi::save);
     }
