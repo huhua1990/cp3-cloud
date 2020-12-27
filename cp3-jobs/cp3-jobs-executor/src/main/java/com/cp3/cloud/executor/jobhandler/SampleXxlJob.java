@@ -1,4 +1,4 @@
-package com.cp3.base.executor.jobhandler;
+package com.cp3.cloud.executor.jobhandler;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;

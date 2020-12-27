@@ -35,22 +35,18 @@
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
+            <groupId>com.cp3.base</groupId>
             <artifactId>cp3-databases</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-log-starter</artifactId>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-log-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.cp3.cloud</groupId>
-            <artifactId>cp3-cloud-j2cache-starter</artifactId>
         </dependency>
 
         <dependency>

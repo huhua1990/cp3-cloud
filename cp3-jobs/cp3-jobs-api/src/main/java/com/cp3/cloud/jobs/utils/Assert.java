@@ -1,4 +1,4 @@
-package com.cp3.base.jobs.utils;
+package com.cp3.cloud.jobs.utils;
 
 /**
  * @Description 断言

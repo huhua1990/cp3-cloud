@@ -1,6 +1,6 @@
-package com.cp3.base.jobs.dto;
+package com.cp3.cloud.jobs.dto;
 
-import com.cp3.base.jobs.utils.Assert;
+import com.cp3.cloud.jobs.utils.Assert;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

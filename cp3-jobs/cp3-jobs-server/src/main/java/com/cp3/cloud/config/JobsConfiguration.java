@@ -1,14 +1,12 @@
-package com.cp3.base.config;
+package com.cp3.cloud.config;
 
 
 import com.cp3.base.converter.String2DateConverter;
-import com.cp3.base.utils.CodeGenerate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -83,8 +81,8 @@ public class JobsConfiguration {
      * @param machineCode
      * @return
      */
-    @Bean("codeGenerate")
-    public CodeGenerate codeGenerate(@Value("${id-generator.machine-code:1}") Long machineCode) {
-        return new CodeGenerate(machineCode.intValue());
-    }
+//    @Bean("codeGenerate")
+//    public CodeGenerate codeGenerate(@Value("${id-generator.machine-code:1}") Long machineCode) {
+//        return new CodeGenerate(machineCode.intValue());
+//    }
 }

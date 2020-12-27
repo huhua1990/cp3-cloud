@@ -1,4 +1,4 @@
-package com.cp3.base.executor;
+package com.cp3.cloud.executor;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.slf4j.Logger;

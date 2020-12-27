@@ -1,8 +1,8 @@
-package com.cp3.base.jobs.api;
+package com.cp3.cloud.jobs.api;
 
 import com.cp3.base.basic.R;
-import com.cp3.base.jobs.api.fallback.JobsTimingApiFallback;
-import com.cp3.base.jobs.dto.XxlJobInfo;
+import com.cp3.cloud.jobs.api.fallback.JobsTimingApiFallback;
+import com.cp3.cloud.jobs.dto.XxlJobInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

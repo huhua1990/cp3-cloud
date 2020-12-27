@@ -37,10 +37,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.cp3.cloud</groupId>
+            <groupId>com.cp3.base</groupId>
             <artifactId>cp3-boot</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>
