@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = SecurityProperties.PREFIX)
 public class SecurityProperties {
-    public static final String PREFIX = "lamp.security";
+    public static final String PREFIX = "cp3.security";
     /**
      * 是否启用uri权限
      */

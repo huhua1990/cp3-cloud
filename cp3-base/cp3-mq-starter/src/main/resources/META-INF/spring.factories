@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.cp3.base.mq.MyRabbitMqConfiguration
+    com.cp3.base.mq.Cp3RabbitMqConfiguration

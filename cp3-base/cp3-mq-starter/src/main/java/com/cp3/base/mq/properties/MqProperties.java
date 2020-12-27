@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = MqProperties.PREFIX)
 public class MqProperties {
-    public static final String PREFIX = "lamp.rabbitmq";
+    public static final String PREFIX = "cp3.rabbitmq";
 
     /**
      * 是否启用

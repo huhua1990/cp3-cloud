@@ -27,7 +27,7 @@ import static com.cp3.base.database.properties.MultiTenantType.SCHEMA;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = PREFIX)
 public class DatabaseProperties {
-    public static final String PREFIX = "lamp.database";
+    public static final String PREFIX = "cp3.database";
     /**
      * 是否启用 防止全表更新与删除插件
      */
@@ -62,7 +62,7 @@ public class DatabaseProperties {
     /**
      * 租户库 前缀
      */
-    private String tenantDatabasePrefix = "lamp_base";
+    private String tenantDatabasePrefix = "cp3_base";
 
     /**
      * 多租户模式

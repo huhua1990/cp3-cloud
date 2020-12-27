@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(InjectionProperties.PREFIX)
 public class InjectionProperties {
-    public static final String PREFIX = "lamp.injection";
+    public static final String PREFIX = "cp3.injection";
     /**
      * 是否启用远程查询
      */

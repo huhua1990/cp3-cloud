@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Mybatis 常用重用拦截器，lamp.database.multiTenantType=任意模式 都需要实例出来
+ * Mybatis 常用重用拦截器，cp3.database.multiTenantType=任意模式 都需要实例出来
  * <p>
  * 拦截器执行一定是：
  * WriteInterceptor > DataScopeInterceptor > PaginationInterceptor
@@ -93,9 +93,9 @@ public abstract class BaseMybatisConfiguration {
             // SCHEMA 动态表名插件
             SchemaInterceptor schemaInterceptor = new SchemaInterceptor(databaseProperties.getTenantDatabasePrefix());
             interceptor.addInnerInterceptor(schemaInterceptor);
-            log.info("检测到 lamp.database.multiTenantType=SCHEMA，已启用 SCHEMA模式");
+            log.info("检测到 cp3.database.multiTenantType=SCHEMA，已启用 SCHEMA模式");
         } else if (MultiTenantType.COLUMN.eq(this.databaseProperties.getMultiTenantType())) {
-            log.info("检测到 lamp.database.multiTenantType=COLUMN，已启用 字段模式");
+            log.info("检测到 cp3.database.multiTenantType=COLUMN，已启用 字段模式");
             // COLUMN 模式 多租户插件
             TenantLineInnerInterceptor tli = new TenantLineInnerInterceptor();
             tli.setTenantLineHandler(new TenantLineHandler() {
@@ -194,7 +194,7 @@ public abstract class BaseMybatisConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnExpression("'DEFAULT'.equals('${lamp.database.id-type:DEFAULT}') || 'CACHE'.equals('${lamp.database.id-type:DEFAULT}')")
+    @ConditionalOnExpression("'DEFAULT'.equals('${cp3.database.id-type:DEFAULT}') || 'CACHE'.equals('${cp3.database.id-type:DEFAULT}')")
     public DisposableWorkerIdAssigner disposableWorkerIdAssigner() {
         return new DisposableWorkerIdAssigner();
     }

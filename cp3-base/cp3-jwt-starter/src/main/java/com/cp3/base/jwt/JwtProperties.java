@@ -16,7 +16,7 @@ import static com.cp3.base.jwt.JwtProperties.PREFIX;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = PREFIX)
 public class JwtProperties {
-    public static final String PREFIX = "lamp.authentication";
+    public static final String PREFIX = "cp3.authentication";
 
     /**
      * 过期时间 2h

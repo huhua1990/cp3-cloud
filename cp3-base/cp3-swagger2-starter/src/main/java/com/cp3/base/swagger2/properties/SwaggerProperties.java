@@ -24,7 +24,7 @@ import static com.cp3.base.swagger2.properties.SwaggerProperties.PREFIX;
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class SwaggerProperties {
-    public static final String PREFIX = "lamp.swagger";
+    public static final String PREFIX = "cp3.swagger";
 
     /**
      * 标题
@@ -34,7 +34,7 @@ public class SwaggerProperties {
     /**
      * 描述
      **/
-    private String description = "lamp-admin-cloud 在线文档";
+    private String description = "cp3-cloud 在线文档";
     /**
      * 版本
      **/
@@ -166,7 +166,7 @@ public class SwaggerProperties {
         /**
          * 描述
          **/
-        private String description = "lamp-admin-cloud 在线文档";
+        private String description = "cp3-cloud 在线文档";
         /**
          * 版本
          **/

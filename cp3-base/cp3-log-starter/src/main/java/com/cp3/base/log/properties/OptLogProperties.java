@@ -16,7 +16,7 @@ import static com.cp3.base.log.properties.OptLogProperties.PREFIX;
 @Data
 @NoArgsConstructor
 public class OptLogProperties {
-    public static final String PREFIX = "lamp.log";
+    public static final String PREFIX = "cp3.log";
 
     /**
      * 是否启用

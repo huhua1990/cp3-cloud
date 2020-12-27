@@ -21,15 +21,15 @@ import org.springframework.context.annotation.Import;
  * @date 2019/09/20
  */
 @Configuration
-@Import(LampRabbitMqConfiguration.RabbitMqConfiguration.class)
-public class LampRabbitMqConfiguration {
+@Import(Cp3RabbitMqConfiguration.RabbitMqConfiguration.class)
+public class Cp3RabbitMqConfiguration {
     @Slf4j
     @Configuration
     @ConditionalOnProperty(prefix = MqProperties.PREFIX, name = "enabled", havingValue = "false", matchIfMissing = true)
     @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
     public static class RabbitMqConfiguration {
         public RabbitMqConfiguration() {
-            log.warn("检测到lamp.rabbitmq.enabled=false，排除了 RabbitMQ");
+            log.warn("检测到cp3.rabbitmq.enabled=false，排除了 RabbitMQ");
         }
     }
 

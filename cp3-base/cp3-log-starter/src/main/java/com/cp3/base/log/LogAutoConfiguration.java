@@ -20,7 +20,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * <p>
  * 启动条件：
  * 1，存在web环境
- * 2，配置文件中lamp.log.enabled=true 或者 配置文件中不存在：lamp.log.enabled 值
+ * 2，配置文件中cp3.log.enabled=true 或者 配置文件中不存在：cp3.log.enabled 值
  *
  * @author zuihou
  * @date 2019/2/1
@@ -40,7 +40,7 @@ public class LogAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnExpression("${lamp.log.enabled:true} && 'LOGGER'.equals('${lamp.log.type:LOGGER}')")
+    @ConditionalOnExpression("${cp3.log.enabled:true} && 'LOGGER'.equals('${cp3.log.type:LOGGER}')")
     public SysLogListener sysLogListener() {
         return new SysLogListener(log -> PointUtil.debug("0", "OPT_LOG", JsonUtil.toJson(log)));
     }

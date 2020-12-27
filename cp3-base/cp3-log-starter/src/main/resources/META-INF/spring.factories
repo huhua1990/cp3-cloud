@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
     com.cp3.base.log.LogAutoConfiguration
 org.springframework.context.ApplicationContextInitializer=\
-    com.cp3.base.log.MyMDCAdapterInitializer
+    com.cp3.base.log.Cp3MdcAdapterInitializer

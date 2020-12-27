@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = XssProperties.PREFIX)
 public class XssProperties {
-    public static final String PREFIX = "lamp.xss";
+    public static final String PREFIX = "cp3.xss";
     private Boolean enabled = true;
     /**
      * 是否启用 RequestBody 注解标记的参数 反序列化时过滤XSS

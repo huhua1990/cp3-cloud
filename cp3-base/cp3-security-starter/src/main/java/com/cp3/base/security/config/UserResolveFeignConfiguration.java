@@ -43,7 +43,7 @@ public class UserResolveFeignConfiguration {
         return instance;
     }
 
-    @FeignClient(name = "${lamp.feign.oauth-server:lamp-oauth-server}", path = "/user",
+    @FeignClient(name = "${cp3.feign.oauth-server:cp3-oauth-server}", path = "/user",
             fallback = UserResolveApiFallback.class)
     public interface UserResolveApi {
 
