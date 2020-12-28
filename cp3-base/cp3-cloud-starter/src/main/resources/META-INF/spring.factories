@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
     com.cp3.base.cloud.OpenFeignAutoConfiguration , \
-    com.cp3.base.cloud.RestTemplateConfiguration
+    com.cp3.base.cloud.RestTemplateConfiguration, \
+    com.cp3.base.cloud.RibbonGatedFilterAutoConfiguration
 
