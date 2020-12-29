@@ -1,0 +1,16 @@
+cp3:
+  swagger:
+    enabled: true
+    docket:
+      auth:
+        title: 权限模块
+        base-package: com.cp3.cloud.authority.controller.auth
+      common:
+        title: 公共模块
+        base-package: com.cp3.cloud.authority.controller.common
+      core:
+        title: 组织模块
+        base-package: com.cp3.cloud.authority.controller.core
+
+server:
+  port: 8764

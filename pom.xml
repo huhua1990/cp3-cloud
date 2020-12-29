@@ -25,8 +25,8 @@
 
     <modules>
         <!--<module>cp3-cloud-mall</module>-->
+        <!--<module>cp3-support</module>-->
         <module>cp3-base</module>
-        <module>cp3-support</module>
         <module>cp3-common</module>
         <module>cp3-gateway</module>
         <module>cp3-authority</module>
@@ -34,12 +34,12 @@
         <module>cp3-tenant</module>
         <module>cp3-file</module>
         <module>cp3-msgs</module>
-        <module>cp3-jobs</module>
+        <!--<module>cp3-jobs</module>-->
     </modules>
 
     <properties>
         <cp3-base.version>2.0.0-RELEASE</cp3-base.version>
-        <cp3-cloud-project.version>1.0.0-SNAPSHOT</cp3-cloud-project.version>
+        <cp3-cloud-project.version>2.0.0-SNAPSHOT</cp3-cloud-project.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
