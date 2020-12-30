@@ -1,0 +1,17 @@
+cp3:
+  cache:
+    type: REDIS
+  redis:
+    ip: 10.45.50.241
+    port: 26379
+    password: redis
+    database: 0
+
+spring:
+  cache:
+    type: GENERIC
+  redis:
+    host: ${cp3.redis.ip}
+    password: ${cp3.redis.password}
+    port: ${cp3.redis.port}
+    database: ${cp3.redis.database}

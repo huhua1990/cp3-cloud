@@ -1,0 +1,18 @@
+cp3:
+  rabbitmq:
+    # 若系统中有除了zipkin之外的地方使用了mq ，则一定不能设置成false
+    enabled: false
+    ip: 10.45.50.241
+    port: 5672
+    username: 'admin'
+    password: 'admin'
+
+spring:
+  rabbitmq:
+    enabled: ${cp3.rabbitmq.enabled}
+    host: ${cp3.rabbitmq.ip}
+    port: ${cp3.rabbitmq.port}
+    username: ${cp3.rabbitmq.username}
+    password: ${cp3.rabbitmq.password}
+    listener:
+      type: direct # simple direct
