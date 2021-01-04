@@ -21,11 +21,23 @@
             <artifactId>cp3-jobs-executor</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-authority-biz</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
+        <!--去掉authority-biz,不支持@EnableLoginArgResolver,还需要单独加其它依赖，如下-->
+        <!--<dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-common</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-cloud-starter</artifactId>
+        </dependency>-->
 
         <!-- xxl-job-core -->
         <dependency>

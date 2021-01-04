@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,8 +13,8 @@ import java.util.List;
  * Created by xuxueli on 16/9/30.
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
-public interface XxlJobGroupDao {
+//@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+public interface XxlJobGroupDao extends BaseMapper<XxlJobGroup> {
 
     public List<XxlJobGroup> findAll();
 

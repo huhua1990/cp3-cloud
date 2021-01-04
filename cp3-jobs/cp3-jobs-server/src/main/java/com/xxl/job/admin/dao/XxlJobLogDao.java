@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.cp3.base.basic.mapper.SuperMapper;
 import com.xxl.job.admin.core.model.XxlJobLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,8 +16,8 @@ import java.util.Map;
  * @author xuxueli 2016-1-12 18:03:06
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
-public interface XxlJobLogDao {
+//@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+public interface XxlJobLogDao extends SuperMapper<XxlJobLog> {
 
 	// exist jobId not use jobGroup, not exist use jobGroup
 	public List<XxlJobLog> pageList(@Param("offset") int offset,

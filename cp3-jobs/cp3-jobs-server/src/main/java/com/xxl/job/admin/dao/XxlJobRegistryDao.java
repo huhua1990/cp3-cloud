@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.cp3.base.basic.mapper.SuperMapper;
 import com.xxl.job.admin.core.model.XxlJobRegistry;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,8 +14,8 @@ import java.util.List;
  * Created by xuxueli on 16/9/30.
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
-public interface XxlJobRegistryDao {
+//@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+public interface XxlJobRegistryDao extends SuperMapper<XxlJobRegistry> {
 
     public List<Integer> findDead(@Param("timeout") int timeout,
                                   @Param("nowTime") Date nowTime);

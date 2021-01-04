@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.cp3.base.basic.mapper.SuperMapper;
 import com.xxl.job.admin.core.model.XxlJobLogGlue;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,8 +14,8 @@ import java.util.List;
  * @author xuxueli 2016-5-19 18:04:56
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
-public interface XxlJobLogGlueDao {
+//@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+public interface XxlJobLogGlueDao extends SuperMapper<XxlJobLogGlue> {
 
 	public int save(XxlJobLogGlue xxlJobLogGlue);
 

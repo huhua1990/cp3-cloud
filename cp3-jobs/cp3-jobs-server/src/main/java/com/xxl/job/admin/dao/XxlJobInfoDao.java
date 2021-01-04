@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.cp3.base.basic.mapper.SuperMapper;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,8 +15,8 @@ import java.util.List;
  * @author xuxueli 2016-1-12 18:03:45
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
-public interface XxlJobInfoDao {
+//@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+public interface XxlJobInfoDao extends SuperMapper<XxlJobInfo> {
 
 	public List<XxlJobInfo> pageList(@Param("offset") int offset,
                                      @Param("pagesize") int pagesize,

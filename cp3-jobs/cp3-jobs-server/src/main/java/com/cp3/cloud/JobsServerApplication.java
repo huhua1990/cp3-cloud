@@ -1,13 +1,19 @@
 package com.cp3.cloud;
 
+import com.cp3.base.security.annotation.EnableLoginArgResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
+
+import static com.cp3.cloud.common.constant.BizConstant.BUSINESS_PACKAGE;
+import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
 
 /**
  * @Description 任务服务
@@ -15,11 +21,15 @@ import java.net.InetAddress;
  * @Date: 2020/12/9
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @ComponentScan({
-        "com.cp3.cloud",
-        "com.xxl.job.admin",
+        UTIL_PACKAGE, BUSINESS_PACKAGE,"com.xxl.job"
+})
+@EnableFeignClients(value = {
+        UTIL_PACKAGE, BUSINESS_PACKAGE
 })
 @Slf4j
+@EnableLoginArgResolver
 public class JobsServerApplication {
     public static void main(String[] args) {
         try {

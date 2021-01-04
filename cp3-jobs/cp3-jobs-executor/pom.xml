@@ -26,6 +26,14 @@
             <groupId>com.cp3.base</groupId>
             <artifactId>cp3-databases</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-boot</artifactId>
+        </dependency>
+
+        <!--如果其它服务要使用job,由对应开放-->
+        <!--
         <dependency>
             <groupId>com.cp3.cloud</groupId>
             <artifactId>cp3-tenant-biz</artifactId>
@@ -41,7 +49,7 @@
             <artifactId>cp3-msgs-biz</artifactId>
             <version>${cp3-cloud-project.version}</version>
         </dependency>
-
+        -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
