@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp3.cloud.activiti.dao.ApprovalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cp3.cloud.activiti.entity.Approval">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="leave_id" jdbcType="BIGINT" property="leaveId"/>
+        <result column="flow_id" jdbcType="BIGINT" property="flowId"/>
+        <result column="proc_inst_id" jdbcType="BIGINT" property="procInstId"/>
+        <result column="rule_id" jdbcType="BIGINT" property="ruleId"/>
+        <result column="leave_state" jdbcType="TINYINT" property="leaveState"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,update_time,
+        leave_id, flow_id, proc_inst_id, rule_id, leave_state, createtime, create_by, update_by
+    </sql>
+
+</mapper>

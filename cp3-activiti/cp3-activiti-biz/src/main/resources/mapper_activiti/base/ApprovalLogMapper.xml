@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp3.cloud.activiti.dao.ApprovalLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cp3.cloud.activiti.entity.ApprovalLog">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="leave_id" jdbcType="BIGINT" property="leaveId"/>
+        <result column="task_id" jdbcType="VARCHAR" property="taskId"/>
+        <result column="task_key" jdbcType="VARCHAR" property="taskKey"/>
+        <result column="task_name" jdbcType="VARCHAR" property="taskName"/>
+        <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus"/>
+        <result column="oper_id" jdbcType="VARCHAR" property="operId"/>
+        <result column="opervalue" jdbcType="VARCHAR" property="opervalue"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,create_time,update_time,
+        leave_id, task_id, task_key, task_name, approval_status, oper_id, opervalue, remark, create_by, update_by
+    </sql>
+
+</mapper>
