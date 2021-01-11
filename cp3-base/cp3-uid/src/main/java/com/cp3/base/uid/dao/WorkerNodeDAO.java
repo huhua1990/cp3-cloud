@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author yutianbao
  */
 @Repository
-@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
+@InterceptorIgnore(tenantLine = "true", dynamicTableName = "true") //拦截忽略注解
 public interface WorkerNodeDAO {
 
     /**

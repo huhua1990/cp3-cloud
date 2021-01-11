@@ -4,6 +4,7 @@ import com.cp3.base.basic.service.SuperCacheService;
 import com.cp3.cloud.tenant.dto.TenantConnectDTO;
 import com.cp3.cloud.tenant.dto.TenantSaveDTO;
 import com.cp3.cloud.tenant.entity.Tenant;
+import com.cp3.cloud.tenant.enumeration.TenantStatusEnum;
 
 import java.util.List;
 
@@ -72,4 +73,13 @@ public interface TenantService extends SuperCacheService<Tenant> {
      * @return 租户信息
      */
     List<Tenant> find();
+
+    /**
+     * 修改租户状态
+     *
+     * @param ids
+     * @param status
+     * @return
+     */
+    Boolean updateStatus(List<Long> ids, TenantStatusEnum status);
 }

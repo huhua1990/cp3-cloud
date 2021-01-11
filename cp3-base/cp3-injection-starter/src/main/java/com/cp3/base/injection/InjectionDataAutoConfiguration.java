@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AllArgsConstructor
 @EnableConfigurationProperties(InjectionProperties.class)
-@ConditionalOnProperty(prefix = InjectionProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class InjectionDataAutoConfiguration {
     private final InjectionProperties remoteProperties;
 
@@ -33,6 +32,7 @@ public class InjectionDataAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = InjectionProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
     public SpringUtils beanFactoryUtils(ApplicationContext applicationContext) {
         SpringUtils instance = SpringUtils.getInstance();
         SpringUtils.setApplicationContext(applicationContext);
@@ -48,6 +48,7 @@ public class InjectionDataAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = InjectionProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
     public InjectionCore getInjectionCore() {
         return new InjectionCore(remoteProperties);
     }
