@@ -73,28 +73,17 @@ public class Flow extends Entity<Long> {
     @Excel(name = "流程状态")
     private Integer flowState;
 
-    @ApiModelProperty(value = "")
-    @TableField("create_by")
-    @Excel(name = "")
-    private Long createBy;
-
-    @ApiModelProperty(value = "")
-    @TableField("update_by")
-    @Excel(name = "")
-    private Long updateBy;
-
-
     @Builder
-    public Flow(Long id, LocalDateTime createTime, LocalDateTime updateTime, 
-                    String procdefCode, String procdefName, Integer flowState, Long createBy, Long updateBy) {
+    public Flow(Long id, LocalDateTime createTime, LocalDateTime updateTime,
+                    String procdefCode, String procdefName, Integer flowState, Long createdBy, Long updatedBy) {
         this.id = id;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.procdefCode = procdefCode;
         this.procdefName = procdefName;
         this.flowState = flowState;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
 }

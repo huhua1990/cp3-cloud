@@ -11,10 +11,13 @@ import java.util.stream.Collectors;
 import com.cp3.base.basic.controller.SuperController;
 import com.cp3.base.basic.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.cp3.base.annotation.security.PreAuth;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -32,8 +35,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/leave")
 @Api(value = "Leave", tags = "假期申请")
-@PreAuth(replace = "activiti:leave:")
+@PreAuth(replace = "activiti:leave:", enabled = false)
 public class LeaveController extends SuperController<LeaveService, Long, Leave, LeavePageQuery, LeaveSaveDTO, LeaveUpdateDTO> {
+
+    @PostMapping("toApproval2")
+    @ApiOperation("提交请假申请-方案二")
+    public R<String> toApproval2(@RequestParam String id){
+        this.baseService.toApproval2(id);
+        return R.success("");
+    }
+
+    @PostMapping("toApproval")
+    @ApiOperation("提交请假申请-方案一")
+    public R<String> toApproval(@RequestParam String id){
+        this.baseService.toApproval(id);
+        return R.success("");
+    }
 
     /**
      * Excel导入后的操作

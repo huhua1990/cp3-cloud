@@ -80,8 +80,8 @@ public class ApprovalLogPageQuery implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

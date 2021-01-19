@@ -77,7 +77,7 @@ public class FlowRuleUpdateDTO implements Serializable {
     @Length(max = 255, message = "规则描述长度不能超过255")
     private String ruleDesc;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 }

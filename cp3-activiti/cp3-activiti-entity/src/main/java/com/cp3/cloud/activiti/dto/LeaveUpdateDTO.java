@@ -92,7 +92,7 @@ public class LeaveUpdateDTO implements Serializable {
     @Length(max = 32, message = "业务类型长度不能超过32")
     private String busiType;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 }

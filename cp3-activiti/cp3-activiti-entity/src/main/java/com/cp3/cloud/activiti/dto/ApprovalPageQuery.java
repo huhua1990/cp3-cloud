@@ -68,8 +68,8 @@ public class ApprovalPageQuery implements Serializable {
     @ApiModelProperty(value = "")
     private LocalDateTime createtime;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

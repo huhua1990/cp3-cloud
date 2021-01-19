@@ -15,14 +15,14 @@
         <result column="state" jdbcType="TINYINT" property="state"/>
         <result column="system_code" jdbcType="VARCHAR" property="systemCode"/>
         <result column="busi_type" jdbcType="VARCHAR" property="busiType"/>
-        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,create_time,update_time,
-        user_id, start_time, end_time, leave_type, context, state, system_code, busi_type, create_by, update_by
+        user_id, start_time, end_time, leave_type, context, state, system_code, busi_type, created_by, updated_by
     </sql>
 
 </mapper>

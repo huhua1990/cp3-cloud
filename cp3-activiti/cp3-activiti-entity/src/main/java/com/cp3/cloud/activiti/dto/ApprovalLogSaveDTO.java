@@ -90,8 +90,8 @@ public class ApprovalLogSaveDTO implements Serializable {
     @Length(max = 255, message = "备注长度不能超过255")
     private String remark;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

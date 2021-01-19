@@ -81,8 +81,8 @@ public class LeavePageQuery implements Serializable {
     @ApiModelProperty(value = "业务类型")
     private String busiType;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

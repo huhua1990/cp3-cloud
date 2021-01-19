@@ -4,7 +4,11 @@ import com.cp3.base.security.annotation.EnableLoginArgResolver;
 import com.cp3.base.validator.annotation.EnableFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,6 +30,10 @@ import static com.cp3.cloud.common.constant.BizConstant.UTIL_PACKAGE;
  * @date 2021-01-11
  */
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {org.activiti.spring.boot.SecurityAutoConfiguration.class,
+        SecurityFilterAutoConfiguration.class,
+        SecurityAutoConfiguration.class,
+        ManagementWebSecurityAutoConfiguration.class})
 @EnableDiscoveryClient
 @Configuration
 @EnableFeignClients(value = { BUSINESS_PACKAGE, UTIL_PACKAGE })

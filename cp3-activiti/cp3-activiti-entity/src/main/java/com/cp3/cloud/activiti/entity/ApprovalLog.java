@@ -119,20 +119,20 @@ public class ApprovalLog extends Entity<Long> {
     private String remark;
 
     @ApiModelProperty(value = "")
-    @TableField("create_by")
+    @TableField("created_by")
     @Excel(name = "")
-    private Long createBy;
+    private Long createdBy;
 
     @ApiModelProperty(value = "")
-    @TableField("update_by")
+    @TableField("updated_by")
     @Excel(name = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 
     @Builder
-    public ApprovalLog(Long id, LocalDateTime createTime, LocalDateTime updateTime, 
-                    Long leaveId, String taskId, String taskKey, String taskName, String approvalStatus, 
-                    String operId, String opervalue, String remark, Long createBy, Long updateBy) {
+    public ApprovalLog(Long id, LocalDateTime createTime, LocalDateTime updateTime,
+                    Long leaveId, String taskId, String taskKey, String taskName, String approvalStatus,
+                    String operId, String opervalue, String remark, Long createdBy, Long updatedBy) {
         this.id = id;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -144,8 +144,8 @@ public class ApprovalLog extends Entity<Long> {
         this.operId = operId;
         this.opervalue = opervalue;
         this.remark = remark;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
 }

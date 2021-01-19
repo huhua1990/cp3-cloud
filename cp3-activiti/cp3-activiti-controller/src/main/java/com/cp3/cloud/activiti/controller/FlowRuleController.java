@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/flowRule")
 @Api(value = "FlowRule", tags = "流程规则")
-@PreAuth(replace = "activiti:flowRule:")
+@PreAuth(replace = "activiti:flowRule:", enabled = false)
 public class FlowRuleController extends SuperController<FlowRuleService, Long, FlowRule, FlowRulePageQuery, FlowRuleSaveDTO, FlowRuleUpdateDTO> {
 
     /**

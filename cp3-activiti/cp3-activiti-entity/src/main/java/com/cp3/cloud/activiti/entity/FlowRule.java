@@ -91,21 +91,10 @@ public class FlowRule extends Entity<Long> {
     @Excel(name = "规则描述")
     private String ruleDesc;
 
-    @ApiModelProperty(value = "")
-    @TableField("create_by")
-    @Excel(name = "")
-    private Long createBy;
-
-    @ApiModelProperty(value = "")
-    @TableField("update_by")
-    @Excel(name = "")
-    private Long updateBy;
-
-
     @Builder
-    public FlowRule(Long id, LocalDateTime createTime, LocalDateTime updateTime, 
-                    Long flowId, String systemCode, String busiType, String ruleName, String ruleDesc, 
-                    Long createBy, Long updateBy) {
+    public FlowRule(Long id, LocalDateTime createTime, LocalDateTime updateTime,
+                    Long flowId, String systemCode, String busiType, String ruleName, String ruleDesc,
+                    Long createdBy, Long updatedBy) {
         this.id = id;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -114,8 +103,8 @@ public class FlowRule extends Entity<Long> {
         this.busiType = busiType;
         this.ruleName = ruleName;
         this.ruleDesc = ruleDesc;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
 }

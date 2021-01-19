@@ -55,8 +55,8 @@ public class FlowPageQuery implements Serializable {
     @ApiModelProperty(value = "流程状态")
     private Integer flowState;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

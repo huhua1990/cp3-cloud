@@ -88,36 +88,20 @@ public class Approval extends Entity<Long> {
     @Excel(name = "审批结果")
     private Integer leaveState;
 
-    @ApiModelProperty(value = "")
-    @TableField("createtime")
-    @Excel(name = "", format = DEFAULT_DATE_TIME_FORMAT, width = 20)
-    private LocalDateTime createtime;
-
-    @ApiModelProperty(value = "")
-    @TableField("create_by")
-    @Excel(name = "")
-    private Long createBy;
-
-    @ApiModelProperty(value = "")
-    @TableField("update_by")
-    @Excel(name = "")
-    private Long updateBy;
-
-
     @Builder
-    public Approval(Long id, LocalDateTime updateTime, 
-                    Long leaveId, Long flowId, Long procInstId, Long ruleId, Integer leaveState, 
-                    LocalDateTime createtime, Long createBy, Long updateBy) {
+    public Approval(Long id, LocalDateTime updateTime,
+                    Long leaveId, Long flowId, Long procInstId, Long ruleId, Integer leaveState,
+                    LocalDateTime createtime, Long createdBy, Long updatedBy) {
         this.id = id;
+        this.createTime = createTime;
         this.updateTime = updateTime;
         this.leaveId = leaveId;
         this.flowId = flowId;
         this.procInstId = procInstId;
         this.ruleId = ruleId;
         this.leaveState = leaveState;
-        this.createtime = createtime;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
 }

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/approval")
 @Api(value = "Approval", tags = "审批")
-@PreAuth(replace = "activiti:approval:")
+@PreAuth(replace = "activiti:approval:", enabled = false)
 public class ApprovalController extends SuperController<ApprovalService, Long, Approval, ApprovalPageQuery, ApprovalSaveDTO, ApprovalUpdateDTO> {
 
     /**

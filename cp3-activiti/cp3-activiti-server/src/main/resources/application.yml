@@ -12,13 +12,13 @@ cp3:
     ip: 10.45.50.241
     port: 3308
     driverClassName: com.mysql.cj.jdbc.Driver
-    database: cp3_activiti
+    database: cp3_activiti_0000
     username: 'root'
     password: 'root'
     url: jdbc:mysql://${cp3.mysql.ip}:${cp3.mysql.port}/${cp3.mysql.database}?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
   database: # 字段介绍参考 DatabaseProperties
-    tenantDatabasePrefix: cp3_activiti  #去掉通过配置，方便个性化配置
-    multiTenantType: COLUMN
+    tenantDatabasePrefix: cp3_activiti
+    multiTenantType: SCHEMA
     isNotWrite: false
     isBlockAttack: false
     isSeata: false #去掉通过配置，方便个性化配置
@@ -38,13 +38,12 @@ cp3:
     docket:
       activiti:
         title: 工作流服务
-        base-package: com.cp3.cloud.demo.controller
+        base-package: com.cp3.cloud.activiti.controller
 
 # mysql 通用配置
 spring:
-  ###
-#  activiti:
-#      check-process-definitions: true  #自动检查、部署流程定义文件,默认为true
+  activiti:
+    check-process-definitions: false  #自动检查、部署本地procsses流程定义文件,默认为true
 #      database-schema-update: true #自动更新数据库结构,默认为true
 #      history-level: full #保存历史数据级别设置为full最高级别，便于历史数据的追溯
 #      db-history-used: true

@@ -15,14 +15,14 @@
         <result column="oper_id" jdbcType="VARCHAR" property="operId"/>
         <result column="opervalue" jdbcType="VARCHAR" property="opervalue"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
-        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,create_time,update_time,
-        leave_id, task_id, task_key, task_name, approval_status, oper_id, opervalue, remark, create_by, update_by
+        leave_id, task_id, task_key, task_name, approval_status, oper_id, opervalue, remark, created_by, updated_by
     </sql>
 
 </mapper>

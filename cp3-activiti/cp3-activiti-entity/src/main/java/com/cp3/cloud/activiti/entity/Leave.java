@@ -115,21 +115,10 @@ public class Leave extends Entity<Long> {
     @Excel(name = "业务类型")
     private String busiType;
 
-    @ApiModelProperty(value = "")
-    @TableField("create_by")
-    @Excel(name = "")
-    private Long createBy;
-
-    @ApiModelProperty(value = "")
-    @TableField("update_by")
-    @Excel(name = "")
-    private Long updateBy;
-
-
     @Builder
-    public Leave(Long id, LocalDateTime createTime, LocalDateTime updateTime, 
-                    Long userId, LocalDateTime startTime, LocalDateTime endTime, Integer leaveType, String context, 
-                    Integer state, String systemCode, String busiType, Long createBy, Long updateBy) {
+    public Leave(Long id, LocalDateTime createTime, LocalDateTime updateTime,
+                    Long userId, LocalDateTime startTime, LocalDateTime endTime, Integer leaveType, String context,
+                    Integer state, String systemCode, String busiType, Long createdBy, Long updatedBy) {
         this.id = id;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -141,8 +130,8 @@ public class Leave extends Entity<Long> {
         this.state = state;
         this.systemCode = systemCode;
         this.busiType = busiType;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
 }

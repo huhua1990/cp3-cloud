@@ -12,14 +12,14 @@
         <result column="rule_id" jdbcType="BIGINT" property="ruleId"/>
         <result column="leave_state" jdbcType="TINYINT" property="leaveState"/>
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
-        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,update_time,
-        leave_id, flow_id, proc_inst_id, rule_id, leave_state, createtime, create_by, update_by
+        leave_id, flow_id, proc_inst_id, rule_id, leave_state, createtime, created_by, updated_by
     </sql>
 
 </mapper>

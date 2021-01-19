@@ -13,5 +13,6 @@ import com.cp3.cloud.activiti.entity.Leave;
  * @date 2021-01-11
  */
 public interface LeaveService extends SuperService<Leave> {
-
+    void toApproval(String id);
+    void toApproval2(String id);
 }

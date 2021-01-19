@@ -65,8 +65,8 @@ public class FlowRulePageQuery implements Serializable {
     @ApiModelProperty(value = "规则描述")
     private String ruleDesc;
     @ApiModelProperty(value = "")
-    private Long createBy;
+    private Long createdBy;
     @ApiModelProperty(value = "")
-    private Long updateBy;
+    private Long updatedBy;
 
 }

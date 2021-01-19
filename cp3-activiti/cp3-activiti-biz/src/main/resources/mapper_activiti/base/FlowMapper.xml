@@ -10,14 +10,14 @@
         <result column="procdef_code" jdbcType="VARCHAR" property="procdefCode"/>
         <result column="procdef_name" jdbcType="VARCHAR" property="procdefName"/>
         <result column="flow_state" jdbcType="TINYINT" property="flowState"/>
-        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,create_time,update_time,
-        procdef_code, procdef_name, flow_state, create_by, update_by
+        procdef_code, procdef_name, flow_state, created_by, updated_by
     </sql>
 
 </mapper>
