@@ -22,7 +22,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApprovalServiceImpl extends SuperServiceImpl<ApprovalMapper, Approval> implements ApprovalService {
 
-    @Override
-
-
 }
