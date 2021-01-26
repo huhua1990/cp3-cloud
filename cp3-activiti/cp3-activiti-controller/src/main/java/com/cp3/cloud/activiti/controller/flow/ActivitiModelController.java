@@ -177,11 +177,9 @@ public class ActivitiModelController {
             //redirectAttributes.addFlashAttribute("message", "部署成功，部署ID=" + deployment.getId());
             //向流程定义表保存数据
             List<Process> processes = model.getProcesses();
-            //TODO  只有一条数据吗
-            log.info("modelId:{},流程部署成功，部署ID:{}", modelId, deployment.getId());
             for (Process process : processes) {
-                log.info("modelId:{},流程部署成功，部署deploymentId:{},进程processId:{}", modelId, deployment.getId(), process.getId());
-                flowService.save(Flow.builder().procdefCode(process.getId()).procdefName(process.getName()).build());
+                log.info("modelId:{},流程部署成功，部署deploymentId:{},流程id(业务类型):{}", modelId, deployment.getId(), process.getId());
+                flowService.save(Flow.builder().modelId(modelId).procdefId(deployment.getId()).build());
             }
 
             return R.success("部署成功，部署ID:" + deployment.getId());

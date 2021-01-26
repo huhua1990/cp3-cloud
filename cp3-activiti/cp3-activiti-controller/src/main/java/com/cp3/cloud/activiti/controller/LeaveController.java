@@ -38,13 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuth(replace = "activiti:leave:", enabled = false)
 public class LeaveController extends SuperController<LeaveService, Long, Leave, LeavePageQuery, LeaveSaveDTO, LeaveUpdateDTO> {
 
-    @PostMapping("toApproval2")
-    @ApiOperation("提交请假申请-方案二")
-    public R<String> toApproval2(@RequestParam String id){
-        this.baseService.toApproval2(id);
-        return R.success("");
-    }
-
     @PostMapping("toApproval")
     @ApiOperation("提交请假申请-方案一")
     public R<String> toApproval(@RequestParam String id){

@@ -1,6 +1,7 @@
 package com.cp3.cloud.activiti.service;
 
 import com.cp3.base.basic.service.SuperService;
+import com.cp3.cloud.activiti.dto.ApprovalSaveDTO;
 import com.cp3.cloud.activiti.entity.Approval;
 
 /**
@@ -13,5 +14,4 @@ import com.cp3.cloud.activiti.entity.Approval;
  * @date 2021-01-11
  */
 public interface ApprovalService extends SuperService<Approval> {
-
 }

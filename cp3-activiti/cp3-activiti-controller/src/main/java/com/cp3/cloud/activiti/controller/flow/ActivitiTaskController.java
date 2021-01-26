@@ -46,11 +46,11 @@ public class ActivitiTaskController {
     @GetMapping("queryTaskList")
     @ResponseBody
     @ApiOperation("实例任务列表查询")
-    public R<IPage<TaskDTO>> queryTaskList(@RequestParam String assignee, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
+    public R<IPage<TaskDTO>> queryTaskList(@RequestParam String assignee,@RequestParam String businessType, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
         Page<TaskDTO> page = new Page<>(currentPage, pageSize);
         int firstResult = (currentPage-1)*pageSize;
         long count = taskService.createTaskQuery().count();
-        List<Task> list = taskService.createTaskQuery().taskAssignee(assignee).orderByExecutionId().desc().listPage(firstResult,pageSize);
+        List<Task> list = taskService.createTaskQuery().taskAssignee(assignee).processInstanceBusinessKey(businessType).orderByExecutionId().desc().listPage(firstResult,pageSize);
         List<TaskDTO> taskDTOList = BeanPlusUtil.toBeanList(list, TaskDTO.class);
         page.setRecords(taskDTOList);
         page.setTotal(count);
@@ -59,14 +59,14 @@ public class ActivitiTaskController {
 
     /**
      * 任务操作
-     * @param id
+     * @param taskId
      * @param state
      * @return
      */
     @PostMapping("completeTask")
     @ResponseBody
     @ApiOperation("任务操作")
-    public R<String> updateModelState(@RequestParam String id, @RequestParam String state, @RequestParam(required = false) Long day, @RequestParam(required = false) Long age) {
+    public R<String> updateModelState(@RequestParam String taskId, @RequestParam String state, @RequestParam(required = false) Long day, @RequestParam(required = false) Long age) {
         //任务完成
         if ("F".equals(state)) {
             Map<String, Object> map = new HashMap<>();
@@ -76,12 +76,12 @@ public class ActivitiTaskController {
             if(null != age) {
                 map.put("age", age);
             }
-            taskService.complete(id, map);
+            taskService.complete(taskId, map);
         }
         //任务删除
         if ("D".equals(state)) {
-            taskService.deleteTask(id);
+            taskService.deleteTask(taskId);
         }
-        return R.success(id);
+        return R.success(taskId);
     }
 }

@@ -44,8 +44,6 @@ import java.util.List;
 public class ActivitiProcessController {
 
     @Autowired
-    private ManagementService managementService;
-    @Autowired
     private RuntimeService runtimeService;
     @Autowired
     private DozerUtils dozerUtils;
@@ -109,5 +107,6 @@ public class ActivitiProcessController {
         runtimeService.startProcessInstanceById(key, businessKey,null);
         return R.success(key);
     }
+
 
 }

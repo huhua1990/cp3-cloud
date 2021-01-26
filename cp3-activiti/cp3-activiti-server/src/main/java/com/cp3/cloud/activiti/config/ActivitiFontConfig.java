@@ -1,5 +1,6 @@
 package com.cp3.cloud.activiti.config;
 
+import com.cp3.base.boot.config.BaseConfig;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date: 2021/1/21
  */
 @Configuration
-public class ActivitiFontConfig {
+public class ActivitiFontConfig extends BaseConfig {
     //@Resource
     //ActivitiIdGenerate activitiIdGenerate;
 
