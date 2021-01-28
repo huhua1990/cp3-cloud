@@ -1,0 +1,13 @@
+cp3:
+  swagger:
+    docket:
+      flowable:
+        title: xxx服务
+        base-package: com.cp3.cloud.flowable.controller
+
+server:
+  port: 8781
+
+
+## 请在nacos中新建一个名为: cp3-flowable-server.yml 的配置文件，并将： cp3-flowable-server/src/main/resources/cp3-flowable-server.yml 配置文件的内容移动过去
+## 然后删除此文件！！！

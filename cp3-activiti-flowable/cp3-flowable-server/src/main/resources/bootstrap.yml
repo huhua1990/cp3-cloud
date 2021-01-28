@@ -1,0 +1,51 @@
+cp3:
+  nacos:
+    ip: ${NACOS_IP:@nacos.ip@}
+    port: ${NACOS_PORT:@nacos.port@}
+    namespace: ${NACOS_ID:@nacos.namespace@}
+    username: ${NACOS_ID:@nacos.username@}
+    password: ${NACOS_ID:@nacos.password@}
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: @profile.active@
+  cloud:
+    nacos:
+      config:
+        server-addr: ${cp3.nacos.ip}:${cp3.nacos.port}
+        file-extension: yml
+        namespace: ${cp3.nacos.namespace}
+        shared-configs:
+          - dataId: common.yml
+            refresh: true
+          - dataId: redis.yml
+            refresh: false
+#          - dataId: mysql.yml
+#            refresh: true
+          - dataId: rabbitmq.yml
+            refresh: false
+        enabled: true
+        username: ${cp3.nacos.username}
+        password: ${cp3.nacos.password}
+      discovery:
+        username: ${cp3.nacos.username}
+        password: ${cp3.nacos.password}
+        server-addr: ${cp3.nacos.ip}:${cp3.nacos.port}
+        namespace: ${cp3.nacos.namespace}
+        metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
+
+logging:
+  file:
+    path: @logging.file.path@
+    name: ${logging.file.path}/${spring.application.name}/root.log
+
+# 用于/actuator/info
+info:
+  name: '@project.name@'
+  description: '@project.description@'
+  version: '@project.version@'

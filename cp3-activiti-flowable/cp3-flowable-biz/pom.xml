@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cp3.cloud</groupId>
+        <artifactId>cp3-activiti-flowable</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cp3-flowable-biz</artifactId>
+    <name>${project.artifactId}</name>
+    <description>xxx-业务模块</description>
+
+    <properties>
+        <flowable.version>6.4.0</flowable.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-flowable-entity</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.cloud</groupId>
+            <artifactId>cp3-oauth-api</artifactId>
+            <version>${cp3-cloud-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-databases</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-dozer-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-cache-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-injection-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cp3.base</groupId>
+            <artifactId>cp3-boot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+        </dependency>
+
+        <!--flowable工作流依赖-->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-basic</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-ui-common</artifactId>
+            <version>${flowable.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-log4j2</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-ui-modeler-rest</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-idm-spring-configurator</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-ui-idm-rest</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-ui-idm-conf</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
