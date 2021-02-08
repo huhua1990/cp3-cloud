@@ -14,6 +14,10 @@
     <name>${project.artifactId}</name>
     <description>xxx-业务模块</description>
 
+    <properties>
+        <activiti-version>5.23.0</activiti-version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.cp3.cloud</groupId>
@@ -60,7 +64,7 @@
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter-basic</artifactId>
-            <version>5.23.0</version>
+            <version>${activiti-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mybatis</groupId>
@@ -72,13 +76,13 @@
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-diagram-rest</artifactId>
-            <version>5.23.0</version>
+            <version>${activiti-version}</version>
         </dependency>
         <!-- Activiti在线设计器 -->
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-modeler</artifactId>
-            <version>5.23.0</version>
+            <version>${activiti-version}</version>
         </dependency>
         <!--jar冲突,单独列出来-->
         <dependency>

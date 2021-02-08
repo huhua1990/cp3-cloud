@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cp3.cloud.activiti.dao.FlowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cp3.cloud.activiti.entity.Flow">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="model_id" jdbcType="VARCHAR" property="modelId"/>
+        <result column="procdef_id" jdbcType="VARCHAR" property="procdefId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,created_by,create_time,updated_by,update_time,
+        model_id, procdef_id
+    </sql>
+
+</mapper>

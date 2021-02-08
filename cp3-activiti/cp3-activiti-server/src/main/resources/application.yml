@@ -43,8 +43,9 @@ cp3:
 # mysql 通用配置
 spring:
   activiti:
-    check-process-definitions: false  #自动检查、部署本地procsses流程定义文件,默认为true
-#      database-schema-update: true #自动更新数据库结构,默认为true
+    check-process-definitions: false #自动检查、部署本地procsses流程定义文件,默认为true
+    async-executor-activate: false #定时任务job,默认为true
+#      database-schema-update: false #自动更新数据库结构,默认为true,更新后需要关闭
 #      history-level: full #保存历史数据级别设置为full最高级别，便于历史数据的追溯
 #      db-history-used: true
   cloud:
