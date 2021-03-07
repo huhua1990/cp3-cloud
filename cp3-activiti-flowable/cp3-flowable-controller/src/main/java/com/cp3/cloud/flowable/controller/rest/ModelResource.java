@@ -1,6 +1,8 @@
 package com.cp3.cloud.flowable.controller.rest;
 
+import com.cp3.base.jackson.JsonUtil;
 import com.cp3.base.utils.DateUtils;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.InputStream;
@@ -84,7 +86,8 @@ public class ModelResource {
             try {
                 updatedModel.updateModel(model);
                 if (model.getModelType() != null) {
-                    ObjectNode modelNode = (ObjectNode)this.objectMapper.readTree(model.getModelEditorJson());
+                    ObjectNode modelNode = (ObjectNode)JsonUtil.newInstance().readTree(model.getModelEditorJson());
+                    //ObjectNode modelNode = (ObjectNode)this.objectMapper.readTree(model.getModelEditorJson());
                     modelNode.put("name", model.getName());
                     modelNode.put("key", model.getKey());
                     if (0 == model.getModelType()) {
@@ -138,7 +141,7 @@ public class ModelResource {
         modelNode.put("name", model.getName());
         modelNode.put("key", model.getKey());
         modelNode.put("description", model.getDescription());
-        modelNode.putPOJO("lastUpdated", model.getLastUpdated());
+        modelNode.putPOJO("lastUpdated", model.getLastUpdated().getTime());
         modelNode.put("lastUpdatedBy", model.getLastUpdatedBy());
         ObjectNode editorJsonNode;
         if (StringUtils.isNotEmpty(model.getModelEditorJson())) {

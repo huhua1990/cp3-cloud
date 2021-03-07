@@ -1,5 +1,6 @@
 package com.cp3.cloud.oauth.controller;
 
+import com.cp3.base.annotation.base.IgnoreResponseBodyAdvice;
 import com.cp3.cloud.authority.service.auth.UserService;
 import com.cp3.cloud.authority.service.common.DictionaryService;
 import com.cp3.cloud.authority.service.core.OrgService;
@@ -25,6 +26,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @AllArgsConstructor
+@IgnoreResponseBodyAdvice
 @Api(value = "数据注入查询接口", tags = "数据注入查询接口， 不建议前端调用")
 public class InjectionController {
     private final DictionaryService dictionaryService;

@@ -8,11 +8,11 @@ cp3:
     password: 'root'
     url: jdbc:mysql://${cp3.mysql.ip}:${cp3.mysql.port}/${cp3.mysql.database}?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
   database: # 字段介绍参考 DatabaseProperties
-    tenantDatabasePrefix: cp3_base
+    #tenantDatabasePrefix: cp3_base 去掉通过配置，方便本地个性化配置
     multiTenantType: SCHEMA
     isNotWrite: false
     isBlockAttack: false
-    isSeata: false
+    #isSeata: false 去掉通过配置，方便本地个性化配置
     id-type: HU_TOOL
     hutoolId:
       workerId: 0

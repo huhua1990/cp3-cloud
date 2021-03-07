@@ -1,4 +1,7 @@
 cp3:
+  database:
+    isSeata: false
+    tenantDatabasePrefix: cp3_base
   swagger:
     enabled: true
     docket:

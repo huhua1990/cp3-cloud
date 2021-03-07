@@ -2,6 +2,9 @@ server:
   port: 8773
 
 cp3:
+  database:
+    isSeata: false
+    tenantDatabasePrefix: cp3_base
   swagger:
     enabled: true
     title: 认证服务

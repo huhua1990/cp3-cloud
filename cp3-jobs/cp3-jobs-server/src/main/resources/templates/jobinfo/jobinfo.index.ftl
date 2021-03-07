@@ -13,17 +13,17 @@
 	<@netCommon.commonHeader />
 	<!-- left -->
 	<@netCommon.commonLeft "jobinfo" />
-	
+
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>${I18n.jobinfo_name}</h1>
 		</section>
-		
+
 		<!-- Main content -->
 	    <section class="content">
-	    
+
 	    	<div class="row">
 	    		<div class="col-xs-3">
 	              	<div class="input-group">
@@ -66,7 +66,7 @@
 	            	<button class="btn btn-block btn-success add" type="button">${I18n.jobinfo_field_add}</button>
 	            </div>
           	</div>
-	    	
+
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box">
@@ -100,7 +100,7 @@
 			</div>
 	    </section>
 	</div>
-	
+
 	<!-- footer -->
 	<@netCommon.commonFooter />
 </div>
@@ -319,18 +319,12 @@ logging.info("脚本文件：" + sys.argv[0])
 #!/usr/bin/env node
 console.log("xxl-job: hello nodejs")
 
-var arguments = process.argv
+var arguments = processes.argv
 
 console.log("${I18n.jobinfo_script_location}: " + arguments[1])
 console.log("${I18n.jobinfo_field_executorparam}: " + arguments[2])
 console.log("${I18n.jobinfo_shard_index}: " + arguments[3])
 console.log("${I18n.jobinfo_shard_total}: " + arguments[4])
-<#--for (var i = 2; i < arguments.length; i++){
-	console.log("参数 %s = %s", (i-1), arguments[i]);
-}-->
-
-console.log("Good bye!")
-process.exit(0)
 </textarea>
 <textarea class="glueSource_powershell" style="display:none;" >
 Write-Host "xxl-job: hello powershell"

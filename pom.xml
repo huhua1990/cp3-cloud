@@ -34,7 +34,11 @@
         <module>cp3-tenant</module>
         <module>cp3-file</module>
         <module>cp3-msgs</module>
-        <!--<module>cp3-jobs</module>-->
+        <module>cp3-jobs</module>
+        <module>cp3-activiti</module>
+        <module>cp3-activiti-flowable</module>
+        <!--<module>cp3-demo</module>
+        <module>cp3-example</module>-->
     </modules>
 
     <properties>

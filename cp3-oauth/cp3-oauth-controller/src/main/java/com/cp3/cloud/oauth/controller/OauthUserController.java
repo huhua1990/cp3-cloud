@@ -1,5 +1,6 @@
 package com.cp3.cloud.oauth.controller;
 
+import com.cp3.base.annotation.base.IgnoreResponseBodyAdvice;
 import com.cp3.base.basic.R;
 import com.cp3.base.security.feign.UserQuery;
 import com.cp3.base.security.model.SysUser;
@@ -54,6 +55,7 @@ public class OauthUserController {
      * @param id 用户id
      */
     @ApiOperation(value = "查询用户权限范围", notes = "根据用户id，查询用户权限范围")
+    @IgnoreResponseBodyAdvice
     @GetMapping(value = "/ds/{id}")
     public Map<String, Object> getDataScopeById(@PathVariable("id") Long id) {
         return userService.getDataScopeById(id);

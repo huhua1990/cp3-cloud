@@ -1,5 +1,6 @@
 package com.cp3.cloud.oauth.controller;
 
+import com.cp3.base.annotation.base.IgnoreResponseBodyAdvice;
 import com.cp3.base.basic.R;
 import com.cp3.base.exception.BizException;
 import com.cp3.base.jwt.TokenUtil;
@@ -69,6 +70,7 @@ public class OauthController {
     }
 
     @ApiOperation(value = "验证码", notes = "验证码")
+    @IgnoreResponseBodyAdvice
     @GetMapping(value = "/anno/captcha", produces = "image/png")
     public void captcha(@RequestParam(value = "key") String key, HttpServletResponse response) throws IOException {
         this.validateCodeService.create(key, response);

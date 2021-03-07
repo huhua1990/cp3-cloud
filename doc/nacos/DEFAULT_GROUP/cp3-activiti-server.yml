@@ -1,0 +1,248 @@
+cp3:
+  zipkin:
+    enabled: false
+  injection:
+    # 是否启用 远程数据 手动注入
+    enabled: true
+    # 是否启用 远程数据 注解注入
+    aop-enabled: true
+    guavaCache:
+      enabled: false
+      maximumSize: 1000
+      refreshWriteTime: 10
+      refreshThreadPoolSize: 1000
+  security:
+    enabled: true
+    type: FEIGN
+  log:
+    enabled: true
+    type: DB
+  xss:
+    enabled: true
+    requestBodyEnabled: false
+  #mysql配置
+  mysql:
+      ip: 10.45.50.241
+      port: 3308
+      driverClassName: com.mysql.cj.jdbc.Driver
+      database: cp3_activiti
+      username: 'root'
+      password: 'root'
+      url: jdbc:mysql://${cp3.mysql.ip}:${cp3.mysql.port}/${cp3.mysql.database}?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
+    database: # 字段介绍参考 DatabaseProperties
+      tenantDatabasePrefix: cp3_base
+      multiTenantType: SCHEMA
+      isNotWrite: false
+      isBlockAttack: false
+      isSeata: false
+      id-type: HU_TOOL
+      hutoolId:
+        workerId: 0
+        dataCenterId: 0
+      cache-id:
+        time-bits: 31
+        worker-bits: 22
+        seq-bits: 10
+        epochStr: '2020-09-15'
+        boost-power: 3
+        padding-factor: 50
+
+server:
+  shutdown: GRACEFUL
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  undertow:
+    threads:
+      io: 4 # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      worker: 80  # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+    buffer-size: 2048  # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理 , 每块buffer的空间大小,越小的空间被利用越充分
+    direct-buffers: true  # 是否分配的直接内存
+
+spring:
+  lifecycle:
+    # 优雅停机宽限期时间
+    timeout-per-shutdown-phase: 30s
+  zipkin:
+    sender:
+      type: RABBIT
+    enabled: ${cp3.zipkin.enabled}
+    discovery-client-enabled: false
+    baseUrl: http://10.45.50.241:9411/
+    compression: # 压缩
+      enabled: true
+    locator:    # 通过nacos动态获取地址
+      discovery:
+        enabled: true
+    rabbitmq: # 使用指定的队列
+      queue: cp3_zipkin
+  #被追踪的可能性，默认是0.1 表示百分之10
+  sleuth:
+    enabled: ${cp3.zipkin.enabled}
+    sampler:
+      probability: 1.0
+  servlet:
+    multipart:
+      max-file-size: 512MB      # Max file size，默认1M
+      max-request-size: 512MB   # Max request size，默认10M
+  #mysql配置
+  autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    datasource:
+      dynamic:
+        enabled: false  # 这里一定要写成false，无论是什么模式
+        # 从这里开始(dynamic)，中间的这段配置用于 cp3.database.multiTenantType == DATASOURCE 时
+        # 联系群主开通
+        # 从这里结束(dynamic)，中间的这段配置用于 cp3.database.multiTenantType == DATASOURCE 时
+      druid:
+        enable: true
+        # 从这里开始(druid)，中间的这段配置用于 cp3.database.multiTenantType != DATASOURCE 时
+        username: ${cp3.mysql.username}
+        password: ${cp3.mysql.password}
+        driver-class-name: ${cp3.mysql.driverClassName}
+        url: jdbc:mysql://${cp3.mysql.ip}:${cp3.mysql.port}/${cp3.mysql.database}?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
+        db-type: mysql
+        initialSize: 10
+        minIdle: 10
+        maxActive: 200
+        max-wait: 60000
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        validation-query: SELECT 'x'
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+        time-between-eviction-runs-millis: 60000  #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        min-evictable-idle-time-millis: 300000    #配置一个连接在池中最小生存的时间，单位是毫秒
+        filters: stat,wall
+        filter:
+          wall:
+            enabled: true
+            config:
+              commentAllow: true
+              multiStatementAllow: true
+              noneBaseStatementAllow: true
+        # 从这里结束(druid)，中间的这段配置用于 cp3.database.multiTenantType != DATASOURCE 时
+
+        # 以下的2段配置，同时适用于所有模式
+        web-stat-filter:  # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+          enabled: true
+          url-pattern: /*
+          exclusions: "*.js , *.gif ,*.jpg ,*.png ,*.css ,*.ico , /druid/*"
+          session-stat-max-count: 1000
+          profile-enable: true
+          session-stat-enable: false
+        stat-view-servlet:  #展示Druid的统计信息,StatViewServlet的用途包括：1.提供监控信息展示的html页面2.提供监控信息的JSON API
+          enabled: true
+          url-pattern: /druid/*   #根据配置中的url-pattern来访问内置监控页面，如果是上面的配置，内置监控页面的首页是/druid/index.html例如：http://127.0.0.1:9000/druid/index.html
+          reset-enable: true    #允许清空统计数据
+          login-username: cp3
+          login-password: cp3
+
+dozer:
+  mappingFiles:
+    - classpath*:dozer/*.dozer.xml
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+      enabled: true
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true   # feign 熔断机制是否开启
+    #支持压缩的mime types
+  compression:  # 请求压缩
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:  # 响应压缩
+      enabled: true
+
+ribbon:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 30000     #
+  ConnectTimeout: 30000  # [ribbon超时时间]大于[熔断超时],那么会先走熔断，相当于你配的ribbon超时就不生效了  ribbon和hystrix是同时生效的，哪个值小哪个生效
+  MaxAutoRetries: 0             # 最大自动重试
+  MaxAutoRetriesNextServer: 1   # 最大自动像下一个服务重试
+  OkToRetryOnAllOperations: false  #无论是请求超时或者socket read timeout都进行重试，
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 1000 # #并发执行的最大线程数，默认10
+      maxQueueSize: 1000 # #BlockingQueue的最大队列数
+      queueSizeRejectionThreshold: 500 # #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 120000  # 熔断超时 ribbon和hystrix是同时生效的，哪个值小哪个生效
+
+
+# mysql 通用配置
+
+mybatis-plus:
+  mapper-locations:
+    - classpath*:mapper_**/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.cp3.cloud.*.entity;com.cp3.base.database.mybatis.typehandler
+  typeEnumsPackage: com.cp3.cloud.*.enumeration
+  global-config:
+    db-config:
+      id-type: INPUT
+      insert-strategy: NOT_NULL
+      update-strategy: NOT_NULL
+      select-strategy: NOT_EMPTY
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'
+
+# 分布式事务相关
+seata:
+  enabled: ${cp3.database.isSeata}
+  enableAutoDataSourceProxy: true
+  tx-service-group: cp3_admin_seata_tx_group
+  registry:
+    type: nacos
+    nacos:
+      server-addr: ${cp3.nacos.ip}:${cp3.nacos.port}
+      username: ${cp3.nacos.username}
+      password: ${cp3.nacos.password}
+      namespace: ${cp3.seata.namespace}
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${cp3.nacos.ip}:${cp3.nacos.port}
+      username: ${cp3.nacos.username}
+      password: ${cp3.nacos.password}
+      namespace: ${cp3.seata.namespace}
+  service:
+    grouplist:
+      default: ${cp3.seata.ip:}:${cp3.seata.port:}
+    vgroup-mapping:
+      cp3_admin_seata_tx_group: default
+    disable-global-transaction: false
+  client:
+    rm:
+      report-success-enable: false

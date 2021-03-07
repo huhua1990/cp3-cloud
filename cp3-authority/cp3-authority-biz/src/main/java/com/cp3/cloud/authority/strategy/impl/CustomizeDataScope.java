@@ -28,7 +28,8 @@ public class CustomizeDataScope implements AbstractDataScopeHandler {
         if (orgList == null || orgList.isEmpty()) {
             throw new BizException(ExceptionCode.BASE_VALID_PARAM.getCode(), "自定义数据权限类型时，组织不能为空");
         }
-        List<Org> children = orgService.findChildren(orgList);
-        return children.stream().mapToLong(Org::getId).boxed().collect(Collectors.toList());
+        return orgList;
+        //List<Org> children = orgService.findChildren(orgList);
+        //return children.stream().mapToLong(Org::getId).boxed().collect(Collectors.toList());
     }
 }
