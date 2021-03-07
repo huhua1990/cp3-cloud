@@ -3,6 +3,8 @@ package com.cp3.base.boot.handler;
 import cn.hutool.core.util.StrUtil;
 import com.cp3.base.basic.R;
 import com.cp3.base.exception.BizException;
+import com.cp3.base.exception.ForbiddenException;
+import com.cp3.base.exception.UnauthorizedException;
 import com.cp3.base.exception.code.ExceptionCode;
 import com.cp3.base.utils.StrPool;
 import lombok.extern.slf4j.Slf4j;
@@ -261,5 +263,20 @@ public abstract class AbstractGlobalExceptionHandler {
         log.warn("DataIntegrityViolationException:", ex);
         return R.result(ExceptionCode.SQL_EX.getCode(), null, ExceptionCode.SQL_EX.getMsg(), ex.getMessage()).setPath(getPath());
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public R forbiddenException(ForbiddenException ex) {
+        log.warn("BizException:", ex);
+        return R.result(ex.getCode(), null, ex.getMessage(), ex.getLocalizedMessage()).setPath(getPath());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public R unauthorizedException(UnauthorizedException ex) {
+        log.warn("BizException:", ex);
+        return R.result(ex.getCode(), null, ex.getMessage(), ex.getLocalizedMessage()).setPath(getPath());
+    }
+
 
 }

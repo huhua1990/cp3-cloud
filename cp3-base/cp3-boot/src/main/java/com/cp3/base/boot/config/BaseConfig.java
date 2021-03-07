@@ -1,5 +1,7 @@
 package com.cp3.base.boot.config;
 
+import com.cp3.base.converter.RemoteDataDeserializer;
+import com.cp3.base.model.RemoteData;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -12,6 +14,7 @@ import com.cp3.base.converter.String2LocalDateTimeConverter;
 import com.cp3.base.converter.String2LocalTimeConverter;
 import com.cp3.base.jackson.LampJacksonModule;
 import com.cp3.base.utils.SpringUtils;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.undertow.Undertow;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -92,7 +95,9 @@ public abstract class BaseConfig {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 //单引号处理
                 .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-        objectMapper.registerModule(new LampJacksonModule()).findAndRegisterModules();
+        objectMapper.registerModule(new LampJacksonModule())
+                .registerModule(new SimpleModule().addDeserializer(RemoteData.class, RemoteDataDeserializer.INSTANCE))
+                .findAndRegisterModules();;
         return objectMapper;
     }
 

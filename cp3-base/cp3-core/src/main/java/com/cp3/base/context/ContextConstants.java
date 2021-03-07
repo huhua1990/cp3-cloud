@@ -78,6 +78,11 @@ public final class ContextConstants {
     public static final String BASIC_HEADER_PREFIX_EXT = "Basic%20";
 
     /**
+     * 是否 内部调用项目
+     */
+    public static final String FEIGN = "x-feign";
+
+    /**
      * 是否boot项目
      */
     public static final String IS_BOOT = "boot";
